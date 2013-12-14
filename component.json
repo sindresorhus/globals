@@ -1,0 +1,25 @@
+{
+  "name": "globals",
+  "version": "0.0.0",
+  "description": "Global identifiers from different JavaScript environments",
+  "license": "MIT",
+  "main": "globals.json",
+  "repo": "sindresorhus/globals",
+  "scripts": [
+    "globals.json"
+  ],
+  "keywords": [
+    "globals",
+    "global",
+    "identifiers",
+    "variables",
+    "vars",
+    "jshint",
+    "eslint",
+    "environments"
+  ],
+  "remotes": [],
+  "dependencies": {
+    "sindresorhus/html-tags": "*"
+  }
+}

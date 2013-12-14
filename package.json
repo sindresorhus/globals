@@ -1,0 +1,35 @@
+{
+  "name": "globals",
+  "version": "0.0.0",
+  "description": "Global identifiers from different JavaScript environments",
+  "license": "MIT",
+  "main": "globals.json",
+  "repository": "sindresorhus/globals",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "globals.json"
+  ],
+  "keywords": [
+    "globals",
+    "global",
+    "identifiers",
+    "variables",
+    "vars",
+    "jshint",
+    "eslint",
+    "environments"
+  ],
+  "devDependencies": {
+    "mocha": "~1.x"
+  }
+}
