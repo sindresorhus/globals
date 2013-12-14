@@ -4,6 +4,8 @@
 
 Extracted from [JSHint](https://github.com/jshint/jshint/blob/master/src/vars.js) and [ESLint](https://github.com/nzakas/eslint/blob/master/conf/environments.json) and merged.
 
+It's just a [JSON file](globals.json), so use it in whatever environment you like.
+
 
 ## Install
 
