@@ -1,4 +1,4 @@
-# globals [![Build Status](https://secure.travis-ci.org/sindresorhus/globals.png?branch=master)](http://travis-ci.org/sindresorhus/globals)
+# globals [![Build Status](https://travis-ci.org/sindresorhus/globals.svg?branch=master)](https://travis-ci.org/sindresorhus/globals)
 
 > Global identifiers from different JavaScript environments
 
@@ -11,29 +11,24 @@ It's just a [JSON file](globals.json), so use it in whatever environment you lik
 
 Download [manually](https://github.com/sindresorhus/globals/releases) or with a package-manager.
 
-#### [npm](https://npmjs.org/package/globals)
-
-```
-npm install --save globals
+```bash
+$ npm install --save globals
 ```
 
-#### [Bower](http://bower.io)
-
-```
-bower install --save globals
+```bash
+$ bower install --save globals
 ```
 
-#### [Component](https://github.com/component/component)
-
-```
-component install sindresorhus/globals
+```bash
+$ component install sindresorhus/globals
 ```
 
 
-## Example
+## Usage
 
 ```js
 var globals = require('globals');
+
 console.log(globals.browser);
 /*
 {
@@ -49,4 +44,4 @@ console.log(globals.browser);
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
