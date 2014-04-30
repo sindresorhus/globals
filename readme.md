@@ -9,17 +9,15 @@ It's just a [JSON file](globals.json), so use it in whatever environment you lik
 
 ## Install
 
-Download [manually](https://github.com/sindresorhus/globals/releases) or with a package-manager.
-
-```bash
+```sh
 $ npm install --save globals
 ```
 
-```bash
+```sh
 $ bower install --save globals
 ```
 
-```bash
+```sh
 $ component install sindresorhus/globals
 ```
 

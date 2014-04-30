@@ -1,6 +1,6 @@
 {
   "name": "globals",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Global identifiers from different JavaScript environments",
   "license": "MIT",
   "main": "globals.json",
@@ -30,6 +30,6 @@
     "environments"
   ],
   "devDependencies": {
-    "mocha": "~1.x"
+    "mocha": "*"
   }
 }
