@@ -3,7 +3,6 @@
   "version": "0.1.1",
   "description": "Global identifiers from different JavaScript environments",
   "license": "MIT",
-  "main": "globals.json",
   "repository": "sindresorhus/globals",
   "author": {
     "name": "Sindre Sorhus",
@@ -11,12 +10,13 @@
     "url": "http://sindresorhus.com"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "scripts": {
     "test": "mocha"
   },
   "files": [
+    "index.js",
     "globals.json"
   ],
   "keywords": [

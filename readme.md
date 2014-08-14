@@ -13,14 +13,6 @@ It's just a [JSON file](globals.json), so use it in whatever environment you lik
 $ npm install --save globals
 ```
 
-```sh
-$ bower install --save globals
-```
-
-```sh
-$ component install sindresorhus/globals
-```
-
 
 ## Usage
 
@@ -42,4 +34,4 @@ console.log(globals.browser);
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](http://sindresorhus.com)

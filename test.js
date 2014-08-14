@@ -1,6 +1,6 @@
 'use strict';
 var assert = require('assert');
-var globals = require('./globals');
+var globals = require('./');
 
 it('should return an object of globals', function () {
 	assert.strictEqual(typeof globals, 'object');
