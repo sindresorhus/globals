@@ -31,6 +31,17 @@
 		"Math": false,
 		"JSON": false
 	},
+	"es6": {
+		"Promise": false,
+		"Proxy": false,
+		"Map": false,
+		"Reflect": false,
+		"Set": false,
+		"Symbol": false,
+		"System": false,
+		"WeakMap": false,
+		"WeakSet": false
+	},
 	"nonstandard": {
 		"escape": false,
 		"unescape": false
