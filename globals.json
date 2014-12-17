@@ -1,6 +1,5 @@
 {
 	"builtin": {
-		"arguments": false,
 		"Array": false,
 		"ArrayBuffer": false,
 		"Boolean": false,
@@ -413,6 +412,7 @@
 	"node": {
 		"__filename": false,
 		"__dirname": false,
+		"arguments": false,
 		"Buffer": false,
 		"DataView": false,
 		"console": false,
