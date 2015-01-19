@@ -62,6 +62,7 @@
 	},
 	"browser": {
 		"addEventListener": false,
+		"alert": false,
 		"applicationCache": false,
 		"atob": false,
 		"Audio": false,
@@ -76,10 +77,13 @@
 		"clearTimeout": false,
 		"close": false,
 		"closed": false,
+		"confirm": false,
+		"console": false,
 		"crypto": false,
 		"CSS": false,
 		"CustomEvent": false,
 		"DataView": false,
+		"Debug": false,
 		"defaultStatus": false,
 		"devicePixelRatio": false,
 		"dispatchEvent": false,
@@ -183,6 +187,7 @@
 		"open": false,
 		"openDatabase": false,
 		"opener": false,
+		"opera": false,
 		"Option": false,
 		"outerHeight": false,
 		"outerWidth": false,
@@ -191,6 +196,7 @@
 		"parent": false,
 		"postMessage": false,
 		"print": false,
+		"prompt": false,
 		"removeEventListener": false,
 		"requestAnimationFrame": false,
 		"resizeBy": false,
@@ -400,14 +406,6 @@
 		"importScripts": true,
 		"postMessage": true,
 		"self": true
-	},
-	"devel": {
-		"alert": false,
-		"confirm": false,
-		"console": false,
-		"Debug": false,
-		"opera": false,
-		"prompt": false
 	},
 	"node": {
 		"__filename": false,
