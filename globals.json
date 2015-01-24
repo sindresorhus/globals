@@ -495,7 +495,7 @@
 		"test": false,
 		"throws": false
 	},
-	"phantom": {
+	"phantomjs": {
 		"phantom": true,
 		"require": true,
 		"WebPage": true,
