@@ -465,7 +465,13 @@
 	},
 	"mocha": {
 		"describe": false,
+		"xdescribe": false,
+		"context": false,
+		"xcontext": false,
 		"it": false,
+		"xit": false,
+		"specify": false,
+		"xspecify": false,
 		"before": false,
 		"after": false,
 		"beforeEach": false,
