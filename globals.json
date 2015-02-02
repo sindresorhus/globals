@@ -429,6 +429,7 @@
 		"WebSocket": false,
 		"WheelEvent": false,
 		"window": false,
+		"Window": false,
 		"Worker": false,
 		"XDomainRequest": false,
 		"XMLHttpRequest": false,
