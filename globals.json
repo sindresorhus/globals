@@ -700,5 +700,33 @@
 		"Utils": false,
 		"WebApp": false,
 		"WebAppInternals": false
+	},
+	"mongo": {
+		"_isWindows": false,
+		"_rand": false,
+		"BulkWriteResult": false,
+		"cat": false,
+		"cd": false,
+		"connect": false,
+		"db": false,
+		"getHostName": false,
+		"getMemInfo": false,
+		"hostname": false,
+		"listFiles": false,
+		"load": false,
+		"ls": false,
+		"md5sumFile": false,
+		"mkdir": false,
+		"Mongo": false,
+		"ObjectId": false,
+		"PlanCache": false,
+		"pwd": false,
+		"quit": false,
+		"removeFile": false,
+		"rs": false,
+		"sh": false,
+		"UUID": false,
+		"version": false,
+		"WriteResult": false
 	}
 }
