@@ -33,6 +33,8 @@ console.log(globals.browser);
 */
 ```
 
+Each global is given a value of `true` or `false`. A value of `true` indicates that the variable may be overwritten. A value of `false` indicates that the variable should be considered read-only. This information is used by static analysis tools to flag incorrect behavior. We assume all variables should be `false` unless we hear otherwise.
+
 
 ## License
 
