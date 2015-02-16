@@ -6,8 +6,6 @@ Extracted from [JSHint](https://github.com/jshint/jshint/blob/master/src/vars.js
 
 It's just a [JSON file](globals.json), so use it in whatever environment you like.
 
-The boolean indicates whether the global is writable.
-
 
 ## Install
 
