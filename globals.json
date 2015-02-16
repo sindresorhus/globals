@@ -663,8 +663,8 @@
 		"Try": false
 	},
 	"meteor": {
-		"_": false,
 		"$": false,
+		"_": false,
 		"Accounts": false,
 		"App": false,
 		"Assets": false,
