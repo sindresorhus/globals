@@ -734,6 +734,7 @@
 		"WriteResult": false
 	},
 	"applescript": {
+		"delay": false,
 		"$": false,
 		"Application": false,
 		"Automation": false,
