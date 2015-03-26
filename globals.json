@@ -738,6 +738,7 @@
 		"Application": false,
 		"Automation": false,
 		"console": false,
+		"delay": false,
 		"Library": false,
 		"ObjC": false,
 		"ObjectSpecifier": false,
