@@ -102,6 +102,7 @@
 		"ErrorEvent": false,
 		"event": false,
 		"Event": false,
+		"FileList": false,
 		"FileReader": false,
 		"fetch": false,
 		"find": false,
