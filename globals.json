@@ -467,6 +467,7 @@
 		"module": false,
 		"process": false,
 		"require": false,
+		"root": false,
 		"setImmediate": false,
 		"setInterval": false,
 		"setTimeout": false
