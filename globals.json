@@ -483,6 +483,7 @@
 		"context": false,
 		"describe": false,
 		"it": false,
+		"mocha": false,
 		"setup": false,
 		"specify": false,
 		"suite": false,
