@@ -11,6 +11,7 @@
 		"encodeURI": false,
 		"encodeURIComponent": false,
 		"Error": false,
+		"escape": false,
 		"eval": false,
 		"EvalError": false,
 		"Float32Array": false,
@@ -52,14 +53,11 @@
 		"Uint8Array": false,
 		"Uint8ClampedArray": false,
 		"undefined": false,
+		"unescape": false,
 		"URIError": false,
 		"valueOf": false,
 		"WeakMap": false,
 		"WeakSet": false
-	},
-	"nonstandard": {
-		"escape": false,
-		"unescape": false
 	},
 	"browser": {
 		"addEventListener": false,
