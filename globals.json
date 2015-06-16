@@ -952,5 +952,23 @@
 		"Path": false,
 		"Progress": false,
 		"Ref": false
+	},
+	"serviceworker": {
+		"caches": false,
+		"Cache": false,
+		"CacheStorage": false,
+		"Client": false,
+		"Clients": false,
+		"ExtendableEvent": false,
+		"ExtendableMessageEvent": false,
+		"FetchEvent": false,
+		"importScripts": false,
+		"self": false,
+		"ServiceWorker": false,
+		"ServiceWorkerContainer": false,
+		"ServiceWorkerGlobalScope": false,
+		"ServiceWorkerMessageEvent": false,
+		"ServiceWorkerRegistration": false,
+		"WindowClient": false
 	}
 }
