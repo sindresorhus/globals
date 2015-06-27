@@ -183,6 +183,7 @@
 		"IDBTransaction": false,
 		"IDBVersionChangeEvent": false,
 		"Image": false,
+		"ImageData": false,
 		"indexedDB": false,
 		"innerHeight": false,
 		"innerWidth": false,
