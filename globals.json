@@ -972,15 +972,15 @@
 		"WindowClient": false
 	},
 	"ember": {
+		"andThen": false,
 		"click": false,
-		"fillIn": false,
-		"keyEvent": false,
-		"triggerEvent": false,
-		"visit": false,
 		"currentPath": false,
 		"currentRouteName": false,
 		"currentUrl": false,
+		"fillIn": false,
 		"find": false,
-		"andThen": false
+		"keyEvent": false,
+		"triggerEvent": false,
+		"visit": false
 	}
 }
