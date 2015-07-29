@@ -971,7 +971,7 @@
 		"ServiceWorkerRegistration": false,
 		"WindowClient": false
 	},
-	"ember": {
+	"embertest": {
 		"andThen": false,
 		"click": false,
 		"currentPath": false,
