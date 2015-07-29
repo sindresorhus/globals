@@ -970,5 +970,17 @@
 		"ServiceWorkerMessageEvent": false,
 		"ServiceWorkerRegistration": false,
 		"WindowClient": false
+	},
+	"ember": {
+		"click": false,
+		"fillIn": false,
+		"keyEvent": false,
+		"triggerEvent": false,
+		"visit": false,
+		"currentPath": false,
+		"currentRouteName": false,
+		"currentUrl": false,
+		"find": false,
+		"andThen": false
 	}
 }
