@@ -721,6 +721,17 @@
 		"xdescribe": false,
 		"xit": false
 	},
+	"jest": {
+		"afterEach": false,
+		"beforeEach": false,
+		"describe": false,
+		"it": false,
+		"jest": false,
+		"pit": false,
+		"require": false,
+		"xdescribe": false,
+		"xit": false
+	},
 	"qunit": {
 		"asyncTest": false,
 		"deepEqual": false,
