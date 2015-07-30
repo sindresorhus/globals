@@ -981,5 +981,17 @@
 		"ServiceWorkerMessageEvent": false,
 		"ServiceWorkerRegistration": false,
 		"WindowClient": false
+	},
+	"embertest": {
+		"andThen": false,
+		"click": false,
+		"currentPath": false,
+		"currentRouteName": false,
+		"currentUrl": false,
+		"fillIn": false,
+		"find": false,
+		"keyEvent": false,
+		"triggerEvent": false,
+		"visit": false
 	}
 }
