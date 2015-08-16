@@ -725,6 +725,7 @@
 		"afterEach": false,
 		"beforeEach": false,
 		"describe": false,
+		"expect": false,
 		"it": false,
 		"jest": false,
 		"pit": false,
