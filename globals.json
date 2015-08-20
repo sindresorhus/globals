@@ -994,5 +994,15 @@
 		"keyEvent": false,
 		"triggerEvent": false,
 		"visit": false
+	},
+	"protractor": {
+		"$": false,
+		"$$": false,
+		"browser": false,
+		"By": false,
+		"by": false,
+		"DartObject": false,
+		"element": false,
+		"protractor": false
 	}
 }
