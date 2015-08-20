@@ -676,6 +676,11 @@
 		"setInterval": false,
 		"setTimeout": false
 	},
+	"commonjs": {
+		"exports": false,
+		"module": false,
+		"require": false
+	},
 	"amd": {
 		"define": false,
 		"require": false
