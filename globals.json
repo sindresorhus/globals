@@ -652,6 +652,7 @@
 		"XSLTProcessor": false
 	},
 	"worker": {
+		"applicationCache": false,
 		"atob": false,
 		"btoa": false,
 		"clearInterval": false,
@@ -660,8 +661,11 @@
 		"console": false,
 		"importScripts": true,
 		"location": false,
+		"name": false,
 		"navigator": false,
+		"onconnect": true,
 		"onmessage": true,
+		"performance": false,
 		"postMessage": true,
 		"self": true,
 		"setInterval": false,
