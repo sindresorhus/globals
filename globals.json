@@ -652,9 +652,20 @@
 		"XSLTProcessor": false
 	},
 	"worker": {
+		"atob": false,
+		"btoa": false,
+		"clearInterval": false,
+		"clearTimeout": false,
+		"close": true,
+		"console": false,
 		"importScripts": true,
+		"location": false,
+		"navigator": false,
+		"onmessage": true,
 		"postMessage": true,
-		"self": true
+		"self": true,
+		"setInterval": false,
+		"setTimeout": false
 	},
 	"node": {
 		"__dirname": false,
