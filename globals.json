@@ -739,7 +739,7 @@
 		"setTimeout": false
 	},
 	"commonjs": {
-		"exports": false,
+		"exports": true,
 		"module": false,
 		"require": false
 	},
