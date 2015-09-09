@@ -1094,5 +1094,12 @@
 		"DartObject": false,
 		"element": false,
 		"protractor": false
+	},
+	"shared-node-browser": {
+		"clearInterval": false,
+		"clearTimeout": false,
+		"console": false,
+		"setInterval": false,
+		"setTimeout": false
 	}
 }
