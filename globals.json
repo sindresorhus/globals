@@ -158,7 +158,6 @@
 		"Element": false,
 		"ElementTimeControl": false,
 		"ErrorEvent": false,
-		"event": false,
 		"Event": false,
 		"EventSource": false,
 		"EventTarget": false,
