@@ -863,6 +863,26 @@
 		"toint32": false,
 		"version": false
 	},
+	"nashorn": {
+		"__DIR__": false,
+		"__FILE__": false,
+		"__LINE__": false,
+		"com": false,
+		"edu": false,
+		"exit": false,
+		"Java": false,
+		"java": false,
+		"javafx": false,
+		"JavaImporter": false,
+		"javax": false,
+		"JSAdapter": false,
+		"load": false,
+		"loadWithNewGlobal": false,
+		"org": false,
+		"Packages": false,
+		"print": false,
+		"quit": false
+	},
 	"wsh": {
 		"ActiveXObject": true,
 		"Enumerator": true,
