@@ -1101,5 +1101,10 @@
 		"console": false,
 		"setInterval": false,
 		"setTimeout": false
+	},
+	"webextensions": {
+		"browser": false,
+		"chrome": false,
+		"opr": false
 	}
 }
