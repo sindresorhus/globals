@@ -825,7 +825,8 @@
 		"exports": true,
 		"phantom": true,
 		"require": true,
-		"WebPage": true
+		"WebPage": true,
+		"window": true
 	},
 	"couch": {
 		"emit": false,
