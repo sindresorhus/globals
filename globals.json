@@ -1107,18 +1107,5 @@
 		"browser": false,
 		"chrome": false,
 		"opr": false
-	},
-	"wsh": {
-		"ActiveXObject": false,
-		"Enumerator": false,
-		"GetObject": false,
-		"ScriptEngine": false,
-		"ScriptEngineBuildVersion": false,
-		"ScriptEngineMajorVersion": false,
-		"ScriptEngineMinorVersion": false,
-		"VBArray": false,
-		"WSH": false,
-		"WScript": false,
-		"XDomainRequest": false
 	}
 }
