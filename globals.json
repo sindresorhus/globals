@@ -1079,7 +1079,7 @@
 		"click": false,
 		"currentPath": false,
 		"currentRouteName": false,
-		"currentUrl": false,
+		"currentURL": false,
 		"fillIn": false,
 		"find": false,
 		"keyEvent": false,
