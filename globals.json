@@ -921,6 +921,7 @@
 		"find": false,
 		"grep": false,
 		"ls": false,
+		"ln": false,
 		"mkdir": false,
 		"mv": false,
 		"popd": false,
