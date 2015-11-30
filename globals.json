@@ -1032,6 +1032,8 @@
 		"Mongo": false,
 		"ObjectId": false,
 		"PlanCache": false,
+		"print": false,
+		"printjson": false,
 		"pwd": false,
 		"quit": false,
 		"removeFile": false,
