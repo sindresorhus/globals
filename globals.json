@@ -1187,7 +1187,9 @@
 		"currentURL": false,
 		"fillIn": false,
 		"find": false,
+		"findWithAssert": false,
 		"keyEvent": false,
+		"pauseTest": false,
 		"triggerEvent": false,
 		"visit": false
 	},
