@@ -1212,5 +1212,21 @@
 		"browser": false,
 		"chrome": false,
 		"opr": false
+	},
+	"greasemonkey": {
+		"GM_addStyle": false,
+		"GM_deleteValue": false,
+		"GM_getResourceText": false,
+		"GM_getResourceURL": false,
+		"GM_getValue": false,
+		"GM_info": false,
+		"GM_listValues": false,
+		"GM_log": false,
+		"GM_openInTab": false,
+		"GM_registerMenuCommand": false,
+		"GM_setClipboard": false,
+		"GM_setValue": false,
+		"GM_xmlhttpRequest": false,
+		"unsafeWindow": false
 	}
 }
