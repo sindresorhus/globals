@@ -1179,6 +1179,15 @@
 		"skipWaiting": false,
 		"WindowClient": false
 	},
+	"atomtest": {
+		"advanceClock": false,
+		"fakeClearInterval": false,
+		"fakeClearTimeout": false,
+		"fakeSetInterval": false,
+		"fakeSetTimeout": false,
+		"resetTimeouts": false,
+		"waitsForPromise": false
+	},
 	"embertest": {
 		"andThen": false,
 		"click": false,
