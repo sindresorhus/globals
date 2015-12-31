@@ -756,6 +756,7 @@
 	"worker": {
 		"applicationCache": false,
 		"atob": false,
+		"Blob": false,
 		"BroadcastChannel": false,
 		"btoa": false,
 		"Cache": false,
