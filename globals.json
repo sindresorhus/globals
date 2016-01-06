@@ -844,7 +844,8 @@
 	"commonjs": {
 		"exports": true,
 		"module": false,
-		"require": false
+		"require": false,
+		"global": false
 	},
 	"amd": {
 		"define": false,
