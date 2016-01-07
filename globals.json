@@ -1240,5 +1240,8 @@
 		"GM_setValue": false,
 		"GM_xmlhttpRequest": false,
 		"unsafeWindow": false
+	},
+	"webdriverio": {
+		"browser": false
 	}
 }
