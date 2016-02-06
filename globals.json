@@ -72,8 +72,6 @@
 		"escape": false,
 		"eval": false,
 		"EvalError": false,
-		"Float32Array": false,
-		"Float64Array": false,
 		"Function": false,
 		"hasOwnProperty": false,
 		"Infinity": false,
