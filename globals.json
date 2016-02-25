@@ -1080,6 +1080,9 @@
 		"$": false,
 		"_": false,
 		"Accounts": false,
+		"AccountsClient": false,
+		"AccountsServer": false,
+		"AccountsCommon": false,
 		"App": false,
 		"Assets": false,
 		"Blaze": false,
@@ -1087,6 +1090,7 @@
 		"Cordova": false,
 		"DDP": false,
 		"DDPServer": false,
+		"DDPRateLimiter": false,
 		"Deps": false,
 		"EJSON": false,
 		"Email": false,
@@ -1113,7 +1117,8 @@
 		"UI": false,
 		"Utils": false,
 		"WebApp": false,
-		"WebAppInternals": false
+		"WebAppInternals": false,
+		"Promise": false
 	},
 	"mongo": {
 		"_isWindows": false,
