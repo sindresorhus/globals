@@ -1117,8 +1117,7 @@
 		"UI": false,
 		"Utils": false,
 		"WebApp": false,
-		"WebAppInternals": false,
-		"Promise": false
+		"WebAppInternals": false
 	},
 	"mongo": {
 		"_isWindows": false,
