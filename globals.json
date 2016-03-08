@@ -831,6 +831,7 @@
 		"exports": true,
 		"GLOBAL": false,
 		"global": false,
+		"JSON": false,
 		"module": false,
 		"process": false,
 		"require": false,
@@ -1220,6 +1221,7 @@
 		"clearInterval": false,
 		"clearTimeout": false,
 		"console": false,
+		"JSON": false,
 		"setInterval": false,
 		"setTimeout": false
 	},
