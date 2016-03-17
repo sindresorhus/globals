@@ -526,7 +526,7 @@
 		"speechSynthesis": false,
 		"SpeechSynthesisEvent": false,
 		"SpeechSynthesisUtterance": false,
-		"status": false,
+		"status": true,
 		"statusbar": false,
 		"stop": false,
 		"Storage": false,
