@@ -849,6 +849,9 @@
 		"define": false,
 		"require": false
 	},
+	"ym": {
+		"modules": false
+	},
 	"mocha": {
 		"after": false,
 		"afterEach": false,
