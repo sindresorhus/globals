@@ -717,6 +717,7 @@
 		"TreeWalker": false,
 		"UIEvent": false,
 		"URL": false,
+		"URLSearchParams": false,
 		"ValidityState": false,
 		"VTTCue": false,
 		"WaveShaperNode": false,
@@ -815,6 +816,7 @@
 		"TextDecoder": false,
 		"TextEncoder": false,
 		"URL": false,
+		"URLSearchParams": false,
 		"WebSocket": false,
 		"Worker": false,
 		"XMLHttpRequest": false
