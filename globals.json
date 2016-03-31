@@ -1110,6 +1110,7 @@
 		"ReactiveDict": false,
 		"ReactiveVar": false,
 		"Router": false,
+		"ServiceConfiguration": false,
 		"Session": false,
 		"share": false,
 		"Spacebars": false,
