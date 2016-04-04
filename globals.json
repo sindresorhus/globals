@@ -833,6 +833,7 @@
 		"exports": true,
 		"GLOBAL": false,
 		"global": false,
+		"Intl": false,
 		"module": false,
 		"process": false,
 		"require": false,
