@@ -394,6 +394,8 @@
 		"innerWidth": false,
 		"InputEvent": false,
 		"InputMethodContext": false,
+		"IntersectionObserver": false,
+		"IntersectionObserverEntry": false,
 		"Intl": false,
 		"KeyboardEvent": false,
 		"KeyframeEffect": false,
