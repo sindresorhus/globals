@@ -911,6 +911,7 @@
 		"describe": false,
 		"expect": false,
 		"it": false,
+		"fit": false,
 		"jest": false,
 		"pit": false,
 		"require": false,
