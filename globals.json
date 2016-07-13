@@ -1059,9 +1059,11 @@
 		"pwd": false,
 		"rm": false,
 		"sed": false,
+		"set": false,
 		"target": false,
 		"tempdir": false,
 		"test": false,
+		"touch": false,
 		"which": false
 	},
 	"prototypejs": {
