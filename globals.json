@@ -917,10 +917,8 @@
 	"jest": {
 		"afterEach": false,
 		"beforeEach": false,
-		"check": false,
 		"describe": false,
 		"expect": false,
-		"gen": false,
 		"it": false,
 		"fit": false,
 		"jest": false,
