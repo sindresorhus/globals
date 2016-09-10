@@ -915,7 +915,9 @@
 		"xit": false
 	},
 	"jest": {
+		"afterAll": false,
 		"afterEach": false,
+		"beforeAll": false,
 		"beforeEach": false,
 		"check": false,
 		"describe": false,
@@ -928,7 +930,8 @@
 		"require": false,
 		"test": false,
 		"xdescribe": false,
-		"xit": false
+		"xit": false,
+		"xtest": false
 	},
 	"qunit": {
 		"asyncTest": false,
