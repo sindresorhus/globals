@@ -544,6 +544,7 @@
 		"SharedWorker": false,
 		"showModalDialog": false,
 		"SiteBoundCredential": false,
+		"SpeechRecognition": false,
 		"speechSynthesis": false,
 		"SpeechSynthesisEvent": false,
 		"SpeechSynthesisUtterance": false,
