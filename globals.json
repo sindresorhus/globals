@@ -510,6 +510,7 @@
 		"removeEventListener": false,
 		"Request": false,
 		"requestAnimationFrame": false,
+		"requestIdleCallback": false,
 		"resizeBy": false,
 		"resizeTo": false,
 		"Response": false,
