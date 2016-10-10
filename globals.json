@@ -883,6 +883,7 @@
 		"describe": false,
 		"it": false,
 		"mocha": false,
+		"run": false,
 		"setup": false,
 		"specify": false,
 		"suite": false,
