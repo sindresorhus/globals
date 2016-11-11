@@ -500,6 +500,7 @@
 		"print": false,
 		"ProcessingInstruction": false,
 		"ProgressEvent": false,
+		"PromiseRejectionEvent": false,
 		"prompt": false,
 		"PushManager": false,
 		"PushSubscription": false,
