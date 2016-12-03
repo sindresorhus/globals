@@ -930,6 +930,7 @@
 		"it": false,
 		"fit": false,
 		"jest": false,
+		"pending": false,
 		"pit": false,
 		"require": false,
 		"test": false,
