@@ -928,6 +928,7 @@
 		"expect": false,
 		"gen": false,
 		"it": false,
+		"fdescribe": false,
 		"fit": false,
 		"jest": false,
 		"pit": false,
