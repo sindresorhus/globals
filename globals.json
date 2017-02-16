@@ -424,6 +424,7 @@
 		"MediaQueryList": false,
 		"MediaQueryListEvent": false,
 		"MediaSource": false,
+		"MediaRecorder": false,
 		"MediaStream": false,
 		"MediaStreamAudioDestinationNode": false,
 		"MediaStreamAudioSourceNode": false,
