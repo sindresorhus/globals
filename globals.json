@@ -1287,5 +1287,10 @@
 		"GM_setValue": false,
 		"GM_xmlhttpRequest": false,
 		"unsafeWindow": false
+	},
+	"newrelic": {
+		"$browser": false,
+		"$driver": false,
+		"$util": false
 	}
 }
