@@ -1287,5 +1287,20 @@
 		"GM_setValue": false,
 		"GM_xmlhttpRequest": false,
 		"unsafeWindow": false
+	},
+	"gjs": {
+		"InternalError": false,
+		"uneval": false,
+		"Iterator": false,
+		"StopIteration": false,
+		"Debugger": false,
+		"window": false,
+		"log": false,
+		"logError": false,
+		"print": false,
+		"printerr": false,
+		"GjsFileImporter": false,
+		"imports": false,
+		"ARGV": false
 	}
 }
