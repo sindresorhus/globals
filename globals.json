@@ -196,6 +196,7 @@
 		"caches": false,
 		"CacheStorage": false,
 		"cancelAnimationFrame": false,
+		"cancelIdleCallback": false,
 		"CanvasGradient": false,
 		"CanvasPattern": false,
 		"CanvasRenderingContext2D": false,
