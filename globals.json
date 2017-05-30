@@ -217,6 +217,7 @@
 		"confirm": false,
 		"console": false,
 		"ConvolverNode": false,
+		"createImageBitmap": false,
 		"Credential": false,
 		"CredentialsContainer": false,
 		"crypto": false,
