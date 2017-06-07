@@ -916,6 +916,7 @@
 		"pending": false,
 		"runs": false,
 		"spyOn": false,
+		"spyOnProperty": false,
 		"waits": false,
 		"waitsFor": false,
 		"xdescribe": false,
