@@ -1,8 +1,8 @@
 'use strict';
-var assert = require('assert');
-var globals = require('./');
+const assert = require('assert');
+const globals = require('.');
 
-it('should return an object of globals', function () {
+it('should return an object of globals', () => {
 	assert.strictEqual(typeof globals, 'object');
 	assert(Object.keys(globals).length > 10 && Object.keys(globals).length < 1000);
 });
