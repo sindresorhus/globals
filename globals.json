@@ -1249,7 +1249,8 @@
 		"pauseTest": false,
 		"resumeTest": false,
 		"triggerEvent": false,
-		"visit": false
+		"visit": false,
+		"wait": false
 	},
 	"protractor": {
 		"$": false,
