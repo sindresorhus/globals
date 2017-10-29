@@ -492,6 +492,7 @@
 		"PerformanceMeasure": false,
 		"PerformanceNavigation": false,
 		"PerformanceResourceTiming": false,
+		"PerformanceObserver": false,
 		"PerformanceTiming": false,
 		"PeriodicWave": false,
 		"Permissions": false,
