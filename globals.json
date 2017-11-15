@@ -1353,6 +1353,15 @@
 		"GM_setClipboard": false,
 		"GM_setValue": false,
 		"GM_xmlhttpRequest": false,
+		"GM.info": false,
+		"GM.deleteValue": false,
+		"GM.getValue": false,
+		"GM.listValues": false,
+		"GM.setValue": false,
+		"GM.getResourceUrl": false,
+		"GM.openInTab": false,
+		"GM.setClipboard": false,
+		"GM.xmlHttpRequest": false,
 		"unsafeWindow": false
 	}
 }
