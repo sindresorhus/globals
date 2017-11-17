@@ -100,7 +100,7 @@
 		"URIError": false,
 		"valueOf": false
 	},
-	"es6": {
+	"es2015": {
 		"Array": false,
 		"ArrayBuffer": false,
 		"Boolean": false,
@@ -159,7 +159,7 @@
 		"WeakMap": false,
 		"WeakSet": false
 	},
-	"es8": {
+	"es2017": {
 		"Array": false,
 		"ArrayBuffer": false,
 		"Atomics": false,
