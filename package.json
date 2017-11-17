@@ -32,5 +32,10 @@
 	"devDependencies": {
 		"ava": "*",
 		"xo": "*"
+	},
+	"xo": {
+		"ignores": [
+			"get-browser-globals.js"
+		]
 	}
 }
