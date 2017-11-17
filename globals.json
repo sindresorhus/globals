@@ -1340,6 +1340,7 @@
 		"opr": false
 	},
 	"greasemonkey": {
+		"GM": false,
 		"GM_addStyle": false,
 		"GM_deleteValue": false,
 		"GM_getResourceText": false,
