@@ -1,8 +1,7 @@
-'use strict';
-const assert = require('assert');
-const globals = require('.');
+import test from 'ava';
+import m from '.';
 
-it('should return an object of globals', () => {
-	assert.strictEqual(typeof globals, 'object');
-	assert(Object.keys(globals).length > 10 && Object.keys(globals).length < 1000);
+test(t => {
+	t.is(typeof m, 'object');
+	t.true(Object.keys(m).length > 10 && Object.keys(m).length < 1000);
 });
