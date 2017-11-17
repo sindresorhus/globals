@@ -62,7 +62,7 @@ const globals = Object.getOwnPropertyNames(window)
 
 const ret = {};
 for (const key of globals) {
-	ret[key] = false;
+	ret[key] = key.startsWith('on');
 }
 
 copy(JSON.stringify(ret, null, '\t'));
