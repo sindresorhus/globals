@@ -221,6 +221,8 @@
 		"WeakSet": false
 	},
 	"browser": {
+		"AbortController": false,
+		"AbortSignal": false,
 		"addEventListener": false,
 		"alert": false,
 		"AnalyserNode": false,
