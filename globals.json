@@ -720,6 +720,7 @@
 		"RTCSctpTransport": false,
 		"RTCSessionDescription": false,
 		"RTCStatsReport": false,
+		"RTCTrackEvent": false,
 		"screen": false,
 		"Screen": false,
 		"screenLeft": false,
