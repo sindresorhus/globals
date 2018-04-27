@@ -1007,7 +1007,9 @@
 		"require": false,
 		"setImmediate": false,
 		"setInterval": false,
-		"setTimeout": false
+		"setTimeout": false,
+		"URL": false,
+		"URLSearchParams": false
 	},
 	"commonjs": {
 		"exports": true,
@@ -1408,7 +1410,9 @@
 		"clearTimeout": false,
 		"console": false,
 		"setInterval": false,
-		"setTimeout": false
+		"setTimeout": false,
+		"URL": false,
+		"URLSearchParams": false
 	},
 	"webextensions": {
 		"browser": false,
