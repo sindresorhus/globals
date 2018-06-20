@@ -4,6 +4,8 @@
 		"ArrayBuffer": false,
 		"Atomics": false,
 		"BigInt": false,
+		"BigInt64Array": false,
+		"BigUint64Array": false,
 		"Boolean": false,
 		"constructor": false,
 		"DataView": false,
