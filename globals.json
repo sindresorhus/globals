@@ -1191,9 +1191,10 @@
 		"jQuery": false
 	},
 	"yui": {
-		"Y": false,
 		"YUI": false,
-		"YUI_config": false
+		"YUI_config": false,
+		"YAHOO": false,
+		"YAHOO_config": false
 	},
 	"shelljs": {
 		"cat": false,
