@@ -1191,7 +1191,8 @@
 		"jQuery": false
 	},
 	"yui": {
-		"Y": false,
+		"YAHOO": false,
+		"YAHOO_config": false,
 		"YUI": false,
 		"YUI_config": false
 	},
