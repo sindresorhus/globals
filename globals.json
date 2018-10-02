@@ -996,6 +996,7 @@
 		"URLSearchParams": false,
 		"WebSocket": false,
 		"Worker": false,
+		"WorkerGlobalScope": false,
 		"XMLHttpRequest": false
 	},
 	"node": {
