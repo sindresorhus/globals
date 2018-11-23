@@ -485,7 +485,7 @@
 		"KeyframeEffectReadOnly": false,
 		"length": false,
 		"localStorage": false,
-		"location": false,
+		"location": true,
 		"Location": false,
 		"locationbar": false,
 		"matchMedia": false,
