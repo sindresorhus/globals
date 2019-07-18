@@ -30,10 +30,10 @@
 		"environments"
 	],
 	"dependencies": {
-		"type-fest": "^0.4.1"
+		"type-fest": "^0.6.0"
 	},
 	"devDependencies": {
-		"ava": "^1.4.1",
+		"ava": "^2.2.0",
 		"tsd": "^0.7.2",
 		"xo": "^0.24.0"
 	},
