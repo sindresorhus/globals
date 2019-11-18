@@ -1186,6 +1186,7 @@
 	},
 	"wsh": {
 		"ActiveXObject": true,
+		"CollectGarbage": true,
 		"Debug": true,
 		"Enumerator": true,
 		"GetObject": true,
