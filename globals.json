@@ -1186,9 +1186,11 @@
 	},
 	"wsh": {
 		"ActiveXObject": true,
+		"CollectGarbage": true,
 		"Debug": true,
 		"Enumerator": true,
 		"GetObject": true,
+		"RuntimeObject": true,
 		"ScriptEngine": true,
 		"ScriptEngineBuildVersion": true,
 		"ScriptEngineMajorVersion": true,
