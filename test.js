@@ -13,9 +13,9 @@ test('ensure alphabetical order', t => {
 	}
 });
 
-test('node is nodeBuiltin with commonjs arguments', t => {
-	// M.commonjs has global which isn't a commonjs argument and doesn't include
-	// __filename and __dirname which are.
+test('`node` is `nodeBuiltin` with CommonJS arguments', t => {
+	// M.commonjs has global which isn't a CommonJS argument and doesn't include
+	// `__filename` and `__dirname` which are.
 	const commonjsArgs = {
 		__dirname: false,
 		__filename: false,
