@@ -8,13 +8,11 @@ It's just a [JSON file](globals.json), so use it in whatever environment you lik
 
 **This module [no longer accepts](https://github.com/sindresorhus/globals/issues/82) new environments. If you need it for ESLint, just [create a plugin](http://eslint.org/docs/developer-guide/working-with-plugins#environments-in-plugins).**
 
-
 ## Install
 
 ```
 $ npm install globals
 ```
-
 
 ## Usage
 
@@ -28,7 +26,7 @@ console.log(globals.browser);
 	applicationCache: false,
 	ArrayBuffer: false,
 	atob: false,
-	...
+	…
 }
 */
 ```
