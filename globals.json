@@ -1215,8 +1215,7 @@
 		"ScriptEngineMinorVersion": true,
 		"VBArray": true,
 		"WScript": true,
-		"WSH": true,
-		"XDomainRequest": true
+		"WSH": true
 	},
 	"jquery": {
 		"$": false,
