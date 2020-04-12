@@ -1203,19 +1203,19 @@
 		"quit": false
 	},
 	"wsh": {
-		"ActiveXObject": true,
-		"CollectGarbage": true,
-		"Debug": true,
-		"Enumerator": true,
-		"GetObject": true,
-		"RuntimeObject": true,
-		"ScriptEngine": true,
-		"ScriptEngineBuildVersion": true,
-		"ScriptEngineMajorVersion": true,
-		"ScriptEngineMinorVersion": true,
-		"VBArray": true,
-		"WScript": true,
-		"WSH": true
+		"ActiveXObject": false,
+		"CollectGarbage": false,
+		"Debug": false,
+		"Enumerator": false,
+		"GetObject": false,
+		"RuntimeObject": false,
+		"ScriptEngine": false,
+		"ScriptEngineBuildVersion": false,
+		"ScriptEngineMajorVersion": false,
+		"ScriptEngineMinorVersion": false,
+		"VBArray": false,
+		"WScript": false,
+		"WSH": false
 	},
 	"jquery": {
 		"$": false,
