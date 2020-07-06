@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const json = require('../../browser_vars.json');
 
-const diff_array = function(oneObj, otherObj){
+const diffArray = function(oneObj, otherObj){
 	const defaultKeys = Object.keys(oneObj);
 	const yours = Object.keys(otherObj);
 
@@ -14,10 +14,9 @@ const diff_array = function(oneObj, otherObj){
 const jshint = json['jshint'];
 const my = json['my'];
 
-const difference = diff_array(jshint, my);
+const difference = diffArray(jshint, my);
 const { browser } = require('../../globals.json');
 
-// todo: refact
 const result = [...Object.keys(browser), ...difference]
 									.sort((a, b) => a.localeCompare(b))
 									.reduce((acc, cur) =>  ({ ...acc, [cur]: true}), {});

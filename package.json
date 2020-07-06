@@ -44,7 +44,9 @@
 	},
 	"xo": {
 		"ignores": [
-			"get-browser-globals.js"
+			"update/get-browser-globals/browser.js",
+			"update/get-browser-globals/combine.js",
+			"update/get-browser-globals/jshint.js"
 		]
 	},
 	"tsd": {
