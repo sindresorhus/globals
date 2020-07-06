@@ -16,7 +16,7 @@
 	"scripts": {
 		"test": "xo && ava",
 		"get-jshint-browser": "node ./update/get-browser-globals/jshint.js",
-		"combine-jshint-browser": "node ./update/get-browser-globals/combine.js"
+		"combine-browser": "node ./update/get-browser-globals/combine.js"
 	},
 	"files": [
 		"index.js",
