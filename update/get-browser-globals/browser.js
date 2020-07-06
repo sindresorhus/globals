@@ -43,7 +43,7 @@ const blacklist = [
 ];
 
 const globals = Object.getOwnPropertyNames(window)
-	.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+	.sort((a, b) => a.localeCompare(b))
 	.filter(global => {
 		for (const pattern of blacklist) {
 			if (typeof pattern === 'string') {
