@@ -36,6 +36,7 @@
 	},
 	"devDependencies": {
 		"ava": "^2.2.0",
+		"jshint": "git+https://git@github.com/shapkarin/jshint.git#master",
 		"tsd": "^0.9.0",
 		"xo": "^0.25.3"
 	},

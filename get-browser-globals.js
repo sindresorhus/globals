@@ -1,5 +1,10 @@
 'use strict';
 
+const fs = require('fs');
+
+const { browser } = require('jshint/src/vars.js');
+
+
 const blacklist = [
 	/^webkit/i,
 	'BeforeInstallPromptEvent',
@@ -42,7 +47,7 @@ const blacklist = [
 	'values'
 ];
 
-const globals = Object.getOwnPropertyNames(window)
+const globals = Object.getOwnPropertyNames(browser)
 	.sort((a, b) => a.localeCompare(b))
 	.filter(global => {
 		for (const pattern of blacklist) {
@@ -65,11 +70,8 @@ for (const key of globals) {
 	ret[key] = key.startsWith('on');
 }
 
-copy(JSON.stringify(ret, null, '\t'));
-
-/*
-
-Usage:
-Open an Incognito window in Chrome Canary and paste the above into the console. You'll now have a new object in your clipboard for the `browser` field in `globals.json`. You still need to manually filter out items from the `builtin` list.
-
-*/
+fs.writeFile('./browser_vars.json', JSON.stringify(ret, null, '\t'), (error) => {
+	if (error) {
+    return console.log(error);
+	}
+});
