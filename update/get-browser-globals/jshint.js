@@ -70,4 +70,4 @@ for (const key of globals) {
 	ret[key] = key.startsWith('on');
 }
 
-fs.writeFileSync('./browser_vars.json', `{ "jshint": \n\t${JSON.stringify(ret, null, '\t\t')}}`);
+fs.writeFileSync('./browser_vars.json', `{ "jshint": \n\t${JSON.stringify(ret, null, '\t\t')},\n"my":\n\t{}\n}`);
