@@ -11,10 +11,16 @@ const diff_array = function(oneObj, otherObj){
 	return defaultKeys.filter(key => !yours.includes(key));
 };
 
-const browser = json['jshint'];
+const jshint = json['jshint'];
 const my = json['my'];
 
-const difference = diff_array(browser, my).reduce(name => `\n${name}: true,\n`, '');
+const difference = diff_array(jshint, my);
+const { browser } = require('../../globals.json');
 
-fs.writeFileSync('./result_browser_vars.json', `{ "result": \n\t${JSON.stringify(difference, null, '\t\t')}`);
+// todo: refact
+const result = [...Object.keys(browser), ...difference]
+									.sort((a, b) => a.localeCompare(b))
+									.reduce((acc, cur) =>  ({ ...acc, [cur]: true}), {});
+
+fs.writeFileSync('./result_browser_vars.json', `{ "result": \n\t${JSON.stringify(result, null, '\t\t')}\n}`);
 
