@@ -5,4 +5,4 @@
 - Open file `browser_vars.json`
 - Paste yours current clipboard to the field `my` at the root of the project.
 - run `npm run combine-browser`
-- Copy and paste the result from the `browser_vars.json` to the field `browser` at the `globals.json`
+- Copy and paste the result from the `result_browser_vars.json` to the field `browser` at the `globals.json`
