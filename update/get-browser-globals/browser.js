@@ -1,10 +1,5 @@
 'use strict';
 
-const fs = require('fs');
-
-const { browser } = require('jshint/src/vars.js');
-
-
 const blacklist = [
 	/^webkit/i,
 	'BeforeInstallPromptEvent',
@@ -47,8 +42,8 @@ const blacklist = [
 	'values'
 ];
 
-const globals = Object.getOwnPropertyNames(browser)
-	.sort((a, b) => a.localeCompare(b))
+const globals = Object.getOwnPropertyNames(window)
+	.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
 	.filter(global => {
 		for (const pattern of blacklist) {
 			if (typeof pattern === 'string') {
@@ -70,8 +65,4 @@ for (const key of globals) {
 	ret[key] = key.startsWith('on');
 }
 
-fs.writeFile('./browser_vars.json', JSON.stringify(ret, null, '\t'), (error) => {
-	if (error) {
-    return console.log(error);
-	}
-});
+copy(JSON.stringify(ret, null, '\t'));

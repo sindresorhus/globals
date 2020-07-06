@@ -14,7 +14,9 @@
 		"node": ">=8"
 	},
 	"scripts": {
-		"test": "xo && ava"
+		"test": "xo && ava",
+		"get-jshint-browser": "node ./update/get-browser-globals/jshint.js",
+		"combine-jshint-browser": "node ./update/get-browser-globals/combine.js"
 	},
 	"files": [
 		"index.js",
