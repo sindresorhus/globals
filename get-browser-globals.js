@@ -1,6 +1,6 @@
 'use strict';
 
-const denylist = [
+const ignorePatterns = [
 	/^webkit/i,
 	'BeforeInstallPromptEvent',
 	/^Bluetooth/,
@@ -45,7 +45,7 @@ const denylist = [
 const globals = Object.getOwnPropertyNames(window)
 	.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
 	.filter(global => {
-		for (const pattern of denylist) {
+		for (const pattern of ignorePatterns) {
 			if (typeof pattern === 'string') {
 				if (global === pattern) {
 					return false;
