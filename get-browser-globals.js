@@ -1,6 +1,6 @@
 'use strict';
 
-const blacklist = [
+const denylist = [
 	/^webkit/i,
 	'BeforeInstallPromptEvent',
 	/^Bluetooth/,
@@ -45,7 +45,7 @@ const blacklist = [
 const globals = Object.getOwnPropertyNames(window)
 	.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
 	.filter(global => {
-		for (const pattern of blacklist) {
+		for (const pattern of denylist) {
 			if (typeof pattern === 'string') {
 				if (global === pattern) {
 					return false;
