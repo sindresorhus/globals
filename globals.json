@@ -1617,6 +1617,7 @@
 	},
 	"atomtest": {
 		"advanceClock": false,
+		"atom": false,
 		"fakeClearInterval": false,
 		"fakeClearTimeout": false,
 		"fakeSetInterval": false,
