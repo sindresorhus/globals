@@ -1,4 +1,4 @@
-# globals [![Build Status](https://travis-ci.org/sindresorhus/globals.svg?branch=master)](https://travis-ci.org/sindresorhus/globals)
+# globals
 
 > Global identifiers from different JavaScript environments
 
