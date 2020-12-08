@@ -680,6 +680,7 @@
 		"OfflineAudioContext": false,
 		"offscreenBuffering": false,
 		"OffscreenCanvas": true,
+		"OffscreenCanvasRenderingContext2D": false,
 		"onabort": true,
 		"onafterprint": true,
 		"onanimationend": true,
