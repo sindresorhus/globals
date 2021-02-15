@@ -1,5 +1,6 @@
 {
 	"builtin": {
+		"AggregateError": false,
 		"Array": false,
 		"ArrayBuffer": false,
 		"Atomics": false,
@@ -292,6 +293,7 @@
 		"WeakSet": false
 	},
 	"es2021": {
+		"AggregateError": false,
 		"Array": false,
 		"ArrayBuffer": false,
 		"Atomics": false,
