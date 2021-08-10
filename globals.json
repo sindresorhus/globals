@@ -1708,7 +1708,8 @@
 		"GM_setValue": false,
 		"GM_unregisterMenuCommand": false,
 		"GM_xmlhttpRequest": false,
-		"unsafeWindow": false
+		"unsafeWindow": false,
+		"GM_addElement": false
 	},
 	"devtools": {
 		"$": false,
