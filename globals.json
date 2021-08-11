@@ -1687,6 +1687,7 @@
 		"createObjectIn": false,
 		"exportFunction": false,
 		"GM": false,
+		"GM_addElement": false,
 		"GM_addStyle": false,
 		"GM_addValueChangeListener": false,
 		"GM_deleteValue": false,
@@ -1708,8 +1709,7 @@
 		"GM_setValue": false,
 		"GM_unregisterMenuCommand": false,
 		"GM_xmlhttpRequest": false,
-		"unsafeWindow": false,
-		"GM_addElement": false
+		"unsafeWindow": false
 	},
 	"devtools": {
 		"$": false,
