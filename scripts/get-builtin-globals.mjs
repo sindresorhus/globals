@@ -52,9 +52,7 @@ const getSpecification = async () => {
 
 function* getGlobalObjects(specification) {
 	const $ = cheerio.load(specification);
-	for (const element of $(
-		'emu-clause#sec-global-object > emu-clause h1'
-	)) {
+	for (const element of $('emu-clause#sec-global-object > emu-clause h1')) {
 		const property = $(element).text().trim().split(/\s/)[0];
 		const descriptor = Object.getOwnPropertyDescriptor(globalThis, property);
 		if (descriptor) {
@@ -72,9 +70,7 @@ function* getGlobalObjects(specification) {
 function* getObjectProperties(specification) {
 	const $ = cheerio.load(specification);
 
-	for (const element of $(
-		'emu-clause#sec-properties-of-the-object-prototype-object > emu-clause > h1'
-	)) {
+	for (const element of $('emu-clause#sec-properties-of-the-object-prototype-object > emu-clause > h1')) {
 		const text = $(element).text().trim();
 		if (!text.startsWith('Object.prototype.')) {
 			continue;
