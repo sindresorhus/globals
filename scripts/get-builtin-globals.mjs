@@ -1,12 +1,12 @@
-import fs from "node:fs/promises";
-import * as cheerio from "cheerio";
+import fs from 'node:fs/promises';
+import * as cheerio from 'cheerio';
 
 const SPECIFICATION_URLS = [
-	"https://raw.githubusercontent.com/tc39/ecma262/HEAD/spec.html",
-	"https://cdn.jsdelivr.net/gh/tc39/ecma262/spec.html",
+	'https://raw.githubusercontent.com/tc39/ecma262/HEAD/spec.html',
+	'https://cdn.jsdelivr.net/gh/tc39/ecma262/spec.html',
 ];
-const CACHE_FILE = new URL("../.cache/spec.html", import.meta.url);
-const DATA_FILE = new URL("../globals.json", import.meta.url);
+const CACHE_FILE = new URL('../.cache/spec.html', import.meta.url);
+const DATA_FILE = new URL('../globals.json', import.meta.url);
 
 const getText = async (url) => {
 	const response = await fetch(url);
@@ -24,7 +24,7 @@ const any = async (asyncFunctions) => {
 		}
 	}
 
-	throw new AggregateError(errors, "All failed.");
+	throw new AggregateError(errors, 'All failed.');
 };
 
 const getSpecification = async () => {
@@ -36,7 +36,7 @@ const getSpecification = async () => {
 
 	if (stat) {
 		if (Date.now() - stat.ctimeMs < /* 10 hours */ 10 * 60 * 60 * 1000) {
-			return fs.readFile(CACHE_FILE, "utf8");
+			return fs.readFile(CACHE_FILE, 'utf8');
 		}
 
 		await fs.rm(CACHE_FILE);
@@ -44,7 +44,7 @@ const getSpecification = async () => {
 
 	const text = await any(SPECIFICATION_URLS.map((url) => () => getText(url)));
 
-	await fs.mkdir(new URL("./", CACHE_FILE), { recursive: true });
+	await fs.mkdir(new URL('./', CACHE_FILE), { recursive: true });
 	await fs.writeFile(CACHE_FILE, text);
 
 	return text;
@@ -54,22 +54,22 @@ const getEmuClause = (specification, id) => {
 	const regexp = new RegExp(
 		[
 			// Line break before
-			"(?<=\\n)",
+			'(?<=\\n)',
 			// Indention of the opening tag
-			"(?<indention>\\s*)",
+			'(?<indention>\\s*)',
 			// Opening tag
-			`<emu-clause id="${id.replaceAll("-", "\\-")}".*?>`,
-			"\n",
-			"(?<text>.*?)",
-			"\n",
+			`<emu-clause id='${id.replaceAll('-', '\\-')}'.*?>`,
+			'\n',
+			'(?<text>.*?)',
+			'\n',
 			// Indention of the closing tag
-			"\\k<indention>",
+			'\\k<indention>',
 			// Closing tag
-			"</emu-clause>",
+			'</emu-clause>',
 			// Line break after
-			"(?=\n)",
-		].join(""),
-		"s"
+			'(?=\n)',
+		].join(''),
+		's'
 	);
 
 	const { text } = specification.match(regexp).groups;
@@ -80,7 +80,7 @@ const getEmuClause = (specification, id) => {
 function* getGlobalObjects(specification) {
 	const $ = cheerio.load(specification);
 	for (const element of $(
-		"emu-clause#sec-global-object > emu-clause h1"
+		'emu-clause#sec-global-object > emu-clause h1'
 	)) {
 		const property = $(element).text().trim().split(/\s/)[0];
 		const descriptor = Object.getOwnPropertyDescriptor(globalThis, property);
@@ -90,7 +90,7 @@ function* getGlobalObjects(specification) {
 	}
 
 	// Annex B
-	yield* ["escape", "unescape"].map((property) => ({
+	yield* ['escape', 'unescape'].map((property) => ({
 		property,
 		descriptor: Object.getOwnPropertyDescriptor(globalThis, property),
 	}));
@@ -100,16 +100,16 @@ function* getObjectProperties(specification) {
 	const $ = cheerio.load(specification);
 
 	for (const element of $(
-		"emu-clause#sec-properties-of-the-object-prototype-object > emu-clause > h1"
+		'emu-clause#sec-properties-of-the-object-prototype-object > emu-clause > h1'
 	)) {
 		const text = $(element).text().trim();
-		if (!text.startsWith("Object.prototype.")) {
+		if (!text.startsWith('Object.prototype.')) {
 			continue;
 		}
 
-		const property = text.split(/\s/)[0].slice("Object.prototype.".length);
+		const property = text.split(/\s/)[0].slice('Object.prototype.'.length);
 		// `Object.prototype.{__proto__, ..}`
-		if (property.startsWith("_")) {
+		if (property.startsWith('_')) {
 			continue;
 		}
 
@@ -144,7 +144,7 @@ const globals = JSON.parse(await fs.readFile(DATA_FILE));
 const originalGlobals = Object.keys(globals.builtin);
 globals.builtin = builtinGlobals;
 
-await fs.writeFile(DATA_FILE, JSON.stringify(globals, undefined, "\t") + "\n");
+await fs.writeFile(DATA_FILE, JSON.stringify(globals, undefined, '\t') + '\n');
 
 const added = Object.keys(builtinGlobals).filter(
 	(property) => !originalGlobals.includes(property)
@@ -157,8 +157,8 @@ console.log(`
 ✅ Builtin globals updated.
 
 Added(${added.length}):
-${added.map((property) => ` - ${property}`).join("\n") || "None"}
+${added.map((property) => ` - ${property}`).join('\n') || 'None'}
 
 Removed(${removed.length}):
-${removed.map((property) => ` - ${property}`).join("\n") || "None"}
+${removed.map((property) => ` - ${property}`).join('\n') || 'None'}
 `);
