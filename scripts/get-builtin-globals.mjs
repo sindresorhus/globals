@@ -50,33 +50,6 @@ const getSpecification = async () => {
 	return text;
 };
 
-const getEmuClause = (specification, id) => {
-	const regexp = new RegExp(
-		[
-			// Line break before
-			'(?<=\\n)',
-			// Indention of the opening tag
-			'(?<indention>\\s*)',
-			// Opening tag
-			`<emu-clause id='${id.replaceAll('-', '\\-')}'.*?>`,
-			'\n',
-			'(?<text>.*?)',
-			'\n',
-			// Indention of the closing tag
-			'\\k<indention>',
-			// Closing tag
-			'</emu-clause>',
-			// Line break after
-			'(?=\n)',
-		].join(''),
-		's'
-	);
-
-	const { text } = specification.match(regexp).groups;
-
-	return text;
-};
-
 function* getGlobalObjects(specification) {
 	const $ = cheerio.load(specification);
 	for (const element of $(
