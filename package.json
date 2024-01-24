@@ -15,7 +15,8 @@
 		"node": ">=8"
 	},
 	"scripts": {
-		"test": "xo && ava"
+		"test": "xo && ava",
+		"update-builtin-globals": "node scripts/get-builtin-globals.mjs"
 	},
 	"files": [
 		"index.js",
@@ -37,6 +38,7 @@
 	},
 	"devDependencies": {
 		"ava": "^2.4.0",
+		"cheerio": "^1.0.0-rc.12",
 		"tsd": "^0.14.0",
 		"xo": "^0.36.1"
 	},
