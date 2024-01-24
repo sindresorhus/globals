@@ -15,7 +15,8 @@
 		"node": ">=8"
 	},
 	"scripts": {
-		"test": "xo && ava"
+		"test": "xo && ava",
+		"update-builtin-globals": "node scripts/get-builtin-globals.mjs"
 	},
 	"files": [
 		"index.js",
