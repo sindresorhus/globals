@@ -24,7 +24,7 @@ for (const group in globals) {
 	console.log(`}\n`);
 }
 
-console.log(`export interface globals {`);
+console.log(`export default interface globals {`);
 
 for (const [group, groupType] of Object.entries(groups)) {
 	console.log(`	readonly '${group}': ${groupType};`);

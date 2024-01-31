@@ -2033,7 +2033,7 @@ interface GlobalsDevtools {
 	readonly 'values': false;
 }
 
-export interface globals {
+export default interface globals {
 	readonly 'builtin': GlobalsBuiltin;
 	readonly 'es5': GlobalsEs5;
 	readonly 'es2015': GlobalsEs2015;
