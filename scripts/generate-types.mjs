@@ -25,7 +25,7 @@ for (const group in globals) {
 	output.push(`}\n`);
 }
 
-output.push(`export Globals = {`);
+output.push(`type Globals = {`);
 
 for (const [group, groupType] of Object.entries(groups)) {
 	output.push(`	readonly '${group}': ${groupType};`);
