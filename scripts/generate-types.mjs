@@ -16,7 +16,7 @@ for (const group in globals) {
 	const groupType = getGroupTypeName(group);
 	groups[group] = groupType;
 
-	output.push(`interface ${getGroupTypeName(group)} {`);
+	output.push(`type ${getGroupTypeName(group)} = {`);
 
 	for (const [rule, status] of Object.entries(globals[group])) {
 		output.push(`	readonly '${rule}': ${status};`);
@@ -25,12 +25,14 @@ for (const group in globals) {
 	output.push(`}\n`);
 }
 
-output.push(`export default interface globals {`);
+output.push(`export Globals = {`);
 
 for (const [group, groupType] of Object.entries(groups)) {
 	output.push(`	readonly '${group}': ${groupType};`);
 }
 
-output.push(`}`);
+output.push(`}\n`);
+output.push(`declare const globals: Globals;\n`);
+output.push(`export = globals;\n`);
 
 console.log(output.join('\n'));
