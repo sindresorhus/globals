@@ -33,6 +33,6 @@ for (const [group, groupType] of Object.entries(groups)) {
 
 output.push(`}\n`);
 output.push(`declare const globals: Globals;\n`);
-output.push(`export = globals;\n`);
+output.push(`export = globals;`);
 
 console.log(output.join('\n'));
