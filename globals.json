@@ -1441,20 +1441,20 @@
 		"xtest": false
 	},
 	"vitest": {
+		"afterAll": false,
+		"afterEach": false,
+		"assert": false,
+		"assertType": false,
+		"beforeAll": false,
+		"beforeEach": false,
+		"describe": false,
+		"expect": false,
+		"expectTypeOf": false,
+		"it": false,
 		"suite": false,
 		"test": false,
-		"describe": false,
-		"it": false,
-		"expectTypeOf": false,
-		"assertType": false,
-		"expect": false,
-		"assert": false,
-		"vitest": false,
 		"vi": false,
-		"beforeAll": false,
-		"afterAll": false,
-		"beforeEach": false,
-		"afterEach": false
+		"vitest": false
 	},
 	"qunit": {
 		"asyncTest": false,
