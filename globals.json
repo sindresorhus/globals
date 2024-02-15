@@ -1440,6 +1440,22 @@
 		"xit": false,
 		"xtest": false
 	},
+	"vitest": {
+		"suite": false,
+		"test": false,
+		"describe": false,
+		"it": false,
+		"expectTypeOf": false,
+		"assertType": false,
+		"expect": false,
+		"assert": false,
+		"vitest": false,
+		"vi": false,
+		"beforeAll": false,
+		"afterAll": false,
+		"beforeEach": false,
+		"afterEach": false
+	},
 	"qunit": {
 		"asyncTest": false,
 		"deepEqual": false,
