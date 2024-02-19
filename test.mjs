@@ -56,3 +56,28 @@ test('should not contain builtins', t => {
 		);
 	}
 });
+
+test('es versions', t => {
+	const builtins = new Map(Object.entries(globals.builtin));
+
+	const esVersions = ['es5', 'es2015', 'es2017', 'es2020', 'es2021'];
+	let previousVersion;
+
+	for (const esVersion of esVersions) {
+		const data = globals[esVersion];
+		for (const [key, value] of Object.entries(data)) {
+			t.true(builtins.has(key), `The builtin '${key}' in '${esVersion}' is missing in 'builtin'.`);
+			t.is(value, builtins.get(key), `Value of '${key}' should be the same as 'builtin'.`);
+		}
+
+		if (previousVersion) {
+			t.deepEqual(
+				previousVersion.globals.filter(key => !Object.hasOwn(data, key)),
+				[],
+				`The builtins in '${previousVersion.esVersion}' are missing in '${esVersion}'.`,
+			);
+		}
+
+		previousVersion = {esVersion, globals: Object.keys(globals[esVersion])};
+	}
+});
