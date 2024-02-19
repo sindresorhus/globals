@@ -17,6 +17,7 @@
 	"scripts": {
 		"test": "xo && ava && tsd",
 		"prepare": "npm run --silent update-types",
+		"update-browser-globals": "node scripts/get-browser-globals.mjs",
 		"update-builtin-globals": "node scripts/get-builtin-globals.mjs",
 		"update-types": "node scripts/generate-types.mjs > index.d.ts"
 	},
@@ -38,14 +39,13 @@
 	"devDependencies": {
 		"ava": "^6.1.1",
 		"cheerio": "^1.0.0-rc.12",
+		"outdent": "^0.8.0",
+		"puppeteer": "^22.1.0",
 		"tsd": "^0.30.4",
 		"type-fest": "^4.10.2",
 		"xo": "^0.57.0"
 	},
 	"xo": {
-		"ignores": [
-			"get-browser-globals.js"
-		],
 		"rules": {
 			"unicorn/prefer-module": "off"
 		}
