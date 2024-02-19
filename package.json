@@ -17,6 +17,7 @@
 	"scripts": {
 		"test": "xo && ava && tsd",
 		"prepare": "npm run --silent update-types",
+		"update-browser-globals": "node scripts/get-browser-globals.mjs",
 		"update-builtin-globals": "node scripts/get-builtin-globals.mjs",
 		"update-types": "node scripts/generate-types.mjs > index.d.ts"
 	},
