@@ -141,9 +141,7 @@ const missingProperties = [
 ];
 
 async function downloadBrowser() {
-	const { downloadBrowser } = await import(
-		'puppeteer/internal/node/install.js'
-	);
+	const { downloadBrowser } = await import('puppeteer/internal/node/install.js');
 	const PUPPETEER_SKIP_DOWNLOAD = process.env.PUPPETEER_SKIP_DOWNLOAD;
 	try {
 		process.env.PUPPETEER_SKIP_DOWNLOAD = JSON.stringify(false);
