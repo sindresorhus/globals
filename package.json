@@ -46,9 +46,6 @@
 		"xo": "^0.36.1"
 	},
 	"xo": {
-		"ignores": [
-			"get-browser-globals.js"
-		],
 		"rules": {
 			"node/no-unsupported-features/es-syntax": "off"
 		}
