@@ -1,8 +1,8 @@
 import process from 'node:process';
 import puppeteer from 'puppeteer';
-import {readData, updateGlobals} from './utilities.mjs';
+import {updateGlobals, getGlobalThisProperties, createGlobals} from './utilities.mjs';
 
-const ignorePatterns = [
+const ignore = [
 	/^webkit/i,
 	/^onwebkit/i,
 	'BeforeInstallPromptEvent',
@@ -173,26 +173,16 @@ async function runInBrowser(function_) {
 	return result;
 }
 
-const properties = await runInBrowser(() => {
-	const keys = [];
-
-	for (let object = globalThis; object; object = Object.getPrototypeOf(object)) {
-		keys.push(...Object.getOwnPropertyNames(object));
-	}
-
-	return keys;
-});
-const {builtin: builtinGlobals} = await readData();
-
-const shouldIgnore = name =>
-	Object.hasOwn(builtinGlobals, name)
-	|| ignorePatterns.some(pattern =>
-		typeof pattern === 'string' ? pattern === name : pattern.test(name),
-	);
-const globals = Object.fromEntries(
-	[...properties, ...missingProperties]
-		.filter(name => !shouldIgnore(name))
-		.map(name => [name, name === 'location' || name.startsWith('on')]),
+const properties = await runInBrowser(getGlobalThisProperties);
+const globals = await createGlobals(
+	[
+		...properties,
+		...missingProperties,
+	],
+	{
+		ignore,
+		writeable: name => name === 'location' || name.startsWith('on'),
+	},
 );
 
 await updateGlobals('browser', globals);
