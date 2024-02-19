@@ -38,6 +38,8 @@
 	"devDependencies": {
 		"ava": "^2.4.0",
 		"cheerio": "^1.0.0-rc.12",
+		"outdent": "^0.8.0",
+		"puppeteer": "^22.1.0",
 		"tsd": "^0.30.4",
 		"type-fest": "^4.10.2",
 		"xo": "^0.36.1"

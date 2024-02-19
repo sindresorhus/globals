@@ -1,12 +1,12 @@
 import fs from 'node:fs/promises';
 import * as cheerio from 'cheerio';
+import {updateGlobals} from './utilities.mjs'
 
 const SPECIFICATION_URLS = [
 	'https://raw.githubusercontent.com/tc39/ecma262/HEAD/spec.html',
 	'https://cdn.jsdelivr.net/gh/tc39/ecma262/spec.html',
 ];
 const CACHE_FILE = new URL('../.cache/spec.html', import.meta.url);
-const DATA_FILE = new URL('../globals.json', import.meta.url);
 
 const getText = async (url) => {
 	const response = await fetch(url);
@@ -99,9 +99,6 @@ const builtinGlobals = Object.fromEntries(
 		// `globalThis` is an object
 		...getObjectProperties(specification),
 	]
-		.sort(({ property: propertyA }, { property: propertyB }) =>
-			propertyA.localeCompare(propertyB)
-		)
 		.map(({ property }) => [
 			property,
 			// Most of these except `Infinity`, `NaN`, `undefined` are actually writable/configurable
@@ -109,25 +106,4 @@ const builtinGlobals = Object.fromEntries(
 		])
 );
 
-const globals = JSON.parse(await fs.readFile(DATA_FILE));
-const originalGlobals = Object.keys(globals.builtin);
-globals.builtin = builtinGlobals;
-
-await fs.writeFile(DATA_FILE, JSON.stringify(globals, undefined, '\t') + '\n');
-
-const added = Object.keys(builtinGlobals).filter(
-	(property) => !originalGlobals.includes(property)
-);
-const removed = originalGlobals.filter(
-	(property) => !Object.hasOwn(builtinGlobals)
-);
-
-console.log(`
-✅ Builtin globals updated.
-
-Added(${added.length}):
-${added.map((property) => ` - ${property}`).join('\n') || 'None'}
-
-Removed(${removed.length}):
-${removed.map((property) => ` - ${property}`).join('\n') || 'None'}
-`);
+await updateGlobals('builtin', builtinGlobals)
