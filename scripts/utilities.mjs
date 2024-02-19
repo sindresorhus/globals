@@ -39,4 +39,35 @@ async function updateGlobals(property, updated) {
 	);
 }
 
-export {readData, updateGlobals};
+/** This function runs in browser too, please keep it pure */
+function getGlobalThisProperties() {
+	const keys = [];
+
+	for (let object = globalThis; object; object = Object.getPrototypeOf(object)) {
+		keys.push(...Object.getOwnPropertyNames(object));
+	}
+
+	return keys;
+}
+
+function unique(array) {
+	return [...new Set(array)];
+}
+
+async function createGlobals(globals, {
+	ignore = [],
+	writeable,
+	ignoreBuiltins = true
+}) {
+	if (ignoreBuiltins) {
+		const {builtin: builtinGlobals} = await readData();
+		ignore = [...ignore, ...Object.keys(builtinGlobals)];
+	}
+
+	globals = unique(globals)
+	globals = globals.filter(name => !ignore.some(pattern => typeof pattern === 'string' ? pattern === name : pattern.test(name)))
+
+	return Object.fromEntries(globals.map(name => [name, writeable?.(name) ?? false]))
+}
+
+export {readData, updateGlobals, getGlobalThisProperties, createGlobals};
