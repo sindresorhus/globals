@@ -106,4 +106,4 @@ const builtinGlobals = Object.fromEntries(
 		])
 );
 
-await updateGlobals('builtin', builtinGlobals)
+await updateGlobals('builtin', builtinGlobals);
