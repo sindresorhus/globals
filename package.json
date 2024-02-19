@@ -16,10 +16,12 @@
 	},
 	"scripts": {
 		"test": "xo && ava && tsd",
-		"prepare": "npm run --silent update-types",
-		"update-browser-globals": "node scripts/get-browser-globals.mjs",
-		"update-builtin-globals": "node scripts/get-builtin-globals.mjs",
-		"update-types": "node scripts/generate-types.mjs > index.d.ts"
+		"prepare": "npm run --silent build:types",
+		"update": "run-p \"update:*\"",
+		"update:browser": "node scripts/get-browser-globals.mjs",
+		"update:builtin": "node scripts/get-builtin-globals.mjs",
+		"update:node": "node scripts/get-node-globals.mjs",
+		"build:types": "node scripts/generate-types.mjs > index.d.ts"
 	},
 	"files": [
 		"index.js",
@@ -39,6 +41,7 @@
 	"devDependencies": {
 		"ava": "^6.1.1",
 		"cheerio": "^1.0.0-rc.12",
+		"npm-run-all2": "^6.1.2",
 		"outdent": "^0.8.0",
 		"puppeteer": "^22.1.0",
 		"tsd": "^0.30.4",
