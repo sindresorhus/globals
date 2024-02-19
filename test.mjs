@@ -57,7 +57,6 @@ test('should not contain builtins', t => {
 	}
 });
 
-
 test('es versions', t => {
 	const builtins = new Map(Object.entries(globals.builtin));
 
