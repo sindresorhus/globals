@@ -2,11 +2,23 @@ import fs from 'node:fs/promises';
 import * as cheerio from 'cheerio';
 import {updateGlobals} from './utilities.mjs';
 
+// https://tc39.es/ecma262/
 const SPECIFICATION_URLS = [
 	'https://raw.githubusercontent.com/tc39/ecma262/HEAD/spec.html',
 	'https://cdn.jsdelivr.net/gh/tc39/ecma262/spec.html',
 ];
 const CACHE_FILE = new URL('../.cache/spec.html', import.meta.url);
+
+const additionalGlobals = [
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects#internationalization
+	// https://www.ecma-international.org/publications-and-standards/standards/ecma-402/
+	'Intl',
+
+	// Annex B
+	// https://tc39.es/ecma262/#sec-additional-built-in-properties
+	'escape',
+	'unescape',
+];
 
 const getText = async url => {
 	const response = await fetch(url);
@@ -53,19 +65,13 @@ const getSpecification = async () => {
 
 function * getGlobalObjects(specification) {
 	const $ = cheerio.load(specification);
+
 	for (const element of $('emu-clause#sec-global-object > emu-clause h1')) {
 		const property = $(element).text().trim().split(/\s/)[0];
-		const descriptor = Object.getOwnPropertyDescriptor(globalThis, property);
-		if (descriptor) {
-			yield {property, descriptor};
+		if (Object.hasOwn(globalThis, property)) {
+			yield property;
 		}
 	}
-
-	// Annex B
-	yield * ['escape', 'unescape'].map(property => ({
-		property,
-		descriptor: Object.getOwnPropertyDescriptor(globalThis, property),
-	}));
 }
 
 function * getObjectProperties(specification) {
@@ -83,12 +89,8 @@ function * getObjectProperties(specification) {
 			continue;
 		}
 
-		const descriptor = Object.getOwnPropertyDescriptor(
-			Object.prototype,
-			property,
-		);
-		if (descriptor) {
-			yield {property, descriptor};
+		if (Object.hasOwn(Object.prototype, property)) {
+			yield property;
 		}
 	}
 }
@@ -99,12 +101,9 @@ const builtinGlobals = Object.fromEntries(
 		...getGlobalObjects(specification),
 		// `globalThis` is an object
 		...getObjectProperties(specification),
+		...additionalGlobals,
 	]
-		.map(({property}) => [
-			property,
-			// Most of these except `Infinity`, `NaN`, `undefined` are actually writable/configurable
-			false,
-		]),
+		.map(property => [property, false]),
 );
 
 await updateGlobals('builtin', builtinGlobals);
