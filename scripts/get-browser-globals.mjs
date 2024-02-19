@@ -119,7 +119,7 @@ async function navigateToSecureContext(page) {
 	};
 }
 
-async function runInBrowser(function_, {secure = false} = {}) {
+async function runInBrowser(function_, {secureContext = false} = {}) {
 	await downloadBrowser();
 
 	const browser = await puppeteer.launch();
@@ -127,7 +127,7 @@ async function runInBrowser(function_, {secure = false} = {}) {
 
 	let server;
 	try {
-		if (secure) {
+		if (secureContext) {
 			server = await navigateToSecureContext(page);
 			assert.ok(
 				server.isSecureContext,
@@ -142,7 +142,7 @@ async function runInBrowser(function_, {secure = false} = {}) {
 	}
 }
 
-const properties = await runInBrowser(getGlobalThisProperties, {secure: true});
+const properties = await runInBrowser(getGlobalThisProperties, {secureContext: true});
 const globals = await createGlobals(
 	[
 		...properties,
