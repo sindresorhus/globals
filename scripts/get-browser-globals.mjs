@@ -13,6 +13,11 @@ const ignorePatterns = [
 	'releaseEvents',
 	'SyncManager',
 	/^USB/,
+	/^__/,
+
+	// Window
+	'TEMPORARY',
+	'PERSISTENT',
 
 	// DevTools globals
 	'chrome',
@@ -168,10 +173,15 @@ async function runInBrowser(function_) {
 	return result;
 }
 
-const properties = await runInBrowser(() => [
-	...Object.getOwnPropertyNames(globalThis),
-	...Object.getOwnPropertyNames(globalThis.EventTarget.prototype),
-]);
+const properties = await runInBrowser(() => {
+	const keys = [];
+
+	for (let object = globalThis; object; object = Object.getPrototypeOf(object)) {
+		keys.push(...Object.getOwnPropertyNames(object));
+	}
+
+	return keys;
+});
 const {builtin: builtinGlobals} = await readData();
 
 const shouldIgnore = name =>
