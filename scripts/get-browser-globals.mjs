@@ -164,8 +164,6 @@ async function runInBrowser(function_) {
 
 	try {
 		const page = await browser.newPage();
-		await page.goto('about:blank');
-
 		result = await page.evaluate(function_);
 	} finally {
 		await browser.close();
