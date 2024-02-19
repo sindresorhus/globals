@@ -39,7 +39,7 @@ test('`node` is `nodeBuiltin` with CommonJS arguments', t => {
 	}
 });
 
-test('es versions', (t) => {
+test('es versions', t => {
 	const builtins = new Map(Object.entries(globals.builtin));
 
 	const esVersions = ['es5', 'es2015', 'es2017', 'es2020', 'es2021'];
@@ -56,10 +56,10 @@ test('es versions', (t) => {
 			t.deepEqual(
 				previousVersion.globals.filter(key => !Object.hasOwn(data, key)),
 				[],
-				`The builtins in '${previousVersion.esVersion}' are missing in '${esVersion}'.`
+				`The builtins in '${previousVersion.esVersion}' are missing in '${esVersion}'.`,
 			);
 		}
 
-		previousVersion = {esVersion, globals: Object.keys(globals[esVersion])}
+		previousVersion = {esVersion, globals: Object.keys(globals[esVersion])};
 	}
 });
