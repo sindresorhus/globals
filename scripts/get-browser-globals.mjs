@@ -1,6 +1,13 @@
 import process from 'node:process';
+import http from 'node:http';
+import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';
+<<<<<<< HEAD
 import {updateGlobals, getGlobalThisProperties, createGlobals} from './utilities.mjs';
+=======
+import getPort from 'get-port';
+import {readData, updateGlobals} from './utilities.mjs';
+>>>>>>> 10e478c (Use secure context to get more browser globals)
 
 const ignore = [
 	/^webkit/i,
@@ -59,90 +66,20 @@ const missingProperties = [
 	'ApplicationCacheErrorEvent',
 	'AudioWorkletGlobalScope',
 	'AudioWorkletProcessor',
-	'BatteryManager',
 	'BudgetService',
-	'Cache',
-	'caches',
-	'CacheStorage',
-	'ClipboardItem',
-	'createImageBitmap',
-	'Credential',
-	'CredentialsContainer',
-	'CryptoKey',
 	'defaultstatus',
 	'defaultStatus',
-	'DeviceMotionEvent',
-	'DeviceOrientationEvent',
 	'HTMLContentElement',
 	'HTMLShadowElement',
 	'KeyframeEffectReadOnly',
-	'MediaDeviceInfo',
-	'MediaDevices',
-	'MediaKeyMessageEvent',
-	'MediaKeySession',
-	'MediaKeyStatusMap',
-	'MediaKeySystemAccess',
 	'MediaSettingsRange',
 	'MediaStreamConstraints',
-	'MessagePort',
-	'MIDIAccess',
-	'MIDIConnectionEvent',
-	'MIDIInput',
-	'MIDIInputMap',
-	'MIDIMessageEvent',
-	'MIDIOutput',
-	'MIDIOutputMap',
-	'MIDIPort',
-	'NavigationPreloadManager',
-	'ondevicemotion',
-	'ondeviceorientation',
-	'ondeviceorientationabsolute',
 	'openDatabase',
-	'PaymentAddress',
-	'PaymentRequest',
-	'PaymentResponse',
 	'PhotoCapabilities',
-	'Presentation',
-	'PresentationAvailability',
-	'PresentationConnection',
-	'PresentationConnectionAvailableEvent',
-	'PresentationConnectionCloseEvent',
-	'PresentationConnectionList',
-	'PresentationReceiver',
-	'PresentationRequest',
 	'registerProcessor',
 	'RTCIceGatherer',
 	'RTCRtpContributingSource',
-	'ServiceWorker',
-	'ServiceWorkerContainer',
-	'ServiceWorkerRegistration',
-	'StorageManager',
-	'SubtleCrypto',
 	'SVGDiscardElement',
-	'XRAnchor',
-	'XRBoundedReferenceSpace',
-	'XRCPUDepthInformation',
-	'XRDepthInformation',
-	'XRFrame',
-	'XRInputSource',
-	'XRInputSourceArray',
-	'XRInputSourceEvent',
-	'XRInputSourcesChangeEvent',
-	'XRPose',
-	'XRReferenceSpace',
-	'XRReferenceSpaceEvent',
-	'XRRenderState',
-	'XRRigidTransform',
-	'XRSession',
-	'XRSessionEvent',
-	'XRSpace',
-	'XRSystem',
-	'XRView',
-	'XRViewerPose',
-	'XRViewport',
-	'XRWebGLBinding',
-	'XRWebGLDepthInformation',
-	'XRWebGLLayer',
 ];
 
 async function downloadBrowser() {
@@ -156,24 +93,56 @@ async function downloadBrowser() {
 	}
 }
 
-async function runInBrowser(function_) {
+async function navigateToSecureContext(page) {
+	const port = await getPort();
+	const server = http.createServer((request, response) => {
+		response.statusCode = 200;
+		response.setHeader('Content-Type', 'text/plain');
+		response.end('Hello World\n');
+	});
+
+	// https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts
+	const hostname = '127.0.0.1';
+	server.listen(port, hostname);
+
+	const url = `http://${hostname}:${port}`;
+	await page.goto(url);
+	const isSecureContext = await page.evaluate(() => globalThis.isSecureContext);
+
+	const close = () => new Promise(resolve => {
+		server.close(resolve);
+	});
+
+	return {
+		close,
+		isSecureContext,
+	};
+}
+
+async function runInBrowser(function_, {secure = false} = {}) {
 	await downloadBrowser();
 
 	const browser = await puppeteer.launch();
+	const page = await browser.newPage();
 
-	let result;
-
+	let server;
 	try {
-		const page = await browser.newPage();
-		result = await page.evaluate(function_);
+		if (secure) {
+			server = await navigateToSecureContext(page);
+			assert.ok(
+				server.isSecureContext,
+				'Expected a secure server.',
+			);
+		}
+
+		return await page.evaluate(function_);
 	} finally {
 		await browser.close();
+		await server?.close();
 	}
-
-	return result;
 }
 
-const properties = await runInBrowser(getGlobalThisProperties);
+const properties = await runInBrowser(getGlobalThisProperties, {secure: true});
 const globals = await createGlobals(
 	[
 		...properties,
