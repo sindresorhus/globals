@@ -46,9 +46,6 @@
 		"xo": "^0.57.0"
 	},
 	"xo": {
-		"ignores": [
-			"get-browser-globals.js"
-		],
 		"rules": {
 			"unicorn/prefer-module": "off"
 		}
