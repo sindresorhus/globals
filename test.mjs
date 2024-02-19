@@ -39,6 +39,25 @@ test('`node` is `nodeBuiltin` with CommonJS arguments', t => {
 	}
 });
 
+test('should not contain builtins', t => {
+	const builtins = new Set(Object.keys(globals.builtin));
+
+	for (const [env, envGlobals] of Object.entries(globals)) {
+		if (env === 'builtin' || /^es\d+$/.test(env)) {
+			continue;
+		}
+
+		const keys = Object.keys(envGlobals).filter(key => builtins.has(key));
+
+		t.deepEqual(
+			keys,
+			[],
+			`The \`${env}\` keys should not contain builtins.`,
+		);
+	}
+});
+
+
 test('es versions', t => {
 	const builtins = new Map(Object.entries(globals.builtin));
 
