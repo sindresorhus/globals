@@ -16,11 +16,13 @@
 	},
 	"scripts": {
 		"test": "xo && ava && tsd",
-		"prepare": "npm run --silent build:types",
+		"prepare": "npm run build",
 		"update": "run-p \"update:*\"",
 		"update:browser": "node scripts/get-browser-globals.mjs",
 		"update:builtin": "node scripts/get-builtin-globals.mjs",
 		"update:node": "node scripts/get-node-globals.mjs",
+		"build": "run-p \"build:*\"",
+		"build:data": "node scripts/generate-data.mjs",
 		"build:types": "node scripts/generate-types.mjs > index.d.ts"
 	},
 	"files": [
@@ -50,7 +52,8 @@
 	},
 	"xo": {
 		"rules": {
-			"unicorn/prefer-module": "off"
+			"unicorn/prefer-module": "off",
+			"import/no-anonymous-default-export": "off"
 		}
 	},
 	"tsd": {
