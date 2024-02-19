@@ -36,18 +36,18 @@
 		"environments"
 	],
 	"devDependencies": {
-		"ava": "^2.4.0",
+		"ava": "^6.1.1",
 		"cheerio": "^1.0.0-rc.12",
 		"tsd": "^0.30.4",
 		"type-fest": "^4.10.2",
-		"xo": "^0.36.1"
+		"xo": "^0.57.0"
 	},
 	"xo": {
 		"ignores": [
 			"get-browser-globals.js"
 		],
 		"rules": {
-			"node/no-unsupported-features/es-syntax": "off"
+			"unicorn/prefer-module": "off"
 		}
 	},
 	"tsd": {
