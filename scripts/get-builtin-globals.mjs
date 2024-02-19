@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import * as cheerio from 'cheerio';
-import {updateGlobals} from './utilities.mjs'
+import {updateGlobals} from './utilities.mjs';
 
 const SPECIFICATION_URLS = [
 	'https://raw.githubusercontent.com/tc39/ecma262/HEAD/spec.html',
@@ -100,7 +100,7 @@ const builtinGlobals = Object.fromEntries(
 		// `globalThis` is an object
 		...getObjectProperties(specification),
 	]
-		.map(({ property }) => [
+		.map(({property}) => [
 			property,
 			// Most of these except `Infinity`, `NaN`, `undefined` are actually writable/configurable
 			false,

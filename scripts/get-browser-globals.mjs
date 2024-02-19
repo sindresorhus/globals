@@ -1,6 +1,6 @@
 import process from 'node:process';
 import puppeteer from 'puppeteer';
-import { readData, updateGlobals } from './utilities.mjs';
+import {readData, updateGlobals} from './utilities.mjs';
 
 const ignorePatterns = [
 	/^webkit/i,
@@ -137,14 +137,14 @@ const missingProperties = [
 	'XRViewport',
 	'XRWebGLBinding',
 	'XRWebGLDepthInformation',
-	'XRWebGLLayer'
+	'XRWebGLLayer',
 ];
 
 async function downloadBrowser() {
-	const { downloadBrowser } = await import(
+	const {downloadBrowser} = await import(
 		'puppeteer/internal/node/install.js'
 	);
-	const PUPPETEER_SKIP_DOWNLOAD = process.env.PUPPETEER_SKIP_DOWNLOAD;
+	const {PUPPETEER_SKIP_DOWNLOAD} = process.env;
 	try {
 		process.env.PUPPETEER_SKIP_DOWNLOAD = JSON.stringify(false);
 		await downloadBrowser();
@@ -176,15 +176,15 @@ const properties = await runInBrowser(() => [
 ]);
 const {builtin: builtinGlobals} = await readData();
 
-const shouldIgnore = (name) =>
-	Object.hasOwn(builtinGlobals, name) ||
-	ignorePatterns.some((pattern) =>
+const shouldIgnore = name =>
+	Object.hasOwn(builtinGlobals, name)
+	|| ignorePatterns.some(pattern =>
 		typeof pattern === 'string' ? pattern === name : pattern.test(name),
 	);
 const globals = Object.fromEntries(
 	[...properties, ...missingProperties]
-		.filter((name) => !shouldIgnore(name))
-		.map((name) => [name, name === 'location' || name.startsWith('on')]),
+		.filter(name => !shouldIgnore(name))
+		.map(name => [name, name === 'location' || name.startsWith('on')]),
 );
 
 await updateGlobals('browser', globals);

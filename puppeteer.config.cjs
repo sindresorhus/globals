@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-const path = require('path');
+const path = require('node:path');
 
 // Will download when execute
 module.exports = {
-  skipDownload: true,
+	skipDownload: true,
 };
