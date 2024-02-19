@@ -181,8 +181,8 @@ const globals = await createGlobals(
 	],
 	{
 		ignore,
-		writeable: name => name === 'location' || name.startsWith('on')
-	}
+		writeable: name => name === 'location' || name.startsWith('on'),
+	},
 );
 
 await updateGlobals('browser', globals);

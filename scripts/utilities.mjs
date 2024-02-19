@@ -57,17 +57,19 @@ function unique(array) {
 async function createGlobals(globals, {
 	ignore = [],
 	writeable,
-	ignoreBuiltins = true
+	ignoreBuiltins = true,
 }) {
 	if (ignoreBuiltins) {
 		const {builtin: builtinGlobals} = await readData();
 		ignore = [...ignore, ...Object.keys(builtinGlobals)];
 	}
 
-	globals = unique(globals)
-	globals = globals.filter(name => !ignore.some(pattern => typeof pattern === 'string' ? pattern === name : pattern.test(name)))
+	globals = unique(globals);
+	globals = globals.filter(name => !ignore.some(pattern => typeof pattern === 'string' ? pattern === name : pattern.test(name)));
 
-	return Object.fromEntries(globals.map(name => [name, writeable?.(name) ?? false]))
+	return Object.fromEntries(globals.map(name => [name, writeable?.(name) ?? false]));
 }
 
-export {readData, updateGlobals, getGlobalThisProperties, createGlobals};
+export {
+	readData, updateGlobals, getGlobalThisProperties, createGlobals,
+};
