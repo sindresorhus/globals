@@ -8,16 +8,17 @@ const SPECIFICATION_URLS = [
 ];
 const CACHE_FILE = new URL('../.cache/spec.html', import.meta.url);
 
-const getText = async (url) => {
+const getText = async url => {
 	const response = await fetch(url);
 	const text = await response.text();
 	return text;
 };
 
-const any = async (asyncFunctions) => {
+const any = async asyncFunctions => {
 	const errors = [];
 	for (const function_ of asyncFunctions) {
 		try {
+			// eslint-disable-next-line no-await-in-loop
 			return await function_();
 		} catch (error) {
 			errors.push(error);
@@ -42,32 +43,32 @@ const getSpecification = async () => {
 		await fs.rm(CACHE_FILE);
 	}
 
-	const text = await any(SPECIFICATION_URLS.map((url) => () => getText(url)));
+	const text = await any(SPECIFICATION_URLS.map(url => () => getText(url)));
 
-	await fs.mkdir(new URL('./', CACHE_FILE), { recursive: true });
+	await fs.mkdir(new URL('./', CACHE_FILE), {recursive: true});
 	await fs.writeFile(CACHE_FILE, text);
 
 	return text;
 };
 
-function* getGlobalObjects(specification) {
+function * getGlobalObjects(specification) {
 	const $ = cheerio.load(specification);
 	for (const element of $('emu-clause#sec-global-object > emu-clause h1')) {
 		const property = $(element).text().trim().split(/\s/)[0];
 		const descriptor = Object.getOwnPropertyDescriptor(globalThis, property);
 		if (descriptor) {
-			yield { property, descriptor };
+			yield {property, descriptor};
 		}
 	}
 
 	// Annex B
-	yield* ['escape', 'unescape'].map((property) => ({
+	yield * ['escape', 'unescape'].map(property => ({
 		property,
 		descriptor: Object.getOwnPropertyDescriptor(globalThis, property),
 	}));
 }
 
-function* getObjectProperties(specification) {
+function * getObjectProperties(specification) {
 	const $ = cheerio.load(specification);
 
 	for (const element of $('emu-clause#sec-properties-of-the-object-prototype-object > emu-clause > h1')) {
@@ -84,15 +85,15 @@ function* getObjectProperties(specification) {
 
 		const descriptor = Object.getOwnPropertyDescriptor(
 			Object.prototype,
-			property
+			property,
 		);
 		if (descriptor) {
-			yield { property, descriptor };
+			yield {property, descriptor};
 		}
 	}
 }
 
-let specification = await getSpecification();
+const specification = await getSpecification();
 const builtinGlobals = Object.fromEntries(
 	[
 		...getGlobalObjects(specification),
@@ -103,7 +104,7 @@ const builtinGlobals = Object.fromEntries(
 			property,
 			// Most of these except `Infinity`, `NaN`, `undefined` are actually writable/configurable
 			false,
-		])
+		]),
 );
 
 await updateGlobals('builtin', builtinGlobals);
