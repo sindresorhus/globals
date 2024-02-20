@@ -1,0 +1,26 @@
+name: Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    # “At 00:00 on Sunday.” https://crontab.guru/#0_0_*_*_0
+    - cron: "0 0 * * 0"
+
+jobs:
+  update:
+    if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          check-latest: true
+          node-version: latest
+      - run: npm install
+      - run: npm run update
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: Update
+          branch: automated-update
+          branch-suffix: timestamp
+          title: Update
