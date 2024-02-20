@@ -68,9 +68,7 @@ async function createGlobals(names, {
 }
 
 export {
-
 	updateGlobals,
 	getGlobalThisProperties,
 	createGlobals,
 };
-export {readGlobals} from '../utilities.mjs';
