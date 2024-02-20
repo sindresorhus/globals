@@ -12,6 +12,13 @@ const ignore = [
 	/^webkit/i,
 	/^onwebkit/,
 	'chrome',
+
+	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/BeforeInstallPromptEvent
+	'BeforeInstallPromptEvent',
+	// Deprecated https://developer.mozilla.org/en-US/docs/Web/API/Window/captureEvents
+	'captureEvents',
+	// Deprecated https://developer.mozilla.org/en-US/docs/Web/API/Window/releaseEvents
+	'releaseEvents',
 ];
 
 const missingProperties = [
