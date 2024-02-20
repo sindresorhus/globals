@@ -189,6 +189,7 @@ async function runInWorker(function_) {
 	const page = await browser.newPage();
 
 	let server;
+	let worker;
 	try {
 		server = await navigateToSecureContext(page);
 		assert.ok(
@@ -196,7 +197,7 @@ async function runInWorker(function_) {
 			'Expected a secure server.',
 		);
 
-		const worker = await new Promise(resolve => {
+		worker = await new Promise(resolve => {
 			page.on('workercreated', worker => {
 				resolve(worker);
 			});
@@ -211,6 +212,7 @@ async function runInWorker(function_) {
 
 		return await worker.evaluate(function_);
 	} finally {
+		await worker?.close();
 		await browser.close();
 		await server?.close();
 	}
