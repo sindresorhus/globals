@@ -19,4 +19,4 @@ function mergeGlobals(globalsA, globalsB) {
 	return sortObject({...globalsA, ...globalsB});
 }
 
-export {mergeGlobals};
+export {sortObject, mergeGlobals};
