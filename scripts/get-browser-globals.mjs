@@ -2,12 +2,8 @@ import process from 'node:process';
 import http from 'node:http';
 import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';
-<<<<<<< HEAD
-import {updateGlobals, getGlobalThisProperties, createGlobals} from './utilities.mjs';
-=======
 import getPort from 'get-port';
-import {readData, updateGlobals} from './utilities.mjs';
->>>>>>> 10e478c (Use secure context to get more browser globals)
+import {updateGlobals, getGlobalThisProperties, createGlobals} from './utilities.mjs';
 
 const ignore = [
 	/^webkit/i,
