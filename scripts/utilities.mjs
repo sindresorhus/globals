@@ -20,8 +20,8 @@ const writeGlobals = async (environment, globals) => {
 };
 
 async function updateGlobals({environment, getGlobals, dry, clean}) {
-	const original = await readGlobals(environment, {ignoreNonExits: true});
 	let updated = await getGlobals();
+	const original = await readGlobals(environment, {ignoreNonExits: true});
 
 	if (!clean) {
 		updated = {...original, ...updated};
