@@ -201,7 +201,7 @@ async function runInWebWorker(function_) {
 			page.on('workercreated', worker => {
 				resolve(worker);
 			});
-			// eslint-disable-next-line no-undef -- execute in brower
+			// eslint-disable-next-line no-undef -- execute in broswer
 			page.evaluate(() => new Worker('data:application/javascript,;'));
 		});
 
