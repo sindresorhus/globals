@@ -32,6 +32,8 @@ export default {
 	MessageChannel: false,
 	MessageEvent: false,
 	MessagePort: false,
+	navigator: false,
+	Navigator: false,
 	performance: false,
 	Performance: false,
 	PerformanceEntry: false,
