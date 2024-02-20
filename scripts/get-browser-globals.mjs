@@ -74,31 +74,6 @@ const isWritable = name =>
 	name === 'location'
 	|| name.startsWith('on');
 
-const additionalGlobals = [
-	'AnimationEffectReadOnly',
-	'AnimationEffectTiming',
-	'AnimationEffectTimingReadOnly',
-	'applicationCache',
-	'ApplicationCache',
-	'ApplicationCacheErrorEvent',
-	'AudioWorkletGlobalScope',
-	'AudioWorkletProcessor',
-	'BudgetService',
-	'defaultstatus',
-	'defaultStatus',
-	'HTMLContentElement',
-	'HTMLShadowElement',
-	'KeyframeEffectReadOnly',
-	'MediaSettingsRange',
-	'MediaStreamConstraints',
-	'openDatabase',
-	'PhotoCapabilities',
-	'registerProcessor',
-	'RTCIceGatherer',
-	'RTCRtpContributingSource',
-	'SVGDiscardElement',
-];
-
 async function downloadBrowser({product} = {}) {
 	const {downloadBrowser} = await import('puppeteer/internal/node/install.js');
 	const originalEnv = {...process.env};
@@ -201,7 +176,7 @@ async function runInWebWorker(function_) {
 			page.on('workercreated', worker => {
 				resolve(worker);
 			});
-			// eslint-disable-next-line no-undef -- execute in broswer
+			// eslint-disable-next-line no-undef -- execute in browser
 			page.evaluate(() => new Worker('data:application/javascript,;'));
 		});
 
@@ -226,7 +201,6 @@ async function getBrowserGlobals() {
 		[
 			...chromeGlobals,
 			...firefoxGlobals,
-			...additionalGlobals,
 		],
 		{
 			shouldExclude,
