@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import test from 'ava';
+import {DATA_DIRECTORY, readGlobals} from './utilities.mjs';
 import globals from './index.js';
 
 test('main', t => {
@@ -84,20 +85,15 @@ test('es versions', t => {
 });
 
 test('globals.json', async t => {
-	const DATA_DIRECTORY = new URL('./data/', import.meta.url);
 	const files = await fs.readdir(DATA_DIRECTORY);
 	const environments = files.filter(filename => filename.endsWith('.mjs')).map(filename => filename.slice(0, -4));
 
-	t.deepEqual(
-		environments.sort(),
-		Object.keys(globals).sort(),
+	const jsData = Object.fromEntries(
+		await Promise.all(environments.map(async environment => [environment, await readGlobals(environment)])),
 	);
 
-	for (const environment of environments) {
-		const {default: jsData} = await import(new URL(`${environment}.mjs`, DATA_DIRECTORY))
-		t.deepEqual(
-			jsData,
-			globals[environment],
-		);
-	}
-})
+	t.deepEqual(
+		jsData,
+		globals,
+	);
+});

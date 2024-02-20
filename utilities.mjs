@@ -1,3 +1,24 @@
+const DATA_DIRECTORY = new URL('data/', import.meta.url);
+
+const readGlobals = async (environment, {ignoreNonExits} = {}) => {
+	const file = new URL(`${environment}.mjs`, DATA_DIRECTORY);
+	file.searchParams.set('ts', Date.now());
+
+	let data;
+
+	try {
+		({default: data} = await import(file));
+	} catch (error) {
+		if (ignoreNonExits && error.code === 'ERR_MODULE_NOT_FOUND') {
+			return {};
+		}
+
+		throw error;
+	}
+
+	return data;
+};
+
 const sortObject = object =>
 	Object.fromEntries(
 		Object.entries(object).sort(([propertyA], [propertyB]) =>
@@ -33,8 +54,10 @@ function getIntersectionGlobals(globalsA, globalsB) {
 }
 
 export {
+	DATA_DIRECTORY,
 	unique,
 	sortObject,
 	mergeGlobals,
 	getIntersectionGlobals,
+	readGlobals,
 };
