@@ -33,5 +33,8 @@ function getIntersectionGlobals(globalsA, globalsB) {
 }
 
 export {
-	unique, sortObject, mergeGlobals, getIntersectionGlobals,
+	unique,
+	sortObject,
+	mergeGlobals,
+	getIntersectionGlobals,
 };
