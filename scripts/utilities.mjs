@@ -1,27 +1,11 @@
 import fs from 'node:fs/promises';
 import {outdent} from 'outdent';
-import {unique, sortObject} from '../utilities.mjs';
-
-const DATA_DIRECTORY = new URL('../data/', import.meta.url);
-
-const readGlobals = async (environment, {ignoreNonExits} = {}) => {
-	const file = new URL(`${environment}.mjs`, DATA_DIRECTORY);
-	file.searchParams.set('ts', Date.now());
-
-	let data;
-
-	try {
-		({default: data} = await import(file));
-	} catch (error) {
-		if (ignoreNonExits && error.code === 'ERR_MODULE_NOT_FOUND') {
-			return {};
-		}
-
-		throw error;
-	}
-
-	return data;
-};
+import {
+	DATA_DIRECTORY,
+	unique,
+	sortObject,
+	readGlobals,
+} from '../utilities.mjs';
 
 const writeGlobals = async (environment, globals) => {
 	const file = new URL(`${environment}.mjs`, DATA_DIRECTORY);
@@ -84,7 +68,6 @@ async function createGlobals(names, {
 }
 
 export {
-	readGlobals,
 	updateGlobals,
 	getGlobalThisProperties,
 	createGlobals,

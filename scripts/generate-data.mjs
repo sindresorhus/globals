@@ -1,5 +1,5 @@
 import * as fs from 'node:fs/promises';
-import {readGlobals} from './utilities.mjs';
+import {readGlobals} from '../utilities.mjs';
 
 const DATA_FILE = new URL('../globals.json', import.meta.url);
 
