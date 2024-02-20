@@ -43,7 +43,7 @@ async function run(options) {
 				✅ ${environment} globals updated.
 
 				Added(${added.length}):
-				${added.map(name => ` - ${name}`).join('\n') || 'None'}
+				${added.map(name => ` + ${name}`).join('\n') || 'None'}
 
 				Removed(${removed.length}):
 				${removed.map(name => ` - ${name}`).join('\n') || 'None'}

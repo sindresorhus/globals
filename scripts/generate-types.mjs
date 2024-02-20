@@ -1,8 +1,5 @@
-import fs from 'node:fs/promises';
-
-const DATA_FILE = new URL('../globals.json', import.meta.url);
-
-const globals = JSON.parse(await fs.readFile(DATA_FILE));
+import fs from 'node:fs';
+import globals from '../index.js';
 
 const getGroupTypeName = group => `Globals${group[0].toUpperCase() + group.slice(1).replaceAll('-', '')}`;
 
@@ -33,4 +30,7 @@ for (const [group, groupType] of Object.entries(groups)) {
 
 output.push('}\n', 'declare const globals: Globals;\n', 'export = globals;');
 
-console.log(output.join('\n'));
+fs.writeFileSync(
+	new URL('../index.d.ts', import.meta.url),
+	output.join('\n'),
+);
