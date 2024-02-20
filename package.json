@@ -22,6 +22,7 @@
 		"update:builtin": "node scripts/update.mjs --environment=builtin",
 		"update:nodeBuiltin": "node scripts/update.mjs --environment=nodeBuiltin",
 		"update:worker": "node scripts/update.mjs --environment=worker",
+		"update:shelljs": "node scripts/update.mjs --environment=shelljs",
 		"build": "run-p \"build:*\"",
 		"build:data": "node scripts/generate-data.mjs",
 		"build:types": "node scripts/generate-types.mjs > index.d.ts"
@@ -49,6 +50,7 @@
 		"npm-run-all2": "^6.1.2",
 		"outdent": "^0.8.0",
 		"puppeteer": "^22.1.0",
+		"shelljs": "^0.8.5",
 		"tsd": "^0.30.4",
 		"type-fest": "^4.10.2",
 		"xo": "^0.57.0"
