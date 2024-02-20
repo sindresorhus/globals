@@ -9,7 +9,7 @@ const ignore = [
 	/^__/,
 
 	// Chrome only
-	/^[wW]ebkit[A-Z]/,
+	/^[wW]eb[kK]it[A-Z]/,
 	/^onwebkit/,
 	'chrome',
 
