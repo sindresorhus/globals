@@ -182,7 +182,7 @@ async function runInBrowser(function_, {product, secureContext = false} = {}) {
 	}
 }
 
-async function runInWorker(function_) {
+async function runInWebWorker(function_) {
 	await downloadBrowser();
 
 	const browser = await puppeteer.launch();
@@ -236,8 +236,8 @@ async function getBrowserGlobals() {
 	);
 }
 
-async function getWorkerGlobals() {
-	const properties = await runInWorker(getGlobalThisProperties);
+async function getWebWorkerGlobals() {
+	const properties = await runInWebWorker(getGlobalThisProperties);
 
 	return createGlobals(
 		[
@@ -259,4 +259,4 @@ async function getWorkerGlobals() {
 	);
 }
 
-export {getBrowserGlobals, getWorkerGlobals};
+export {getBrowserGlobals, getWebWorkerGlobals};
