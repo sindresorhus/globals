@@ -5,6 +5,10 @@ const sortObject = object =>
 		),
 	);
 
+function unique(array) {
+	return [...new Set(array)];
+}
+
 function mergeGlobals(globalsA, globalsB) {
 	const existsInA = Object.keys(globalsB).filter(name => Object.hasOwn(globalsA, name));
 	if (existsInA.length > 0) {
@@ -19,4 +23,13 @@ function mergeGlobals(globalsA, globalsB) {
 	return sortObject({...globalsA, ...globalsB});
 }
 
-export {sortObject, mergeGlobals};
+function getIntersectionGlobals(globalsA, globalsB) {
+	return sortObject(
+		Object.fromEntries([
+			...Object.entries(globalsA).filter(([name]) => Object.hasOwn(globalsB, name)),
+			...Object.entries(globalsB).filter(([name]) => Object.hasOwn(globalsA, name)),
+		])
+	);
+}
+
+export {sortObject, mergeGlobals, getIntersectionGlobals};

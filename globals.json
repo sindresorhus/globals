@@ -2176,6 +2176,7 @@
 		"MessageEvent": false,
 		"MessagePort": false,
 		"performance": false,
+		"Performance": false,
 		"PerformanceEntry": false,
 		"PerformanceMark": false,
 		"PerformanceMeasure": false,
