@@ -1,7 +1,10 @@
 import fs from 'node:fs/promises';
 import {outdent} from 'outdent';
 import {
-	DATA_DIRECTORY, unique, sortObject, readGlobals,
+	DATA_DIRECTORY,
+	unique,
+	sortObject,
+	readGlobals,
 } from '../utilities.mjs';
 
 const writeGlobals = async (environment, globals) => {
