@@ -41,11 +41,8 @@
 	"devDependencies": {
 		"ava": "^6.1.1",
 		"cheerio": "^1.0.0-rc.12",
-<<<<<<< HEAD
-		"npm-run-all2": "^6.1.2",
-=======
 		"get-port": "^7.0.0",
->>>>>>> 10e478c (Use secure context to get more browser globals)
+		"npm-run-all2": "^6.1.2",
 		"outdent": "^0.8.0",
 		"puppeteer": "^22.1.0",
 		"tsd": "^0.30.4",
