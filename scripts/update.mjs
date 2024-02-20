@@ -3,7 +3,7 @@ import {outdent} from 'outdent';
 import {execaCommand} from 'execa';
 import getBuiltinGlobals from './get-builtin-globals.mjs';
 import getNodeBuiltinGlobals from './get-node-builtin-globals.mjs';
-import getBrowserGlobals from './get-browser-globals.mjs';
+import {getBrowserGlobals, getWebWorkerGlobals} from './get-browser-globals.mjs';
 import {updateGlobals} from './utilities.mjs';
 
 const ALL_JOBS = [
@@ -18,6 +18,10 @@ const ALL_JOBS = [
 	{
 		environment: 'browser',
 		getGlobals: getBrowserGlobals,
+	},
+	{
+		environment: 'worker',
+		getGlobals: getWebWorkerGlobals,
 	},
 ];
 

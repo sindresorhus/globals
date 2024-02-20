@@ -101,7 +101,7 @@ const additionalGlobals = [
 
 async function downloadBrowser({product} = {}) {
 	const {downloadBrowser} = await import('puppeteer/internal/node/install.js');
-	const {PUPPETEER_SKIP_DOWNLOAD, PUPPETEER_PRODUCT} = process.env;
+	const originalEnv = {...process.env};
 	try {
 		process.env.PUPPETEER_SKIP_DOWNLOAD = JSON.stringify(false);
 		if (product) {
@@ -110,17 +110,35 @@ async function downloadBrowser({product} = {}) {
 
 		await downloadBrowser();
 	} finally {
-		process.env.PUPPETEER_SKIP_DOWNLOAD = PUPPETEER_SKIP_DOWNLOAD;
-		process.env.PUPPETEER_PRODUCT = PUPPETEER_PRODUCT;
+		for (const env of ['PUPPETEER_SKIP_DOWNLOAD', 'PUPPETEER_PRODUCT']) {
+			if (Object.hasOwn(originalEnv)) {
+				process.env[env] = originalEnv[env];
+			} else {
+				delete process.env[env];
+			}
+		}
 	}
 }
 
-async function navigateToSecureContext(page) {
+async function navigateToSecureContext(page, responses) {
 	const port = await getPort();
 	const server = http.createServer((request, response) => {
-		response.statusCode = 200;
-		response.setHeader('Content-Type', 'text/plain');
-		response.end('Hello World\n');
+		const {url} = request;
+		if (responses?.[url]) {
+			const {contentType, content} = responses[url];
+			response.statusCode = 200;
+			response.setHeader('Content-Type', contentType);
+			response.end(content);
+			return;
+		}
+
+		if (url === '/') {
+			response.statusCode = 200;
+			response.setHeader('Content-Type', 'text/html');
+			response.end('');
+		}
+
+		response.statusCode = 404;
 	});
 
 	// https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts
@@ -164,7 +182,43 @@ async function runInBrowser(function_, {product, secureContext = false} = {}) {
 	}
 }
 
-export default async function getBrowserGlobals() {
+async function runInWebWorker(function_) {
+	await downloadBrowser();
+
+	const browser = await puppeteer.launch();
+	const page = await browser.newPage();
+
+	let server;
+	let worker;
+	try {
+		server = await navigateToSecureContext(page);
+		assert.ok(
+			server.isSecureContext,
+			'Expected a secure server.',
+		);
+
+		worker = await new Promise(resolve => {
+			page.on('workercreated', worker => {
+				resolve(worker);
+			});
+			// eslint-disable-next-line no-undef -- execute in broswer
+			page.evaluate(() => new Worker('data:application/javascript,;'));
+		});
+
+		assert.ok(
+			await worker.evaluate(() => globalThis.isSecureContext),
+			'Expected a secure worker.',
+		);
+
+		return await worker.evaluate(function_);
+	} finally {
+		await worker?.close();
+		await browser.close();
+		await server?.close();
+	}
+}
+
+async function getBrowserGlobals() {
 	const chromeGlobals = await runInBrowser(getGlobalThisProperties, {secureContext: true});
 	const firefoxGlobals = await runInBrowser(getGlobalThisProperties, {product: 'firefox', secureContext: true});
 
@@ -182,3 +236,27 @@ export default async function getBrowserGlobals() {
 	);
 }
 
+async function getWebWorkerGlobals() {
+	const properties = await runInWebWorker(getGlobalThisProperties);
+
+	return createGlobals(
+		[
+			...properties,
+			// Existing data, need confirm
+			'applicationCache',
+			'onclose',
+			'onconnect',
+			'onoffline',
+			'ononline',
+			'PerformanceNavigation',
+			'PerformanceTiming',
+		],
+		{
+			shouldExclude: name => name.startsWith('__'),
+			isWritable: name => name.startsWith('on'),
+			excludeBuiltins: true,
+		},
+	);
+}
+
+export {getBrowserGlobals, getWebWorkerGlobals};
