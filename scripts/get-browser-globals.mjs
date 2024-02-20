@@ -240,17 +240,7 @@ async function getWebWorkerGlobals() {
 	const properties = await runInWebWorker(getGlobalThisProperties);
 
 	return createGlobals(
-		[
-			...properties,
-			// Existing data, need confirm
-			'applicationCache',
-			'onclose',
-			'onconnect',
-			'onoffline',
-			'ononline',
-			'PerformanceNavigation',
-			'PerformanceTiming',
-		],
+		properties,
 		{
 			shouldExclude: name => name.startsWith('__'),
 			isWritable: name => name.startsWith('on'),
