@@ -8,8 +8,8 @@ import {updateGlobals, getGlobalThisProperties, createGlobals} from './utilities
 const ignore = [
 	/^__/,
 
-	// Chrome
-	/^webkit/i,
+	// Chrome only
+	/^webkit[A-Z]/i,
 	/^onwebkit/,
 	'chrome',
 
