@@ -2052,6 +2052,7 @@
 		"exit": false,
 		"find": false,
 		"grep": false,
+		"head": false,
 		"ln": false,
 		"ls": false,
 		"mkdir": false,
@@ -2062,10 +2063,13 @@
 		"rm": false,
 		"sed": false,
 		"set": false,
-		"target": false,
+		"ShellString": false,
+		"sort": false,
+		"tail": false,
 		"tempdir": false,
 		"test": false,
 		"touch": false,
+		"uniq": false,
 		"which": false
 	},
 	"prototypejs": {
