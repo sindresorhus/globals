@@ -35,25 +35,21 @@ const writeGlobals = async (environment, globals) => {
 	await fs.writeFile(file, code + '\n');
 };
 
-async function updateGlobals(environment, updated) {
+async function updateGlobals({environment, getGlobals, dry}) {
+	const updated = await getGlobals();
 	const original = await readGlobals(environment, {ignoreNonExits: true});
 
-	await writeGlobals(environment, updated);
+	if (!dry) {
+		await writeGlobals(environment, updated);
+	}
 
 	const added = Object.keys(updated).filter(property => !Object.hasOwn(original, property));
 	const removed = Object.keys(original).filter(property => !Object.hasOwn(updated, property));
 
-	console.log(
-		outdent`
-			✅ ${environment} globals updated.
-
-			Added(${added.length}):
-			${added.map(property => ` - ${property}`).join('\n') || 'None'}
-
-			Removed(${removed.length}):
-			${removed.map(property => ` - ${property}`).join('\n') || 'None'}
-		`,
-	);
+	return {
+		added,
+		removed,
+	};
 }
 
 /** This function runs in browser too, please keep it pure */
@@ -67,20 +63,24 @@ function getGlobalThisProperties() {
 	return keys;
 }
 
-async function createGlobals(globals, {
-	ignore = [],
-	writeable,
-	ignoreBuiltins = true,
+async function createGlobals(names, {
+	shouldExclude,
+	isWritable = () => false,
+	excludeBuiltins,
 }) {
-	if (ignoreBuiltins) {
-		const builtinGlobals = await readGlobals('builtin');
-		ignore = [...ignore, ...Object.keys(builtinGlobals)];
+	names = unique(names);
+
+	if (shouldExclude) {
+		names = names.filter(name => !shouldExclude(name));
 	}
 
-	globals = unique(globals);
-	globals = globals.filter(name => !ignore.some(pattern => typeof pattern === 'string' ? pattern === name : pattern.test(name)));
+	if (excludeBuiltins) {
+		const builtinGlobals = new Set(Object.keys(await readGlobals('builtin')));
 
-	return Object.fromEntries(globals.map(name => [name, writeable?.(name) ?? false]));
+		names = names.filter(name => !builtinGlobals.has(name));
+	}
+
+	return Object.fromEntries(names.map(name => [name, isWritable(name) ?? false]));
 }
 
 export {

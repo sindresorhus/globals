@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import * as cheerio from 'cheerio';
-import {updateGlobals} from './utilities.mjs';
 
 // https://tc39.es/ecma262/
 const SPECIFICATION_URLS = [
@@ -95,15 +94,15 @@ function * getObjectProperties(specification) {
 	}
 }
 
-const specification = await getSpecification();
-const builtinGlobals = Object.fromEntries(
-	[
-		...getGlobalObjects(specification),
-		// `globalThis` is an object
-		...getObjectProperties(specification),
-		...additionalGlobals,
-	]
-		.map(property => [property, false]),
-);
+export default async function getBuiltinGlobals() {
+	const specification = await getSpecification();
 
-await updateGlobals('builtin', builtinGlobals);
+	return Object.fromEntries(
+		[
+			...getGlobalObjects(specification),
+			// `globalThis` is an object
+			...getObjectProperties(specification),
+			...additionalGlobals,
+		].map(name => [name, false]),
+	);
+}
