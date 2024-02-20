@@ -11,13 +11,10 @@ const ignore = [
 	// Chrome only
 	'chrome',
 	/^(?:webkit|WebKit)[A-Z]/,
+	/^onwebkit/,
+
+	// Firefox only
 	/^onmoz/,
-
-	// Window
-	'TEMPORARY',
-	'PERSISTENT',
-
-	// Firefox
 	'netscape',
 	'CSSMozDocumentRule',
 	'mozInnerScreenX',
@@ -102,10 +99,11 @@ async function downloadBrowser({product} = {}) {
 		if (product) {
 			process.env.PUPPETEER_PRODUCT = product;
 		}
+
 		await downloadBrowser();
 	} finally {
 		process.env.PUPPETEER_SKIP_DOWNLOAD = PUPPETEER_SKIP_DOWNLOAD;
-		process.env.PUPPETEER_PRODUCT = PUPPETEER_PRODUCT
+		process.env.PUPPETEER_PRODUCT = PUPPETEER_PRODUCT;
 	}
 }
 

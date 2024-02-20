@@ -444,11 +444,8 @@
 		"CanvasPattern": false,
 		"CanvasRenderingContext2D": false,
 		"CaptureController": false,
-<<<<<<< HEAD
-		"CDATASection": false,
-=======
 		"CaretPosition": false,
->>>>>>> 7e43c8a (Add globals from firefox)
+		"CDATASection": false,
 		"ChannelMergerNode": false,
 		"ChannelSplitterNode": false,
 		"CharacterBoundsUpdateEvent": false,
@@ -898,7 +895,6 @@
 		"NodeIterator": false,
 		"NodeList": false,
 		"Notification": false,
-		"NotifyPaintEvent": false,
 		"OfflineAudioCompletionEvent": false,
 		"OfflineAudioContext": false,
 		"offscreenBuffering": false,
