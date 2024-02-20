@@ -101,7 +101,7 @@ const additionalGlobals = [
 
 async function downloadBrowser({product} = {}) {
 	const {downloadBrowser} = await import('puppeteer/internal/node/install.js');
-	const {PUPPETEER_SKIP_DOWNLOAD, PUPPETEER_PRODUCT} = process.env;
+	const originalEnv = {...process.env};
 	try {
 		process.env.PUPPETEER_SKIP_DOWNLOAD = JSON.stringify(false);
 		if (product) {
@@ -110,8 +110,13 @@ async function downloadBrowser({product} = {}) {
 
 		await downloadBrowser();
 	} finally {
-		process.env.PUPPETEER_SKIP_DOWNLOAD = PUPPETEER_SKIP_DOWNLOAD;
-		process.env.PUPPETEER_PRODUCT = PUPPETEER_PRODUCT;
+		for (const env of ['PUPPETEER_SKIP_DOWNLOAD', 'PUPPETEER_PRODUCT']) {
+			if (Object.hasOwn(originalEnv)) {
+				process.env[env] = originalEnv[env];
+			} else {
+				delete process.env[env];
+			}
+		}
 	}
 }
 
