@@ -28,8 +28,10 @@ function getIntersectionGlobals(globalsA, globalsB) {
 		Object.fromEntries([
 			...Object.entries(globalsA).filter(([name]) => Object.hasOwn(globalsB, name)),
 			...Object.entries(globalsB).filter(([name]) => Object.hasOwn(globalsA, name)),
-		])
+		]),
 	);
 }
 
-export {sortObject, mergeGlobals, getIntersectionGlobals};
+export {
+	unique, sortObject, mergeGlobals, getIntersectionGlobals,
+};

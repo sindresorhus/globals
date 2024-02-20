@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import {outdent} from 'outdent';
-import {sortObject} from '../utilities.mjs';
+import {unique, sortObject} from '../utilities.mjs';
 
 const DATA_DIRECTORY = new URL('../data/', import.meta.url);
 
