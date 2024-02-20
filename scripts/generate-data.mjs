@@ -46,7 +46,7 @@ const environments = [
 
 async function getData() {
 	const data = await Promise.all(
-		environments.map(async environment => ({environment, globals: readGlobals(environment)})),
+		environments.map(async environment => ({environment, globals: await readGlobals(environment)})),
 	);
 
 	return Object.fromEntries(data.map(({environment, globals}) => [environment, globals]));
