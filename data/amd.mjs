@@ -1,4 +1,4 @@
 export default {
-	"define": false,
-	"require": false
-}
+	define: false,
+	require: false,
+};

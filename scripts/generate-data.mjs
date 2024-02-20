@@ -1,4 +1,3 @@
-import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
 import {readGlobals} from './utilities.mjs';
 
@@ -45,23 +44,9 @@ const environments = [
 	'devtools',
 ];
 
-async function getEnvironmentData(filename) {
-
-	const data = Object.fromEntries(
-		globals.map(
-			property => typeof property === 'string' ? [property, false] : [property.name, property.writable],
-		),
-	);
-
-	return {
-		environmentName,
-		globals: data,
-	};
-}
-
 async function getData() {
 	const data = await Promise.all(
-		environments.map(async environment => ({environment, globals: readGlobals(environment)}))
+		environments.map(async environment => ({environment, globals: readGlobals(environment)})),
 	);
 
 	return Object.fromEntries(data.map(({environment, globals}) => [environment, globals]));

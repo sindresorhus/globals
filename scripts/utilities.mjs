@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import {outdent} from 'outdent';
 
-const DATA_FILE = new URL('../globals.json', import.meta.url);
 const DATA_DIRECTORY = new URL('../data/', import.meta.url);
 
 const sortObject = object =>
@@ -10,12 +9,6 @@ const sortObject = object =>
 			propertyA.localeCompare(propertyB),
 		),
 	);
-
-const readData = async () => JSON.parse(await fs.readFile(DATA_FILE));
-
-const writeData = async data => {
-	await fs.writeFile(DATA_FILE, JSON.stringify(data, undefined, '\t') + '\n');
-};
 
 const readGlobals = async (environment, {ignoreNonExits} = {}) => {
 	const file = new URL(`${environment}.mjs`, DATA_DIRECTORY);
@@ -90,7 +83,7 @@ async function createGlobals(globals, {
 	ignoreBuiltins = true,
 }) {
 	if (ignoreBuiltins) {
-		const {builtin: builtinGlobals} = await readData();
+		const builtinGlobals = await readGlobals('builtin');
 		ignore = [...ignore, ...Object.keys(builtinGlobals)];
 	}
 
@@ -102,7 +95,6 @@ async function createGlobals(globals, {
 
 export {
 	readGlobals,
-	readData,
 	updateGlobals,
 	getGlobalThisProperties,
 	createGlobals,

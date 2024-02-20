@@ -1,4 +1,4 @@
 export default {
-	"$": false,
-	"jQuery": false
-}
+	$: false,
+	jQuery: false,
+};

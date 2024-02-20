@@ -1,6 +1,6 @@
 export default {
-	"exports": true,
-	"global": false,
-	"module": false,
-	"require": false
-}
+	exports: true,
+	global: false,
+	module: false,
+	require: false,
+};

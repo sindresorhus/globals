@@ -52,9 +52,28 @@
 	},
 	"xo": {
 		"rules": {
-			"unicorn/prefer-module": "off",
-			"import/no-anonymous-default-export": "off"
-		}
+			"unicorn/prefer-module": "off"
+		},
+		"overrides": [
+			{
+				"files": [
+					"data/*.mjs"
+				],
+				"rules": {
+					"import/no-anonymous-default-export": "off",
+					"camelcase": "off",
+					"unicorn/filename-case": [
+						"error",
+						{
+							"cases": {
+								"camelCase": true,
+								"kebabCase": true
+							}
+						}
+					]
+				}
+			}
+		]
 	},
 	"tsd": {
 		"compilerOptions": {

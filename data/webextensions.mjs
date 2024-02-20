@@ -1,5 +1,5 @@
 export default {
-	"browser": false,
-	"chrome": false,
-	"opr": false
-}
+	browser: false,
+	chrome: false,
+	opr: false,
+};
