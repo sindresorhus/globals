@@ -134,10 +134,14 @@ async function navigateToSecureContext(page, responses) {
 	};
 }
 
-async function runInBrowser(function_, {product, secureContext = false} = {}) {
+async function runInBrowser(function_, {
+	product,
+	secureContext = false,
+	flags = [],
+} = {}) {
 	await downloadBrowser({product});
 
-	const browser = await puppeteer.launch({product});
+	const browser = await puppeteer.launch({product, args: flags});
 	const page = await browser.newPage();
 
 	let server;
@@ -157,10 +161,12 @@ async function runInBrowser(function_, {product, secureContext = false} = {}) {
 	}
 }
 
-async function runInWebWorker(function_) {
+async function runInWebWorker(function_, {
+	flags = [],
+} = {}) {
 	await downloadBrowser();
 
-	const browser = await puppeteer.launch();
+	const browser = await puppeteer.launch({args: flags});
 	const page = await browser.newPage();
 
 	let server;
@@ -194,7 +200,10 @@ async function runInWebWorker(function_) {
 }
 
 async function getBrowserGlobals() {
-	const chromeGlobals = await runInBrowser(getGlobalThisProperties, {secureContext: true});
+	const chromeGlobals = await runInBrowser(getGlobalThisProperties, {
+		secureContext: true,
+		flags: ['--enable-experimental-web-platform-features'],
+	});
 	const firefoxGlobals = await runInBrowser(getGlobalThisProperties, {product: 'firefox', secureContext: true});
 
 	return createGlobals(
@@ -211,7 +220,9 @@ async function getBrowserGlobals() {
 }
 
 async function getWebWorkerGlobals() {
-	const properties = await runInWebWorker(getGlobalThisProperties);
+	const properties = await runInWebWorker(getGlobalThisProperties, {
+		flags: ['--enable-experimental-web-platform-features'],
+	});
 
 	return createGlobals(
 		properties,
