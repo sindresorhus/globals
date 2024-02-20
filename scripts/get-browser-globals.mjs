@@ -6,51 +6,12 @@ import getPort from 'get-port';
 import {updateGlobals, getGlobalThisProperties, createGlobals} from './utilities.mjs';
 
 const ignore = [
-	/^webkit/i,
-	/^onwebkit/i,
-	'BeforeInstallPromptEvent',
-	/^Bluetooth/,
-	'CDATASection',
-	'captureEvents',
-	'InputDeviceCapabilities',
-	'releaseEvents',
-	'SyncManager',
-	/^USB/,
 	/^__/,
 
-	// Window
-	'TEMPORARY',
-	'PERSISTENT',
-
-	// DevTools globals
+	// Chrome
+	/^webkit/i,
+	/^onwebkit/,
 	'chrome',
-	'$_',
-	'$0',
-	'$1',
-	'$2',
-	'$3',
-	'$4',
-	'$',
-	'$$',
-	'$x',
-	'clear',
-	'copy',
-	'debug',
-	'dir',
-	'dirxml',
-	'getEventListeners',
-	'inspect',
-	'keys',
-	'monitor',
-	'monitorEvents',
-	'profile',
-	'profileEnd',
-	'queryObjects',
-	'table',
-	'undebug',
-	'unmonitor',
-	'unmonitorEvents',
-	'values',
 ];
 
 const missingProperties = [
