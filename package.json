@@ -17,10 +17,10 @@
 	"scripts": {
 		"test": "xo && ava && tsd",
 		"prepare": "npm run build",
-		"update": "run-p \"update:*\" && npm run build && xo --fix",
-		"update:browser": "node scripts/get-browser-globals.mjs",
-		"update:builtin": "node scripts/get-builtin-globals.mjs",
-		"update:node": "node scripts/get-node-globals.mjs",
+		"update": "node scripts/update.mjs",
+		"update:browser": "node scripts/update.mjs --environment=browser",
+		"update:builtin": "node scripts/update.mjs --environment=builtin",
+		"update:nodeBuiltin": "node scripts/update.mjs --environment=nodeBuiltin",
 		"build": "run-p \"build:*\"",
 		"build:data": "node scripts/generate-data.mjs",
 		"build:types": "node scripts/generate-types.mjs > index.d.ts"
@@ -43,6 +43,7 @@
 	"devDependencies": {
 		"ava": "^6.1.1",
 		"cheerio": "^1.0.0-rc.12",
+		"execa": "^8.0.1",
 		"get-port": "^7.0.0",
 		"npm-run-all2": "^6.1.2",
 		"outdent": "^0.8.0",

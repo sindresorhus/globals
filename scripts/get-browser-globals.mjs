@@ -3,18 +3,13 @@ import http from 'node:http';
 import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';
 import getPort from 'get-port';
-import {updateGlobals, getGlobalThisProperties, createGlobals} from './utilities.mjs';
+import {getGlobalThisProperties, createGlobals} from './utilities.mjs';
 
-const ignore = [
-	/^__/,
-
+const ignoredGlobals = new Set([
 	// Chrome only
 	'chrome',
-	/^(?:webkit|WebKit)[A-Z]/,
-	/^onwebkit/,
 
 	// Firefox only
-	/^onmoz/,
 	'netscape',
 	'CSSMozDocumentRule',
 	'mozInnerScreenX',
@@ -64,9 +59,22 @@ const ignore = [
 	'setResizable',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/updateCommands
 	'updateCommands',
-];
+]);
 
-const missingProperties = [
+const shouldExclude = name =>
+	name.startsWith('__')
+	// Chrome only
+	|| /^(?:webkit|WebKit)[A-Z]/.test(name)
+	|| name.startsWith('onwebkit')
+	// Firefox only
+	|| name.startsWith('onmoz')
+	|| ignoredGlobals.has(name);
+
+const isWritable = name =>
+	name === 'location'
+	|| name.startsWith('on');
+
+const additionalGlobals = [
 	'AnimationEffectReadOnly',
 	'AnimationEffectTiming',
 	'AnimationEffectTimingReadOnly',
@@ -156,18 +164,21 @@ async function runInBrowser(function_, {product, secureContext = false} = {}) {
 	}
 }
 
-const chromeGlobals = await runInBrowser(getGlobalThisProperties, {secureContext: true});
-const firefoxGlobals = await runInBrowser(getGlobalThisProperties, {product: 'firefox', secureContext: true});
-const globals = await createGlobals(
-	[
-		...chromeGlobals,
-		...firefoxGlobals,
-		...missingProperties,
-	],
-	{
-		ignore,
-		writeable: name => name === 'location' || name.startsWith('on'),
-	},
-);
+export default async function getBrowserGlobals() {
+	const chromeGlobals = await runInBrowser(getGlobalThisProperties, {secureContext: true});
+	const firefoxGlobals = await runInBrowser(getGlobalThisProperties, {product: 'firefox', secureContext: true});
 
-await updateGlobals('browser', globals);
+	return createGlobals(
+		[
+			...chromeGlobals,
+			...firefoxGlobals,
+			...additionalGlobals,
+		],
+		{
+			shouldExclude,
+			isWritable,
+			excludeBuiltins: true,
+		},
+	);
+}
+
