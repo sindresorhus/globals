@@ -43,6 +43,7 @@
 	"devDependencies": {
 		"ava": "^6.1.1",
 		"cheerio": "^1.0.0-rc.12",
+		"get-port": "^7.0.0",
 		"npm-run-all2": "^6.1.2",
 		"outdent": "^0.8.0",
 		"puppeteer": "^22.1.0",
