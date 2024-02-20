@@ -36,19 +36,34 @@ async function run(options) {
 			removed,
 		}
 		// eslint-disable-next-line no-await-in-loop
-		= await updateGlobals({environment, getGlobals, dry: options.dry});
+		= await updateGlobals({
+			environment,
+			getGlobals,
+			dry: options.dry,
+			clean: options.clean,
+		});
 
-		console.log(
-			outdent`
-				✅ ${environment} globals updated.
+		console.log(`✅ ${environment} globals updated.`);
 
-				Added(${added.length}):
-				${added.map(name => ` - ${name}`).join('\n') || 'None'}
+		if (added.length > 0) {
+			console.log();
+			console.log(
+				outdent`
+					Added(${removed.length}):
+					${added.map(name => ` + ${name}`).join('\n')}
+				`,
+			);
+		}
 
-				Removed(${removed.length}):
-				${removed.map(name => ` - ${name}`).join('\n') || 'None'}
-			`,
-		);
+		if (removed.length > 0) {
+			console.log();
+			console.log(
+				outdent`
+					Removed(${removed.length}):
+					${removed.map(name => ` - ${name}`).join('\n')}
+				`,
+			);
+		}
 	}
 
 	if (!options.dry) {
@@ -70,6 +85,10 @@ const {
 			type: 'string',
 		},
 		dry: {
+			type: 'boolean',
+			default: false,
+		},
+		clean: {
 			type: 'boolean',
 			default: false,
 		},
