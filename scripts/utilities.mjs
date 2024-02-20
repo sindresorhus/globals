@@ -1,14 +1,8 @@
 import fs from 'node:fs/promises';
 import {outdent} from 'outdent';
+import {unique, sortObject} from '../utilities.mjs';
 
 const DATA_DIRECTORY = new URL('../data/', import.meta.url);
-
-const sortObject = object =>
-	Object.fromEntries(
-		Object.entries(object).sort(([propertyA], [propertyB]) =>
-			propertyA.localeCompare(propertyB),
-		),
-	);
 
 const readGlobals = async (environment, {ignoreNonExits} = {}) => {
 	const file = new URL(`${environment}.mjs`, DATA_DIRECTORY);
@@ -71,10 +65,6 @@ function getGlobalThisProperties() {
 	}
 
 	return keys;
-}
-
-function unique(array) {
-	return [...new Set(array)];
 }
 
 async function createGlobals(globals, {
