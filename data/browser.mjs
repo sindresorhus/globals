@@ -515,6 +515,7 @@ export default {
 	NodeIterator: false,
 	NodeList: false,
 	Notification: false,
+	NotifyPaintEvent: false,
 	OfflineAudioCompletionEvent: false,
 	OfflineAudioContext: false,
 	offscreenBuffering: false,
