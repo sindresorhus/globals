@@ -19,15 +19,15 @@ const writeGlobals = async (environment, globals) => {
 	await fs.writeFile(file, code + '\n');
 };
 
-async function updateGlobals({environment, getGlobals, dry, clean}) {
+async function updateGlobals({environment, getGlobals, dryRun, incremental}) {
 	let updated = await getGlobals();
 	const original = await readGlobals(environment, {ignoreNonExits: true});
 
-	if (!clean) {
+	if (incremental) {
 		updated = {...original, ...updated};
 	}
 
-	if (!dry) {
+	if (!dryRun) {
 		await writeGlobals(environment, updated);
 	}
 

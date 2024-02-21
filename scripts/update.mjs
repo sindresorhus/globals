@@ -5,6 +5,7 @@ import getBuiltinGlobals from './get-builtin-globals.mjs';
 import getNodeBuiltinGlobals from './get-node-builtin-globals.mjs';
 import {getBrowserGlobals, getWebWorkerGlobals} from './get-browser-globals.mjs';
 import getShelljsGlobals from './get-shelljs-globals.mjs';
+import getJestGlobals from './get-jest-globals.mjs';
 import {updateGlobals} from './utilities.mjs';
 
 const ALL_JOBS = [
@@ -27,6 +28,12 @@ const ALL_JOBS = [
 	{
 		environment: 'shelljs',
 		getGlobals: getShelljsGlobals,
+		incremental: false,
+	},
+	{
+		environment: 'jest',
+		getGlobals: getJestGlobals,
+		incremental: false,
 	},
 ];
 
@@ -35,7 +42,7 @@ async function run(options) {
 		? ALL_JOBS.filter(job => job.environment === options.environment)
 		: ALL_JOBS;
 
-	for (const {environment, getGlobals} of jobs) {
+	for (const {environment, getGlobals, incremental = false} of jobs) {
 		const {
 			added,
 			removed,
@@ -44,8 +51,8 @@ async function run(options) {
 		= await updateGlobals({
 			environment,
 			getGlobals,
-			dry: options.dry,
-			clean: options.clean,
+			dryRun: options.dry,
+			incremental: incremental ?? !options.clean,
 		});
 
 		console.log(`✅ ${environment} globals updated.`);
@@ -54,7 +61,7 @@ async function run(options) {
 			console.log();
 			console.log(
 				outdent`
-					Added(${removed.length}):
+					Added(${added.length}):
 					${added.map(name => ` + ${name}`).join('\n')}
 				`,
 			);
