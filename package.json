@@ -23,8 +23,8 @@
 		"update:nodeBuiltin": "node scripts/update.mjs --environment=nodeBuiltin",
 		"update:worker": "node scripts/update.mjs --environment=worker",
 		"update:shelljs": "node scripts/update.mjs --environment=shelljs",
+		"update:jest": "node scripts/update.mjs --environment=jest",
 		"build": "run-s build:data build:types",
-		"build": "run-p \"build:*\"",
 		"build:data": "node scripts/generate-data.mjs",
 		"build:types": "node scripts/generate-types.mjs"
 	},
@@ -46,6 +46,7 @@
 	"devDependencies": {
 		"ava": "^6.1.1",
 		"cheerio": "^1.0.0-rc.12",
+		"eslint-plugin-jest": "^27.9.0",
 		"execa": "^8.0.1",
 		"get-port": "^7.0.0",
 		"npm-run-all2": "^6.1.2",
