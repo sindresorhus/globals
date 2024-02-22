@@ -25,20 +25,6 @@ const getText = async url => {
 	return text;
 };
 
-const any = async asyncFunctions => {
-	const errors = [];
-	for (const function_ of asyncFunctions) {
-		try {
-			// eslint-disable-next-line no-await-in-loop
-			return await function_();
-		} catch (error) {
-			errors.push(error);
-		}
-	}
-
-	throw new AggregateError(errors, 'All failed.');
-};
-
 const getSpecification = async () => {
 	let stat;
 
@@ -54,7 +40,7 @@ const getSpecification = async () => {
 		await fs.rm(CACHE_FILE);
 	}
 
-	const text = await any(SPECIFICATION_URLS.map(url => () => getText(url)));
+	const text = await Promise.any(SPECIFICATION_URLS.map(url => getText(url)));
 
 	await fs.mkdir(new URL('./', CACHE_FILE), {recursive: true});
 	await fs.writeFile(CACHE_FILE, text);
@@ -73,35 +59,12 @@ function * getGlobalObjects(specification) {
 	}
 }
 
-function * getObjectProperties(specification) {
-	const $ = cheerio.load(specification);
-
-	for (const element of $('emu-clause#sec-properties-of-the-object-prototype-object > emu-clause > h1')) {
-		const text = $(element).text().trim();
-		if (!text.startsWith('Object.prototype.')) {
-			continue;
-		}
-
-		const property = text.split(/\s/)[0].slice('Object.prototype.'.length);
-		// `Object.prototype.{__proto__, ..}`
-		if (property.startsWith('_')) {
-			continue;
-		}
-
-		if (Object.hasOwn(Object.prototype, property)) {
-			yield property;
-		}
-	}
-}
-
 export default async function getBuiltinGlobals() {
 	const specification = await getSpecification();
 
 	return Object.fromEntries(
 		[
 			...getGlobalObjects(specification),
-			// `globalThis` is an object
-			...getObjectProperties(specification),
 			...additionalGlobals,
 		].map(name => [name, false]),
 	);

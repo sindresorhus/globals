@@ -12,6 +12,7 @@ const ALL_JOBS = [
 	{
 		environment: 'builtin',
 		getGlobals: getBuiltinGlobals,
+		incremental: false,
 	},
 	{
 		environment: 'nodeBuiltin',
@@ -42,7 +43,7 @@ async function run(options) {
 		? ALL_JOBS.filter(job => job.environment === options.environment)
 		: ALL_JOBS;
 
-	for (const {environment, getGlobals, incremental = false} of jobs) {
+	for (const {environment, getGlobals, incremental} of jobs) {
 		const {
 			added,
 			removed,
