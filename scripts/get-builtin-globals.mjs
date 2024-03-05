@@ -25,20 +25,6 @@ const getText = async url => {
 	return text;
 };
 
-const any = async asyncFunctions => {
-	const errors = [];
-	for (const function_ of asyncFunctions) {
-		try {
-			// eslint-disable-next-line no-await-in-loop
-			return await function_();
-		} catch (error) {
-			errors.push(error);
-		}
-	}
-
-	throw new AggregateError(errors, 'All failed.');
-};
-
 const getSpecification = async () => {
 	let stat;
 
@@ -54,7 +40,7 @@ const getSpecification = async () => {
 		await fs.rm(CACHE_FILE);
 	}
 
-	const text = await any(SPECIFICATION_URLS.map(url => () => getText(url)));
+	const text = await Promise.any(SPECIFICATION_URLS.map(url => getText(url)));
 
 	await fs.mkdir(new URL('./', CACHE_FILE), {recursive: true});
 	await fs.writeFile(CACHE_FILE, text);
