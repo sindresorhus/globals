@@ -44,11 +44,15 @@ async function updateGlobals({environment, getGlobals, dryRun, incremental}) {
 function getGlobalThisProperties() {
 	const keys = [];
 
-	for (let object = globalThis; object; object = Object.getPrototypeOf(object)) {
+	for (
+		let object = globalThis;
+		object && object !== Object.prototype;
+		object = Object.getPrototypeOf(object)
+	) {
 		keys.push(...Object.getOwnPropertyNames(object));
 	}
 
-	return keys;
+	return keys.filter(key => key !== 'constructor');
 }
 
 async function createGlobals(names, {

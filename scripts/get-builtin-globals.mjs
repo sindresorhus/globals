@@ -59,35 +59,12 @@ function * getGlobalObjects(specification) {
 	}
 }
 
-function * getObjectProperties(specification) {
-	const $ = cheerio.load(specification);
-
-	for (const element of $('emu-clause#sec-properties-of-the-object-prototype-object > emu-clause > h1')) {
-		const text = $(element).text().trim();
-		if (!text.startsWith('Object.prototype.')) {
-			continue;
-		}
-
-		const property = text.split(/\s/)[0].slice('Object.prototype.'.length);
-		// `Object.prototype.{__proto__, ..}`
-		if (property.startsWith('_')) {
-			continue;
-		}
-
-		if (Object.hasOwn(Object.prototype, property)) {
-			yield property;
-		}
-	}
-}
-
 export default async function getBuiltinGlobals() {
 	const specification = await getSpecification();
 
 	return Object.fromEntries(
 		[
 			...getGlobalObjects(specification),
-			// `globalThis` is an object
-			...getObjectProperties(specification),
 			...additionalGlobals,
 		].map(name => [name, false]),
 	);
