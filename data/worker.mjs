@@ -269,6 +269,8 @@ export default {
 	webkitResolveLocalFileSystemSyncURL: false,
 	webkitResolveLocalFileSystemURL: false,
 	WebSocket: false,
+	WebSocketError: false,
+	WebSocketStream: false,
 	WebTransport: false,
 	WebTransportBidirectionalStream: false,
 	WebTransportDatagramDuplexStream: false,
