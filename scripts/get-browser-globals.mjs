@@ -177,11 +177,13 @@ async function runInAudioWorklet(function_) {
 	`;
 
 	return runInBrowser(async workletCode => {
+		// eslint-disable-next-line no-undef -- execute in browser
 		const context = new AudioContext();
 		const workletUrl = URL.createObjectURL(new Blob([workletCode], {type: 'application/javascript'}));
 		await context.audioWorklet.addModule(workletUrl);
 		URL.revokeObjectURL(workletUrl);
 		return new Promise(resolve => {
+			// eslint-disable-next-line no-undef -- execute in browser
 			const node = new AudioWorkletNode(context, 'execute-processor');
 			node.port.onmessage = ({data}) => {
 				resolve(data);
