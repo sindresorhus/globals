@@ -3,6 +3,7 @@ import http from 'node:http';
 import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';
 import getPort from 'get-port';
+import {outdent} from 'outdent';
 import {getGlobalThisProperties, createGlobals} from './utilities.mjs';
 
 const ignoredGlobals = new Set([
@@ -134,7 +135,11 @@ async function navigateToSecureContext(page, responses) {
 	};
 }
 
-async function runInBrowser(function_, {product, secureContext = false} = {}) {
+async function runInBrowser(function_, {
+	product,
+	secureContext = false,
+	arguments: arguments_ = [],
+} = {}) {
 	await downloadBrowser({product});
 
 	const browser = await puppeteer.launch({product});
@@ -150,11 +155,42 @@ async function runInBrowser(function_, {product, secureContext = false} = {}) {
 			);
 		}
 
-		return await page.evaluate(function_);
+		return await page.evaluate(function_, arguments_);
 	} finally {
 		await browser.close();
 		await server?.close();
 	}
+}
+
+async function runInAudioWorklet(function_) {
+	const workletCode = outdent`
+		registerProcessor('execute-processor', class extends AudioWorkletProcessor {
+			constructor() {
+				super();
+
+				this.port.postMessage(${function_}());
+			}
+			process() {
+				return true;
+			}
+		});
+	`;
+
+	return runInBrowser(async workletCode => {
+		const context = new AudioContext();
+		const workletUrl = URL.createObjectURL(new Blob([workletCode], {type: 'application/javascript'}));
+		await context.audioWorklet.addModule(workletUrl);
+		URL.revokeObjectURL(workletUrl);
+		return new Promise(resolve => {
+			const node = new AudioWorkletNode(context, 'execute-processor');
+			node.port.onmessage = ({data}) => {
+				resolve(data);
+			};
+		});
+	}, {
+		secureContext: true,
+		arguments: [workletCode],
+	});
 }
 
 async function runInWebWorker(function_) {
@@ -196,11 +232,13 @@ async function runInWebWorker(function_) {
 async function getBrowserGlobals() {
 	const chromeGlobals = await runInBrowser(getGlobalThisProperties, {secureContext: true});
 	const firefoxGlobals = await runInBrowser(getGlobalThisProperties, {product: 'firefox', secureContext: true});
+	const audioWorkletGlobals = await runInAudioWorklet(getGlobalThisProperties);
 
 	return createGlobals(
 		[
 			...chromeGlobals,
 			...firefoxGlobals,
+			...audioWorkletGlobals,
 		],
 		{
 			shouldExclude,
