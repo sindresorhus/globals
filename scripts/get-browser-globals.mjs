@@ -185,6 +185,7 @@ async function runInAudioWorklet(function_) {
 		return new Promise(resolve => {
 			// eslint-disable-next-line no-undef -- execute in browser
 			const node = new AudioWorkletNode(context, 'execute-processor');
+			// eslint-disable-next-line unicorn/prefer-add-event-listener -- not working
 			node.port.onmessage = ({data}) => {
 				resolve(data);
 			};
