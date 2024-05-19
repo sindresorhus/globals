@@ -171,6 +171,8 @@ export default {
 	PermissionStatus: false,
 	PERSISTENT: false,
 	postMessage: false,
+	PressureObserver: false,
+	PressureRecord: false,
 	ProgressEvent: false,
 	PromiseRejectionEvent: false,
 	PushManager: false,
