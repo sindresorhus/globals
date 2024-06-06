@@ -1,7 +1,7 @@
 import {mergeGlobals} from '../utilities.mjs';
-import es2015Globals from './es2015.mjs';
+import es2016Globals from './es2016.mjs';
 
-export default mergeGlobals(es2015Globals, {
+export default mergeGlobals(es2016Globals, {
 	Atomics: false,
 	SharedArrayBuffer: false,
 });
