@@ -1,50 +1,14 @@
 import * as fs from 'node:fs/promises';
+import path from 'node:path';
 import {readGlobals} from '../utilities.mjs';
 
 const DATA_FILE = new URL('../globals.json', import.meta.url);
-
-// List this to make sure we won't break `globals.json`
-// use `fs.readdir` later
-const environments = [
-	'builtin',
-	'es5',
-	'es2015',
-	'es2017',
-	'es2020',
-	'es2021',
-	'browser',
-	'worker',
-	'node',
-	'nodeBuiltin',
-	'commonjs',
-	'amd',
-	'mocha',
-	'jasmine',
-	'jest',
-	'qunit',
-	'phantomjs',
-	'couch',
-	'rhino',
-	'nashorn',
-	'wsh',
-	'jquery',
-	'yui',
-	'shelljs',
-	'prototypejs',
-	'meteor',
-	'mongo',
-	'applescript',
-	'serviceworker',
-	'atomtest',
-	'embertest',
-	'protractor',
-	'shared-node-browser',
-	'webextensions',
-	'greasemonkey',
-	'devtools',
-];
+const DATA_DIRECTORY = new URL('../data/', import.meta.url);
 
 async function getData() {
+	const files = await fs.readdir(DATA_DIRECTORY);
+	const environments = files.map(file => path.basename(file, '.mjs'))
+		.sort((a, b) => a.localeCompare(b))
 	const data = await Promise.all(
 		environments.map(async environment => ({environment, globals: await readGlobals(environment)})),
 	);
