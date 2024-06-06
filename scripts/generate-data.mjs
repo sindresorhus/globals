@@ -8,7 +8,7 @@ const DATA_DIRECTORY = new URL('../data/', import.meta.url);
 async function getData() {
 	const files = await fs.readdir(DATA_DIRECTORY);
 	const environments = files.map(file => path.basename(file, '.mjs'))
-		.sort((a, b) => a.localeCompare(b))
+		.sort((a, b) => a.localeCompare(b));
 	const data = await Promise.all(
 		environments.map(async environment => ({environment, globals: await readGlobals(environment)})),
 	);
