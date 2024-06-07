@@ -82,6 +82,9 @@ test('es versions', t => {
 
 		previousVersion = {esVersion, globals: Object.keys(globals[esVersion])};
 	}
+
+	const latestVersion = esVersions.at(-1);
+	t.deepEqual(globals[latestVersion], globals.builtin, `'${latestVersion}' should be the same as 'builtin'.`);
 });
 
 test('globals.json', async t => {
