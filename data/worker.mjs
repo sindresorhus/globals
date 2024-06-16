@@ -254,6 +254,7 @@ export default {
 	WebGLBuffer: false,
 	WebGLContextEvent: false,
 	WebGLFramebuffer: false,
+	WebGLObject: false,
 	WebGLProgram: false,
 	WebGLQuery: false,
 	WebGLRenderbuffer: false,
