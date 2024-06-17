@@ -1204,6 +1204,11 @@
 		"WeakRef": false,
 		"WeakSet": false
 	},
+	"chai": {
+		"assert": true,
+		"expect": true,
+		"should": true
+	},
 	"commonjs": {
 		"exports": true,
 		"global": false,
