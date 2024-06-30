@@ -247,6 +247,7 @@ export default {
 	FileSystemHandle: false,
 	FileSystemWritableFileStream: false,
 	find: false,
+	Float16Array: false,
 	focus: false,
 	FocusEvent: false,
 	FontData: false,
