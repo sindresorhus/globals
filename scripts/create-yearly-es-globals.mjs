@@ -13,8 +13,8 @@ fs.writeFileSync(
 	workflowFile,
 	fs.readFileSync(workflowFile, 'utf8')
 		.replaceAll(
-			`title: Add \`es${year + 1}\` globals`,
-			`title: Add \`es${year + 2}\` globals`,
+			`Add \`es${year + 1}\` globals`,
+			`Add \`es${year + 2}\` globals`,
 		),
 );
 
