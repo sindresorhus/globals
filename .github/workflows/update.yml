@@ -23,4 +23,4 @@ jobs:
           commit-message: Update
           branch: automated-update
           branch-suffix: timestamp
-          title: Update
+          title: Update globals
