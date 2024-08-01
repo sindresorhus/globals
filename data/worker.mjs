@@ -5,6 +5,7 @@ export default {
 	AbortController: false,
 	AbortSignal: false,
 	addEventListener: false,
+	ai: false,
 	atob: false,
 	AudioData: false,
 	AudioDecoder: false,
