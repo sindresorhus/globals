@@ -3,4 +3,5 @@
 // Will download when execute
 module.exports = {
 	skipDownload: true,
+	version: 'latest'
 };
