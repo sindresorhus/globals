@@ -80,13 +80,22 @@ async function downloadBrowser({product} = {}) {
 	const originalEnv = {...process.env};
 	try {
 		process.env.PUPPETEER_SKIP_DOWNLOAD = JSON.stringify(false);
+		process.env.PUPPETEER_CHROME_SKIP_DOWNLOAD = JSON.stringify(false);
+		process.env.PUPPETEER_CHROME_HEADLESS_SHELL_SKIP_DOWNLOAD = JSON.stringify(false);
+		process.env.PUPPETEER_FIREFOX_SKIP_DOWNLOAD = JSON.stringify(false);
 		if (product) {
 			process.env.PUPPETEER_PRODUCT = product;
 		}
 
 		await downloadBrowsers();
 	} finally {
-		for (const env of ['PUPPETEER_SKIP_DOWNLOAD', 'PUPPETEER_PRODUCT']) {
+		for (const env of [
+			'PUPPETEER_PRODUCT',
+			'PUPPETEER_SKIP_DOWNLOAD',
+			'PUPPETEER_CHROME_SKIP_DOWNLOAD',
+			'PUPPETEER_CHROME_HEADLESS_SHELL_SKIP_DOWNLOAD',
+			'PUPPETEER_FIREFOX_SKIP_DOWNLOAD',
+		]) {
 			if (Object.hasOwn(originalEnv)) {
 				process.env[env] = originalEnv[env];
 			} else {
