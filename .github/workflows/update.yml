@@ -26,6 +26,7 @@ jobs:
   update-on-windows:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
     runs-on: windows-latest
+    needs: [update-on-macos]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -46,6 +47,7 @@ jobs:
   update-on-linux:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
     runs-on: ubuntu-latest
+    needs: [update-on-windows]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
