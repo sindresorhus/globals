@@ -7,7 +7,7 @@ on:
     - cron: "0 0 1 * *"
 
 jobs:
-  update:
+  update-on-macos:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
     runs-on: macos-latest
     steps:
@@ -18,9 +18,50 @@ jobs:
           node-version: latest
       - run: npm install
       - run: npm run update
+      - uses: actions/upload-artifact@v4
+        with:
+          name: data
+          path: data
+
+  update-on-windows:
+    if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          check-latest: true
+          node-version: latest
+      - run: npm install
+      - uses: actions/download-artifact@v4
+        with:
+          name: data
+          path: data
+      - run: npm run update
+      - uses: actions/upload-artifact@v4
+        with:
+          name: data
+          path: data
+
+  update-on-linux:
+    if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          check-latest: true
+          node-version: latest
+      - run: npm install
+      - uses: actions/download-artifact@v4
+        with:
+          name: data
+          path: data
+      - run: npm run update
       - uses: peter-evans/create-pull-request@v7
         with:
           commit-message: Update globals
           branch: automated-update
           branch-suffix: timestamp
           title: Update globals
+
