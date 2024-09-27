@@ -4,15 +4,16 @@
 module.exports = {
 	skipDownload: true,
 	chrome: {
-		version: 'latest',
+		// Bug? `latest` version can't be launched
+		// version: 'latest',
 		skipDownload: false,
 	},
 	'chrome-headless-shell': {
-		version: 'latest',
+		// version: 'latest',
 		skipDownload: false,
 	},
 	firefox: {
-		version: 'latest',
+		// version: 'latest',
 		skipDownload: false,
 	},
 };
