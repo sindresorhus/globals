@@ -1,4 +1,4 @@
-import * as util from 'node:util';
+import {parseArgs} from 'node:util';
 import {outdent} from 'outdent';
 import {execaCommand} from 'execa';
 import getBuiltinGlobals from './get-builtin-globals.mjs';
@@ -92,7 +92,7 @@ async function run(options) {
 
 const {
 	values: options,
-} = util.parseArgs({
+} = parseArgs({
 	options: {
 		environment: {
 			type: 'string',
