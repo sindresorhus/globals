@@ -69,4 +69,3 @@ jobs:
           branch: automated-update
           branch-suffix: timestamp
           title: Update globals
-
