@@ -22,6 +22,7 @@ jobs:
         with:
           name: data
           path: data
+          if-no-files-found: error
 
   update-on-windows:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
@@ -43,6 +44,8 @@ jobs:
         with:
           name: data
           path: data
+          if-no-files-found: error
+          overwrite: true
 
   update-on-linux:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
