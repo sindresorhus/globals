@@ -1,4 +1,4 @@
-import util from 'node:util';
+import * as util from 'node:util';
 import {outdent} from 'outdent';
 import {execaCommand} from 'execa';
 import getBuiltinGlobals from './get-builtin-globals.mjs';
