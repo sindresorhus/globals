@@ -76,7 +76,7 @@ const isWritable = name =>
 	|| name.startsWith('on');
 
 async function downloadBrowser({product} = {}) {
-	const {downloadBrowser} = await import('puppeteer/internal/node/install.js');
+	const {downloadBrowsers} = await import('puppeteer/internal/node/install.js');
 	const originalEnv = {...process.env};
 	try {
 		process.env.PUPPETEER_SKIP_DOWNLOAD = JSON.stringify(false);
@@ -84,9 +84,12 @@ async function downloadBrowser({product} = {}) {
 			process.env.PUPPETEER_PRODUCT = product;
 		}
 
-		await downloadBrowser();
+		await downloadBrowsers();
 	} finally {
-		for (const env of ['PUPPETEER_SKIP_DOWNLOAD', 'PUPPETEER_PRODUCT']) {
+		for (const env of [
+			'PUPPETEER_PRODUCT',
+			'PUPPETEER_SKIP_DOWNLOAD',
+		]) {
 			if (Object.hasOwn(originalEnv)) {
 				process.env[env] = originalEnv[env];
 			} else {
