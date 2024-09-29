@@ -6,6 +6,10 @@ on:
     # “At 00:00 on day-of-month 1 in July.” https://crontab.guru/#0_0_1_7_*
     - cron: "0 0 1 7 *"
 
+permissions:
+  pull-requests: write
+  contents: write
+
 jobs:
   update:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
