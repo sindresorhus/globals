@@ -6,6 +6,10 @@ on:
     # “At 00:00 on day-of-month 1.” https://crontab.guru/#0_0_1_*_*
     - cron: "0 0 1 * *"
 
+permissions:
+  pull-requests: write
+  contents: write
+
 jobs:
   update-on-macos:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
