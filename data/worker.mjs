@@ -13,6 +13,7 @@ export default {
 	BackgroundFetchManager: false,
 	BackgroundFetchRecord: false,
 	BackgroundFetchRegistration: false,
+	BarcodeDetector: false,
 	Blob: false,
 	BroadcastChannel: false,
 	btoa: false,
