@@ -62,7 +62,10 @@ test('should not contain builtins', t => {
 test('es versions', t => {
 	const builtins = new Map(Object.entries(globals.builtin));
 
-	const esVersions = ['es5', ...Array.from({length: 2024 - 2015 + 1}, (_, index) => `es${2015 + index}`)];
+	const esVersions = Object.keys(globals)
+		.filter(key => /^es(?:3|5|\d{4})$/.test(key))
+		.sort((versionA, versionB) => Number(versionA.slice(2)) - Number(versionB.slice(2)));
+
 	let previousVersion;
 
 	for (const esVersion of esVersions) {
