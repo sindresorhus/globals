@@ -32,6 +32,7 @@ export default {
 	Intl: false,
 	isFinite: false,
 	isNaN: false,
+	Iterator: false,
 	JSON: false,
 	Map: false,
 	Math: false,
