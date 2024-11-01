@@ -13,6 +13,7 @@ export default {
 	clearImmediate: false,
 	clearInterval: false,
 	clearTimeout: false,
+	CloseEvent: false,
 	CompressionStream: false,
 	console: false,
 	CountQueuingStrategy: false,

@@ -144,6 +144,7 @@ export default {
 	CSSMatrixComponent: false,
 	CSSMediaRule: false,
 	CSSNamespaceRule: false,
+	CSSNestedDeclarations: false,
 	CSSNumericArray: false,
 	CSSNumericValue: false,
 	CSSPageDescriptors: false,

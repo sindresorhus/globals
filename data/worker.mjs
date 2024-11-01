@@ -193,6 +193,7 @@ export default {
 	Request: false,
 	requestAnimationFrame: false,
 	Response: false,
+	RTCDataChannel: false,
 	RTCEncodedAudioFrame: false,
 	RTCEncodedVideoFrame: false,
 	scheduler: false,
