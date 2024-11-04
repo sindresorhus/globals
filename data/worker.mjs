@@ -133,7 +133,6 @@ export default {
 	importScripts: false,
 	indexedDB: false,
 	isSecureContext: false,
-	Iterator: false,
 	location: false,
 	Lock: false,
 	LockManager: false,
