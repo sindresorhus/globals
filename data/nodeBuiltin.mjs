@@ -30,7 +30,6 @@ export default {
 	FormData: false,
 	global: false,
 	Headers: false,
-	Iterator: false,
 	MessageChannel: false,
 	MessageEvent: false,
 	MessagePort: false,

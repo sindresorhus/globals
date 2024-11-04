@@ -445,7 +445,6 @@ export default {
 	IntersectionObserver: false,
 	IntersectionObserverEntry: false,
 	isSecureContext: false,
-	Iterator: false,
 	Keyboard: false,
 	KeyboardEvent: false,
 	KeyboardLayoutMap: false,
