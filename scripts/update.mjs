@@ -7,6 +7,7 @@ import {getBrowserGlobals, getWebWorkerGlobals} from './get-browser-globals.mjs'
 import getShelljsGlobals from './get-shelljs-globals.mjs';
 import getJestGlobals from './get-jest-globals.mjs';
 import {updateGlobals} from './utilities.mjs';
+import getVitestGlobals from './get-vitest-globals.mjs';
 
 const ALL_JOBS = [
 	{
@@ -34,6 +35,11 @@ const ALL_JOBS = [
 	{
 		environment: 'jest',
 		getGlobals: getJestGlobals,
+		incremental: false,
+	},
+	{
+		environment: 'vitest',
+		getGlobals: getVitestGlobals,
 		incremental: false,
 	},
 ];
