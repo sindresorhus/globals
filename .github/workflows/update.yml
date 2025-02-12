@@ -66,7 +66,8 @@ jobs:
         with:
           name: data
           path: data
-      - run: echo -e "\nexport CHROME_DEVEL_SANDBOX=/opt/google/chrome/chrome-sandbox" >> ~/.bashrc
+      # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+      - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - run: npm run update
       - uses: peter-evans/create-pull-request@v7
         with:
