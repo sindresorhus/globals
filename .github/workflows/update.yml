@@ -55,9 +55,6 @@ jobs:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
     runs-on: ubuntu-latest
     needs: [update-on-windows]
-    env:
-      # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
-      CHROME_DEVEL_SANDBOX: "/opt/google/chrome/chrome-sandbox"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -70,6 +67,9 @@ jobs:
           name: data
           path: data
       - run: npm run update
+        env:
+          # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+          CHROME_DEVEL_SANDBOX: /usr/local/sbin/chrome-devel-sandbox
       - uses: peter-evans/create-pull-request@v7
         with:
           commit-message: Update globals
