@@ -66,10 +66,8 @@ jobs:
         with:
           name: data
           path: data
+      - run: echo -e "\nexport CHROME_DEVEL_SANDBOX=/opt/google/chrome/chrome-sandbox" >> ~/.bashrc
       - run: npm run update
-        env:
-          # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
-          CHROME_DEVEL_SANDBOX: /usr/local/sbin/chrome-devel-sandbox
       - uses: peter-evans/create-pull-request@v7
         with:
           commit-message: Update globals
