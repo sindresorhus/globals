@@ -8,6 +8,7 @@ export default {
 	assertType: false,
 	beforeAll: false,
 	beforeEach: false,
+	chai: false,
 	describe: false,
 	expect: false,
 	expectTypeOf: false,
