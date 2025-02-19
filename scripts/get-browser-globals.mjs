@@ -171,7 +171,7 @@ async function runInBrowser(function_, {
 			);
 		}
 
-		return await page.evaluate(function_, arguments_);
+		return await page.evaluate(function_, ...arguments_);
 	} finally {
 		await browser.close();
 		await server?.close();
@@ -248,9 +248,9 @@ async function runInWebWorker(function_) {
 	}
 }
 
-async function runInServiceWorker(function_) {
+async function runInServiceWorker(function_, {product}) {
 	const executeCommandMark = 'get-globals';
-	const workerUrl = `/service-worker.js?${Date.now()}`;
+	const workerUrl = '/service-worker.js';
 	const workerCode = outdent`
 		self.onmessage = ({data, source}) => {
 			if (data !== '${executeCommandMark}') {
@@ -261,7 +261,7 @@ async function runInServiceWorker(function_) {
 		};
 	`;
 
-	const result = await runInBrowser(async ([workerUrl, executeCommandMark]) => {
+	const result = await runInBrowser(async (workerUrl, executeCommandMark) => {
 		// eslint-disable-next-line no-undef -- execute in browser
 		const {navigator} = window;
 		const registration = await navigator.serviceWorker.register(`${workerUrl}`);
@@ -276,6 +276,7 @@ async function runInServiceWorker(function_) {
 		});
 	}, {
 		secureContext: true,
+		product,
 		arguments: [workerUrl, executeCommandMark],
 		server: {
 			responses: {
@@ -323,10 +324,14 @@ async function getWebWorkerGlobals() {
 }
 
 async function getServiceWorkerGlobals() {
-	const properties = await runInServiceWorker(getGlobalThisProperties);
+	const chromeGlobals = await runInServiceWorker(getGlobalThisProperties, {product: 'chrome'});
+	const firefoxGlobals = await runInServiceWorker(getGlobalThisProperties, {product: 'firefox'});
 
 	return createGlobals(
-		properties,
+		[
+			...chromeGlobals,
+			...firefoxGlobals,
+		],
 		{
 			shouldExclude: name => name.startsWith('__'),
 			isWritable: name => name.startsWith('on'),
