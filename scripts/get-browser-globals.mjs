@@ -75,21 +75,30 @@ const isWritable = name =>
 	name === 'location'
 	|| name.startsWith('on');
 
+const puppeteerBrowsers = [
+	'chrome',
+	'chrome-headless-shell',
+	'firefox',
+];
+
 async function downloadBrowser({product} = {}) {
 	const {downloadBrowsers} = await import('puppeteer/internal/node/install.js');
 	const originalEnv = {...process.env};
-	try {
-		process.env.PUPPETEER_SKIP_DOWNLOAD = JSON.stringify(false);
-		if (product) {
-			process.env.PUPPETEER_PRODUCT = product;
-		}
 
+	const envOverrides = {
+		PUPPETEER_SKIP_DOWNLOAD: JSON.stringify(false),
+		...Object.fromEntries(puppeteerBrowsers.map(browser => [
+			`PUPPETEER_${browser.replaceAll('-', '_').toUpperCase()}_SKIP_DOWNLOAD`,
+			JSON.stringify(browser !== product),
+		])),
+	};
+
+	Object.assign(process.env, envOverrides);
+
+	try {
 		await downloadBrowsers();
 	} finally {
-		for (const env of [
-			'PUPPETEER_PRODUCT',
-			'PUPPETEER_SKIP_DOWNLOAD',
-		]) {
+		for (const env of Object.keys(envOverrides)) {
 			if (Object.hasOwn(originalEnv)) {
 				process.env[env] = originalEnv[env];
 			} else {
@@ -99,22 +108,25 @@ async function downloadBrowser({product} = {}) {
 	}
 }
 
-async function navigateToSecureContext(page, responses) {
+async function navigateToSecureContext(page, serverOptions) {
+	const responses = {
+		'/': {
+			contentType: 'text/html',
+			content: '',
+		},
+		...serverOptions?.responses,
+	};
+
 	const port = await getPort();
 	const server = http.createServer((request, response) => {
 		const {url} = request;
-		if (responses?.[url]) {
+
+		if (responses[url]) {
 			const {contentType, content} = responses[url];
 			response.statusCode = 200;
 			response.setHeader('Content-Type', contentType);
 			response.end(content);
 			return;
-		}
-
-		if (url === '/') {
-			response.statusCode = 200;
-			response.setHeader('Content-Type', 'text/html');
-			response.end('');
 		}
 
 		response.statusCode = 404;
@@ -139,9 +151,10 @@ async function navigateToSecureContext(page, responses) {
 }
 
 async function runInBrowser(function_, {
-	product,
+	product = 'chrome',
 	secureContext = false,
 	arguments: arguments_ = [],
+	server: serverOptions,
 } = {}) {
 	await downloadBrowser({product});
 
@@ -151,7 +164,7 @@ async function runInBrowser(function_, {
 	let server;
 	try {
 		if (secureContext) {
-			server = await navigateToSecureContext(page);
+			server = await navigateToSecureContext(page, serverOptions);
 			assert.ok(
 				server.isSecureContext,
 				'Expected a secure server.',
@@ -235,6 +248,48 @@ async function runInWebWorker(function_) {
 	}
 }
 
+async function runInServiceWorker(function_) {
+	const executeCommandMark = 'get-globals';
+	const workerUrl = `/service-worker.js?${Date.now()}`;
+	const workerCode = outdent`
+		self.onmessage = ({data, source}) => {
+			if (data !== '${executeCommandMark}') {
+				return;
+			}
+
+			source.postMessage(${function_}());
+		};
+	`;
+
+	const result = await runInBrowser(async ([workerUrl, executeCommandMark]) => {
+		// eslint-disable-next-line no-undef -- execute in browser
+		const {navigator} = window;
+		const registration = await navigator.serviceWorker.register(`${workerUrl}`);
+		const serviceWorker = registration.active ?? registration.waiting ?? registration.installing;
+
+		return new Promise(resolve => {
+			navigator.serviceWorker.addEventListener('message', ({data}) => {
+				resolve(data);
+			});
+			serviceWorker.postMessage(executeCommandMark);
+			navigator.serviceWorker.startMessages();
+		});
+	}, {
+		secureContext: true,
+		arguments: [workerUrl, executeCommandMark],
+		server: {
+			responses: {
+				[workerUrl]: {
+					contentType: 'application/javascript',
+					content: workerCode,
+				},
+			},
+		},
+	});
+
+	return result;
+}
+
 async function getBrowserGlobals() {
 	const chromeGlobals = await runInBrowser(getGlobalThisProperties, {secureContext: true});
 	const firefoxGlobals = await runInBrowser(getGlobalThisProperties, {product: 'firefox', secureContext: true});
@@ -267,4 +322,17 @@ async function getWebWorkerGlobals() {
 	);
 }
 
-export {getBrowserGlobals, getWebWorkerGlobals};
+async function getServiceWorkerGlobals() {
+	const properties = await runInServiceWorker(getGlobalThisProperties);
+
+	return createGlobals(
+		properties,
+		{
+			shouldExclude: name => name.startsWith('__'),
+			isWritable: name => name.startsWith('on'),
+			excludeBuiltins: true,
+		},
+	);
+}
+
+export {getBrowserGlobals, getWebWorkerGlobals, getServiceWorkerGlobals};
