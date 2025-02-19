@@ -248,7 +248,7 @@ async function runInWebWorker(function_) {
 	}
 }
 
-async function runInServiceWorker(function_, {product}) {
+async function runInServiceWorker(function_) {
 	const executeCommandMark = 'get-globals';
 	const workerUrl = '/service-worker.js';
 	const workerCode = outdent`
@@ -276,7 +276,6 @@ async function runInServiceWorker(function_, {product}) {
 		});
 	}, {
 		secureContext: true,
-		product,
 		arguments: [workerUrl, executeCommandMark],
 		server: {
 			responses: {
@@ -324,13 +323,13 @@ async function getWebWorkerGlobals() {
 }
 
 async function getServiceWorkerGlobals() {
-	const chromeGlobals = await runInServiceWorker(getGlobalThisProperties, {product: 'chrome'});
-	const firefoxGlobals = await runInServiceWorker(getGlobalThisProperties, {product: 'firefox'});
+	const chromeGlobals = await runInServiceWorker(getGlobalThisProperties);
 
 	return createGlobals(
 		[
+			// Only safari supported https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/pushsubscriptionchange_event#browser_compatibility
+			'onpushsubscriptionchange',
 			...chromeGlobals,
-			...firefoxGlobals,
 		],
 		{
 			shouldExclude: name => name.startsWith('__'),

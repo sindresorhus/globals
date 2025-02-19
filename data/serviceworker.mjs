@@ -166,6 +166,7 @@ export default {
 	onpaymentrequest: true,
 	onperiodicsync: true,
 	onpush: true,
+	onpushsubscriptionchange: true,
 	onrejectionhandled: true,
 	onsync: true,
 	onunhandledrejection: true,
