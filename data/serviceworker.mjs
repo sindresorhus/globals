@@ -12,6 +12,7 @@ export default {
 	BackgroundFetchRecord: false,
 	BackgroundFetchRegistration: false,
 	BackgroundFetchUpdateUIEvent: false,
+	BarcodeDetector: false,
 	Blob: false,
 	BroadcastChannel: false,
 	btoa: false,

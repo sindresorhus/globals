@@ -2433,7 +2433,7 @@
 		"toint32": false,
 		"version": false
 	},
-	"serviceWorker": {
+	"serviceworker": {
 		"AbortController": false,
 		"AbortPaymentEvent": false,
 		"AbortSignal": false,
@@ -2444,6 +2444,7 @@
 		"BackgroundFetchRecord": false,
 		"BackgroundFetchRegistration": false,
 		"BackgroundFetchUpdateUIEvent": false,
+		"BarcodeDetector": false,
 		"Blob": false,
 		"BroadcastChannel": false,
 		"btoa": false,
