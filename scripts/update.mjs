@@ -32,7 +32,7 @@ const ALL_JOBS = [
 		getGlobals: getWebWorkerGlobals,
 	},
 	{
-		environment: 'serviceWorker',
+		environment: 'serviceworker',
 		getGlobals: getServiceWorkerGlobals,
 	},
 	{
