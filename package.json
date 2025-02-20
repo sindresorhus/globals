@@ -22,6 +22,7 @@
 		"update:builtin": "node scripts/update.mjs --environment=builtin",
 		"update:nodeBuiltin": "node scripts/update.mjs --environment=nodeBuiltin",
 		"update:worker": "node scripts/update.mjs --environment=worker",
+		"update:serviceWorker": "node scripts/update.mjs --environment=serviceWorker",
 		"update:shelljs": "node scripts/update.mjs --environment=shelljs",
 		"update:jest": "node scripts/update.mjs --environment=jest",
 		"update:vitest": "node scripts/update.mjs --environment=vitest",
