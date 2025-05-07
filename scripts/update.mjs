@@ -58,6 +58,7 @@ async function run(options) {
 		: ALL_JOBS;
 
 	for (const {environment, getGlobals, incremental = true} of jobs) {
+		const excludeBuiltins = environment !== 'builtin';
 		const {
 			added,
 			removed,
@@ -68,6 +69,7 @@ async function run(options) {
 			getGlobals,
 			dryRun: options.dry,
 			incremental: options.clean ? false : incremental,
+			excludeBuiltins,
 		});
 
 		console.log(`✅ ${environment} globals updated.`);
