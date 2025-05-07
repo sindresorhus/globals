@@ -307,7 +307,6 @@ async function getBrowserGlobals() {
 		{
 			shouldExclude,
 			isWritable,
-			excludeBuiltins: true,
 		},
 	);
 }
@@ -320,7 +319,6 @@ async function getWebWorkerGlobals() {
 		{
 			shouldExclude: name => name.startsWith('__'),
 			isWritable: name => name.startsWith('on'),
-			excludeBuiltins: true,
 		},
 	);
 }
@@ -337,7 +335,6 @@ async function getServiceWorkerGlobals() {
 		{
 			shouldExclude: name => name.startsWith('__'),
 			isWritable: name => name.startsWith('on'),
-			excludeBuiltins: true,
 		},
 	);
 }

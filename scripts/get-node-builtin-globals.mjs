@@ -5,7 +5,6 @@ export default function getNodeBuiltinGlobals() {
 		getGlobalThisProperties(),
 		{
 			shouldExclude: name => name.startsWith('__'),
-			excludeBuiltins: true,
 		},
 	);
 }

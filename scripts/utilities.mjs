@@ -19,12 +19,24 @@ const writeGlobals = async (environment, globals) => {
 	await fs.writeFile(file, code + '\n');
 };
 
-async function updateGlobals({environment, getGlobals, dryRun, incremental}) {
+async function updateGlobals({
+	environment,
+	getGlobals,
+	dryRun,
+	incremental,
+	excludeBuiltins,
+}) {
 	let updated = await getGlobals();
 	const original = await readGlobals(environment, {ignoreNonExits: true});
 
 	if (incremental) {
 		updated = {...original, ...updated};
+	}
+
+	if (excludeBuiltins) {
+		for (const name of Object.keys(await readGlobals('builtin'))) {
+			delete updated[name];
+		}
 	}
 
 	if (!dryRun) {
@@ -58,18 +70,11 @@ function getGlobalThisProperties() {
 async function createGlobals(names, {
 	shouldExclude,
 	isWritable = () => false,
-	excludeBuiltins,
 }) {
 	names = unique(names);
 
 	if (shouldExclude) {
 		names = names.filter(name => !shouldExclude(name));
-	}
-
-	if (excludeBuiltins) {
-		const builtinGlobals = new Set(Object.keys(await readGlobals('builtin')));
-
-		names = names.filter(name => !builtinGlobals.has(name));
 	}
 
 	return Object.fromEntries(names.map(name => [name, isWritable(name) ?? false]));
