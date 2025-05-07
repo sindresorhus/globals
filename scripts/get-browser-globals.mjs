@@ -262,8 +262,7 @@ async function runInServiceWorker(function_) {
 	`;
 
 	const result = await runInBrowser(async (workerUrl, executeCommandMark) => {
-		// eslint-disable-next-line no-undef -- execute in browser
-		const {navigator} = window;
+		const {navigator} = globalThis;
 		const registration = await navigator.serviceWorker.register(`${workerUrl}`);
 		const serviceWorker = registration.active ?? registration.waiting ?? registration.installing;
 
