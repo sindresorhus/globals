@@ -21,6 +21,7 @@ export default {
 	eval: false,
 	EvalError: false,
 	FinalizationRegistry: false,
+	Float16Array: false,
 	Float32Array: false,
 	Float64Array: false,
 	Function: false,
