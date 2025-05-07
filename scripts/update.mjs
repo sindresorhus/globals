@@ -1,6 +1,6 @@
 import {parseArgs} from 'node:util';
 import {outdent} from 'outdent';
-import {execaCommand} from 'execa';
+import spawn from 'nano-spawn';
 import getBuiltinGlobals from './get-builtin-globals.mjs';
 import getNodeBuiltinGlobals from './get-node-builtin-globals.mjs';
 import {
@@ -97,11 +97,11 @@ async function run(options) {
 
 	if (!options.dry) {
 		try {
-			await execaCommand('npm run build');
+			await spawn('npm', ['run', 'build'], {stdio: 'inherit'});
 		} catch {}
 
 		try {
-			await execaCommand('npx xo --fix');
+			await spawn('npx', ['xo', '--fix'], {stdio: 'inherit'});
 		} catch {}
 	}
 }
