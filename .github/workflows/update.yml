@@ -11,27 +11,9 @@ permissions:
   contents: write
 
 jobs:
-  # update-on-macos:
-  #   if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         check-latest: true
-  #         node-version: latest
-  #     - run: npm install
-  #     - run: npm run update
-  #     - uses: actions/upload-artifact@v4
-  #       with:
-  #         name: data
-  #         path: data
-  #         if-no-files-found: error
-
-  update-on-windows:
+  update-on-macos:
     if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
-    runs-on: windows-latest
-    # needs: [update-on-macos]
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -39,10 +21,28 @@ jobs:
           check-latest: true
           node-version: latest
       - run: npm install
-      # - uses: actions/download-artifact@v4
-      #   with:
-      #     name: data
-      #     path: data
+      - run: npm run update
+      - uses: actions/upload-artifact@v4
+        with:
+          name: data
+          path: data
+          if-no-files-found: error
+
+  update-on-windows:
+    if: github.event_name != 'schedule' || github.repository == 'sindresorhus/globals'
+    runs-on: windows-latest
+    needs: [update-on-macos]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          check-latest: true
+          node-version: latest
+      - run: npm install
+      - uses: actions/download-artifact@v4
+        with:
+          name: data
+          path: data
       - run: npm run update
       - uses: actions/upload-artifact@v4
         with:
