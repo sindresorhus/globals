@@ -138,7 +138,7 @@ async function navigateToSecureContext(page, serverOptions) {
 
 	const url = `http://${hostname}:${port}`;
 	await page.goto(url);
-	const isSecureContext = await page.evaluate(() => globalThis.isSecureContext);
+	const isSecureContext = await page.evaluate(() => window.isSecureContext);
 
 	const close = () => new Promise(resolve => {
 		server.close(resolve);
