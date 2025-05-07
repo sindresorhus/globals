@@ -139,7 +139,7 @@ async function navigateToSecureContext(page, serverOptions) {
 
 	const url = `http://${hostname}:${port}`;
 	await page.goto(url);
-	const isSecureContext = await page.evaluate(() => window.isSecureContext);
+	const isSecureContext = await page.evaluate(() => globalThis.isSecureContext);
 
 	const close = () => new Promise(resolve => {
 		server.close(resolve);
@@ -222,14 +222,7 @@ async function runInWebWorker(function_) {
 	let server;
 	let worker;
 	try {
-		server = await navigateToSecureContext(page, {
-			responses: {
-				'/worker.js': {
-					contentType: 'application/javascript',
-					content: '',
-				}
-			}
-		});
+		server = await navigateToSecureContext(page);
 		assert.ok(
 			server.isSecureContext,
 			'Expected a secure server.',
@@ -240,7 +233,7 @@ async function runInWebWorker(function_) {
 				resolve(worker);
 			});
 			// eslint-disable-next-line no-undef -- execute in browser
-			page.evaluate(() => new Worker('/worker.js'));
+			page.evaluate(() => new Worker('data:application/javascript,;'));
 		});
 
 		// Unknown reason, it returns `undefined` instead of `true` on MacOS
