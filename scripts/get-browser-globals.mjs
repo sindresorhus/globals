@@ -221,7 +221,14 @@ async function runInWebWorker(function_) {
 	let server;
 	let worker;
 	try {
-		server = await navigateToSecureContext(page);
+		server = await navigateToSecureContext(page, {
+			responses: {
+				'/worker.js': {
+					contentType: 'application/javascript',
+					content: '',
+				}
+			}
+		});
 		assert.ok(
 			server.isSecureContext,
 			'Expected a secure server.',
@@ -232,7 +239,7 @@ async function runInWebWorker(function_) {
 				resolve(worker);
 			});
 			// eslint-disable-next-line no-undef -- execute in browser
-			page.evaluate(() => new Worker('data:application/javascript,;'));
+			page.evaluate(() => new Worker('/worker.js'));
 		});
 
 		assert.ok(
