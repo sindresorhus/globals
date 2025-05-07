@@ -54,6 +54,7 @@
 		"get-port": "^7.1.0",
 		"npm-run-all2": "^8.0.1",
 		"outdent": "^0.8.0",
+		"patch-package": "^8.0.0",
 		"puppeteer": "^24.8.1",
 		"shelljs": "^0.9.2",
 		"tsd": "^0.32.0",

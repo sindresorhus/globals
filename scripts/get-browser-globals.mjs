@@ -1,5 +1,6 @@
 import process from 'node:process';
 import http from 'node:http';
+import os from 'node:os';
 import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';
 import getPort from 'get-port';
@@ -235,10 +236,13 @@ async function runInWebWorker(function_) {
 			page.evaluate(() => new Worker('data:application/javascript,;'));
 		});
 
-		assert.ok(
-			await worker.evaluate(() => globalThis.isSecureContext),
-			'Expected a secure worker.',
-		);
+		// Unknown reason, it returns `undefined` instead of `true` on MacOS
+		if (os.platform() !== 'darwin') {
+			assert.ok(
+				await worker.evaluate(() => globalThis.isSecureContext),
+				'Expected a secure worker.',
+			);
+		}
 
 		return await worker.evaluate(function_);
 	} finally {

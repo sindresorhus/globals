@@ -39,6 +39,8 @@ jobs:
           check-latest: true
           node-version: latest
       - run: npm install
+      # https://github.com/puppeteer/puppeteer/issues/13853
+      - run: npx patch-package
       - uses: actions/download-artifact@v4
         with:
           name: data
