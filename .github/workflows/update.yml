@@ -39,6 +39,7 @@ jobs:
           check-latest: true
           node-version: latest
       - run: npm install
+      - run: npx patch-package
       - uses: actions/download-artifact@v4
         with:
           name: data
