@@ -44,7 +44,4 @@ jobs:
       # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
       - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
         if: matrix.os == 'ubuntu-latest'
-      # https://github.com/puppeteer/puppeteer/issues/13853
-      - run: npx patch-package
-        if: matrix.os == 'windows-latest'
       - run: npm run update --dry
