@@ -6,8 +6,8 @@ const environments = [
 	{environment: 'serviceworker', getGlobals: getServiceWorkerGlobals},
 ];
 
-function getGlobalThisProperties({secureContext = true} = {}) {
-	if (secureContext && !globalThis.isSecureContext) {
+function getGlobalThisProperties({expectSecureContext = true} = {}) {
+	if (expectSecureContext && !globalThis.isSecureContext) {
 		throw new Error('Expected a secure context.');
 	}
 
@@ -125,7 +125,7 @@ function initAudioWorklet() {
 
 			sendResult({
 				port: this.port,
-				getGlobals: () => getGlobalThisProperties({secureContext: false}),
+				getGlobals: () => getGlobalThisProperties({expectSecureContext: false}),
 			});
 		}
 
