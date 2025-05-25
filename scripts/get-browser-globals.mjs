@@ -123,13 +123,8 @@ async function getGlobalsInBrowser(environment, product = 'chrome') {
 }
 
 async function getBrowserGlobals() {
-	const [
-		chromeGlobals,
-		firefoxGlobals,
-	] = await Promise.all([
-		getGlobalsInBrowser('browser', 'chrome'),
-		getGlobalsInBrowser('browser', 'firefox'),
-	]);
+	const chromeGlobals = await getGlobalsInBrowser('browser')
+	const firefoxGlobals = await getGlobalsInBrowser('browser', 'firefox')
 
 	return createGlobals(
 		[
