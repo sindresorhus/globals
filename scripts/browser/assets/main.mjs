@@ -8,7 +8,7 @@ const environments = [
 
 function getGlobalThisProperties({secureContext = true} = {}) {
 	if (secureContext && !globalThis.isSecureContext) {
-		throw new Error('Expected a secure server.');
+		throw new Error('Expected a secure context.');
 	}
 
 	const keys = [];
@@ -25,11 +25,11 @@ function getGlobalThisProperties({secureContext = true} = {}) {
 }
 
 function sendResult({
-	port,
+	port = globalThis,
 	receivePort = port,
 	sendPort = receivePort,
 	getGlobals = getGlobalThisProperties,
-}) {
+} = {}) {
 	receivePort.onmessage = receivedMessage => {
 		if (receivedMessage.data !== EXECUTE_COMMAND_SIGNAL) {
 			return;
@@ -73,7 +73,7 @@ function getWebWorkerGlobals() {
 }
 
 function initWebWorker() {
-	sendResult({port: globalThis});
+	sendResult();
 }
 
 const SERVICE_WORK_URL = './assets/service-worker.mjs';
@@ -82,8 +82,11 @@ async function getServiceWorkerGlobals() {
 	const serviceWorkerContainer = navigator.serviceWorker;
 	if (!serviceWorker) {
 		let registration = await serviceWorkerContainer.getRegistration(SERVICE_WORK_URL);
-		await registration?.unregister();
-		registration = await serviceWorkerContainer.register(SERVICE_WORK_URL, {type: 'module'});
+		if (registration) {
+			await registration.update();
+		} else {
+			registration = await serviceWorkerContainer.register(SERVICE_WORK_URL, {type: 'module'});
+		}
 		serviceWorker = registration.active ?? registration.waiting ?? registration.installing;
 		serviceWorkerContainer.startMessages();
 	}
@@ -93,7 +96,6 @@ async function getServiceWorkerGlobals() {
 
 async function initServiceWorker() {
 	sendResult({
-		receivePort: globalThis,
 		sendPort: message => message.source,
 	});
 }
