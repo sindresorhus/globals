@@ -87,6 +87,7 @@ async function getServiceWorkerGlobals() {
 		} else {
 			registration = await serviceWorkerContainer.register(SERVICE_WORK_URL, {type: 'module'});
 		}
+
 		serviceWorker = registration.active ?? registration.waiting ?? registration.installing;
 		serviceWorkerContainer.startMessages();
 	}
