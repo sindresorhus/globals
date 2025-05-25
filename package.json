@@ -90,6 +90,20 @@
 				"rules": {
 					"n/no-unsupported-features/node-builtins": "off"
 				}
+			},
+			{
+				"files": [
+					"scripts/browser/assets/**/*.mjs"
+				],
+				"envs": [
+					"browser",
+					"worker",
+					"serviceworker"
+				],
+				"rules": {
+					"n/no-unsupported-features/node-builtins": "off",
+					"unicorn/prefer-add-event-listener": "off"
+				}
 			}
 		]
 	},
