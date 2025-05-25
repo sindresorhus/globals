@@ -2,6 +2,11 @@ name: CI
 on:
   - push
   - pull_request
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test:
     name: Node.js ${{ matrix.node-version }}
@@ -19,3 +24,24 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm test
+  test-update:
+    name: Update script (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          check-latest: true
+          node-version: latest
+      - run: npm install
+      # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+      - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+        if: matrix.os == 'ubuntu-latest'
+      - run: npm run update --dry
