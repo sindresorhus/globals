@@ -1,4 +1,4 @@
-const EXECUTE_COMMAND_MARK = 'get-globals';
+const EXECUTE_COMMAND_SIGNAL = 'get-globals';
 
 const environments = [
 	{environment: 'browser', getGlobals: getBrowserGlobals},
@@ -24,53 +24,113 @@ function getGlobalThisProperties({secureContext = true} = {}) {
 	return keys.filter(key => key !== 'constructor');
 }
 
-function getWebWorkerGlobals() {
-	const worker = new Worker('./assets/web-worker.mjs', {type: 'module'});
-	return new Promise(resolve => {
-		worker.postMessage(EXECUTE_COMMAND_MARK);
-		worker.onmessage = ({data}) => {
-			resolve(data);
+function sendResult({
+	port,
+	receivePort = port,
+	sendPort = receivePort,
+	getGlobals = getGlobalThisProperties,
+}) {
+	receivePort.onmessage = receivedMessage => {
+		if (receivedMessage.data !== EXECUTE_COMMAND_SIGNAL) {
+			return;
+		}
+
+		const message = {};
+		try {
+			message.result = getGlobals();
+		} catch (error) {
+			message.error = error;
+			throw error;
+		} finally {
+			const port = typeof	sendPort === 'function' ? sendPort(receivedMessage) : sendPort;
+			port.postMessage(message);
+		}
+	};
+}
+
+function receiveResult({
+	port,
+	receivePort = port,
+	sendPort = receivePort,
+}) {
+	return new Promise((resolve, reject) => {
+		receivePort.onmessage = ({data: {result, error}}) => {
+			if (error) {
+				reject(error);
+			} else {
+				resolve(result);
+			}
 		};
+
+		sendPort.postMessage(EXECUTE_COMMAND_SIGNAL);
 	});
+}
+
+let webWorker;
+function getWebWorkerGlobals() {
+	webWorker ??= new Worker('./assets/web-worker.mjs', {type: 'module'});
+	return receiveResult({port: webWorker});
 }
 
 function initWebWorker() {
-	globalThis.onmessage = ({data}) => {
-		if (data !== EXECUTE_COMMAND_MARK) {
-			return;
-		}
-
-		globalThis.postMessage(getGlobalThisProperties());
-	};
+	sendResult({port: globalThis});
 }
 
+const SERVICE_WORK_URL = './assets/service-worker.mjs';
+let serviceWorker;
 async function getServiceWorkerGlobals() {
-	const registration = await navigator.serviceWorker.register('./assets/service-worker.mjs', {type: 'module'});
-	const serviceWorker = registration.active ?? registration.waiting ?? registration.installing;
+	const serviceWorkerContainer = navigator.serviceWorker;
+	if (!serviceWorker) {
+		let registration = await serviceWorkerContainer.getRegistration(SERVICE_WORK_URL);
+		await registration?.unregister();
+		registration = await serviceWorkerContainer.register(SERVICE_WORK_URL, {type: 'module'});
+		serviceWorker = registration.active ?? registration.waiting ?? registration.installing;
+		serviceWorkerContainer.startMessages();
+	}
 
-	return new Promise(resolve => {
-		navigator.serviceWorker.addEventListener('message', ({data}) => {
-			resolve(data);
-		});
-		serviceWorker.postMessage(EXECUTE_COMMAND_MARK);
-		navigator.serviceWorker.startMessages();
-	});
+	return receiveResult({receivePort: serviceWorkerContainer, sendPort: serviceWorker});
 }
 
 async function initServiceWorker() {
-	globalThis.onmessage = ({data, source}) => {
-		if (data !== EXECUTE_COMMAND_MARK) {
-			return;
-		}
-
-		source.postMessage(getGlobalThisProperties());
-	};
+	sendResult({
+		receivePort: globalThis,
+		sendPort: message => message.source,
+	});
 }
 
 async function getBrowserGlobals() {
 	const globals = getGlobalThisProperties();
 	const audioWorkletGlobals = await getAudioWorkletGlobals();
 	return [...new Set([...globals, ...audioWorkletGlobals])];
+}
+
+const AUDIO_WORKLET_PROCESSOR_NAME = `${EXECUTE_COMMAND_SIGNAL}-processor`;
+let audioWorkletNode;
+async function getAudioWorkletGlobals() {
+	if (!audioWorkletNode) {
+		const context = new AudioContext();
+		await context.audioWorklet.addModule('./assets/audio-worklet.mjs');
+		audioWorkletNode = new AudioWorkletNode(context, AUDIO_WORKLET_PROCESSOR_NAME);
+	}
+
+	return receiveResult({port: audioWorkletNode.port});
+}
+
+function initAudioWorklet() {
+	registerProcessor(AUDIO_WORKLET_PROCESSOR_NAME, class AudioWorkletGetGlobalsProcessor extends AudioWorkletProcessor {
+		constructor() {
+			super();
+
+			sendResult({
+				port: this.port,
+				getGlobals: () => getGlobalThisProperties({secureContext: false}),
+			});
+		}
+
+		process() {
+			return true;
+		}
+	});
 }
 
 function initPage() {
@@ -102,7 +162,7 @@ function initPage() {
 				const globals = await getGlobals();
 				result.textContent = JSON.stringify(globals, undefined, 2);
 			} catch (error) {
-				result.textContent = error.message;
+				result.textContent = error;
 			} finally {
 				button.disabled = false;
 			}
@@ -113,31 +173,6 @@ function initPage() {
 		container.append(result);
 		mainContainer.append(container);
 	}
-}
-
-async function getAudioWorkletGlobals() {
-	const context = new AudioContext();
-	await context.audioWorklet.addModule('./assets/audio-worklet.mjs');
-	return new Promise(resolve => {
-		const node = new AudioWorkletNode(context, 'execute-processor');
-		node.port.onmessage = ({data}) => {
-			resolve(data);
-		};
-	});
-}
-
-function initAudioWorklet() {
-	registerProcessor('execute-processor', class extends AudioWorkletProcessor {
-		constructor() {
-			super();
-
-			this.port.postMessage(getGlobalThisProperties({secureContext: false}));
-		}
-
-		process() {
-			return true;
-		}
-	});
 }
 
 export {
