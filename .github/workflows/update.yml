@@ -21,7 +21,9 @@ jobs:
           check-latest: true
           node-version: latest
       - run: npm install
-      - run: npm run update
+      - run: |
+          npm install puppeteer --save-dev
+          npm run update
       - uses: actions/upload-artifact@v4
         with:
           name: data
@@ -43,7 +45,9 @@ jobs:
         with:
           name: data
           path: data
-      - run: npm run update
+      - run: |
+          npm install puppeteer --save-dev
+          npm run update
       - uses: actions/upload-artifact@v4
         with:
           name: data
@@ -68,7 +72,9 @@ jobs:
           path: data
       # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
       - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
-      - run: npm run update
+      - run: |
+          npm install puppeteer --save-dev
+          npm run update
       - uses: peter-evans/create-pull-request@v7
         with:
           commit-message: Update globals

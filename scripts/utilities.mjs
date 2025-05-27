@@ -52,7 +52,6 @@ async function updateGlobals({
 	};
 }
 
-/** This function runs in browser too, please keep it pure */
 function getGlobalThisProperties() {
 	const keys = [];
 
