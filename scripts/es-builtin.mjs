@@ -58,13 +58,7 @@ function * getGlobalObjects($) {
 	for (const element of $('emu-clause#sec-global-object emu-clause:not([type]) > h1')) {
 		let text = $(element).text().trim();
 
-		/*
-		Function shape
-
-		```
-    Array ( . . . )
-    ```
-		*/
+		// Function shape `Array ( . . . )`
 		text = text.match(/^(?<functionName>\w+?)\s*\(.*?\)$/)?.groups.functionName ?? text;
 
 		if (!/^\w+$/.test(text)) {
