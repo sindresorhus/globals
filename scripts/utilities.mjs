@@ -19,6 +19,16 @@ const writeGlobals = async (environment, globals) => {
 	await fs.writeFile(file, code + '\n');
 };
 
+function getDataDiff(original, updated) {
+	const added = Object.keys(updated).filter(property => !Object.hasOwn(original, property));
+	const removed = Object.keys(original).filter(property => !Object.hasOwn(updated, property));
+
+	return {
+		added,
+		removed,
+	};
+}
+
 async function updateGlobals({
 	job,
 	getGlobals,
@@ -26,10 +36,9 @@ async function updateGlobals({
 	incremental,
 	excludeBuiltins,
 }) {
-	let {
-		[Symbol.for('environment')]: environment = job.id,
-		...updated
-	} = await getGlobals();
+	const environment = job.id;
+
+	let updated = await getGlobals();
 
 	const original = await readGlobals(environment, {ignoreNonExits: true});
 
@@ -47,14 +56,7 @@ async function updateGlobals({
 		await writeGlobals(environment, updated);
 	}
 
-	const added = Object.keys(updated).filter(property => !Object.hasOwn(original, property));
-	const removed = Object.keys(original).filter(property => !Object.hasOwn(updated, property));
-
-	return {
-		environment,
-		added,
-		removed,
-	};
+	return getDataDiff(original, updated);
 }
 
 function getGlobalThisProperties() {
@@ -85,6 +87,7 @@ async function createGlobals(names, {
 }
 
 export {
+	getDataDiff,
 	updateGlobals,
 	getGlobalThisProperties,
 	createGlobals,

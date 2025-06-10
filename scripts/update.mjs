@@ -1,7 +1,7 @@
 import {parseArgs} from 'node:util';
 import {outdent} from 'outdent';
 import spawn from 'nano-spawn';
-import getBuiltinGlobals from './get-builtin-globals.mjs';
+import {getBuiltinGlobals, buildYearlyBuiltinGlobals} from './es-builtin.mjs';
 import getNodeBuiltinGlobals from './get-node-builtin-globals.mjs';
 import {
 	getBrowserGlobals,
@@ -20,6 +20,10 @@ const ALL_JOBS = [
 			incremental: false,
 			excludeBuiltins: false,
 		}),
+	},
+	{
+		id: 'builtin-yearly',
+		build: buildYearlyBuiltinGlobals,
 	},
 	{
 		id: 'nodeBuiltin',
@@ -43,11 +47,11 @@ const ALL_JOBS = [
 	},
 	{
 		id: 'jest',
-		build: createBuildFunction(getJestGlobals, {incremental: false})
+		build: createBuildFunction(getJestGlobals, {incremental: false}),
 	},
 	{
 		id: 'jest',
-		build: createBuildFunction(getVitestGlobals, {incremental: false})
+		build: createBuildFunction(getVitestGlobals, {incremental: false}),
 	},
 ];
 
@@ -61,8 +65,8 @@ function createBuildFunction(getGlobals, {incremental = true, excludeBuiltins = 
 			excludeBuiltins,
 		});
 
-		report(job, result)
-	}
+		report(job, result);
+	};
 }
 
 function report(job, {environment, added, removed}) {
@@ -95,6 +99,7 @@ async function run(options) {
 		: ALL_JOBS;
 
 	for (const job of jobs) {
+		// eslint-disable-next-line no-await-in-loop
 		await job.build(job, options);
 	}
 

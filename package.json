@@ -20,6 +20,7 @@
 		"update": "node scripts/update.mjs",
 		"update:browser": "node scripts/update.mjs --job=browser",
 		"update:builtin": "node scripts/update.mjs --job=builtin",
+		"update:builtin-yearly": "node scripts/update.mjs --job=builtin-yearly",
 		"update:nodeBuiltin": "node scripts/update.mjs --job=nodeBuiltin",
 		"update:worker": "node scripts/update.mjs --job=worker",
 		"update:serviceworker": "node scripts/update.mjs --job=serviceworker",
