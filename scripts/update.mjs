@@ -56,17 +56,13 @@ const ALL_JOBS = [
 ];
 
 function createBuildFunction(getGlobals, {incremental = true, excludeBuiltins = true} = {}) {
-	return async (job, options) => {
-		const result = await updateGlobals({
-			job,
-			getGlobals,
-			dryRun: options.dry,
-			incremental: options.clean ? false : incremental,
-			excludeBuiltins,
-		});
-
-		report(job, result);
-	};
+	return (job, options) => updateGlobals({
+		job,
+		getGlobals,
+		dryRun: options.dry,
+		incremental: options.clean ? false : incremental,
+		excludeBuiltins,
+	});
 }
 
 function report(job, {environment, added, removed}) {
@@ -100,7 +96,8 @@ async function run(options) {
 
 	for (const job of jobs) {
 		// eslint-disable-next-line no-await-in-loop
-		await job.build(job, options);
+		const result = await job.build(job, options);
+		report(job, result);
 	}
 
 	if (!options.dry) {
