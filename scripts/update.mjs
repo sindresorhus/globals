@@ -50,7 +50,7 @@ const ALL_JOBS = [
 		build: createBuildFunction(getJestGlobals, {incremental: false}),
 	},
 	{
-		id: 'jest',
+		id: 'vitest',
 		build: createBuildFunction(getVitestGlobals, {incremental: false}),
 	},
 ];
