@@ -15,84 +15,87 @@ import getVitestGlobals from './get-vitest-globals.mjs';
 
 const ALL_JOBS = [
 	{
-		environment: 'builtin',
-		getGlobals: getBuiltinGlobals,
-		incremental: false,
+		id: 'builtin',
+		build: createBuildFunction(getBuiltinGlobals, {
+			incremental: false,
+			excludeBuiltins: false,
+		}),
 	},
 	{
-		environment: 'nodeBuiltin',
-		getGlobals: getNodeBuiltinGlobals,
+		id: 'nodeBuiltin',
+		build: createBuildFunction(getNodeBuiltinGlobals),
 	},
 	{
-		environment: 'browser',
-		getGlobals: getBrowserGlobals,
+		id: 'browser',
+		build: createBuildFunction(getBrowserGlobals),
 	},
 	{
-		environment: 'worker',
-		getGlobals: getWebWorkerGlobals,
+		id: 'worker',
+		build: createBuildFunction(getWebWorkerGlobals),
 	},
 	{
-		environment: 'serviceworker',
-		getGlobals: getServiceWorkerGlobals,
+		id: 'serviceworker',
+		build: createBuildFunction(getServiceWorkerGlobals),
 	},
 	{
-		environment: 'shelljs',
-		getGlobals: getShelljsGlobals,
-		incremental: false,
+		id: 'shelljs',
+		build: createBuildFunction(getShelljsGlobals, {incremental: false}),
 	},
 	{
-		environment: 'jest',
-		getGlobals: getJestGlobals,
-		incremental: false,
+		id: 'jest',
+		build: createBuildFunction(getJestGlobals, {incremental: false})
 	},
 	{
-		environment: 'vitest',
-		getGlobals: getVitestGlobals,
-		incremental: false,
+		id: 'jest',
+		build: createBuildFunction(getVitestGlobals, {incremental: false})
 	},
 ];
 
-async function run(options) {
-	const jobs = options.environment
-		? ALL_JOBS.filter(job => job.environment === options.environment)
-		: ALL_JOBS;
-
-	for (const {environment, getGlobals, incremental = true} of jobs) {
-		const excludeBuiltins = environment !== 'builtin';
-		const {
-			added,
-			removed,
-		}
-		// eslint-disable-next-line no-await-in-loop
-		= await updateGlobals({
-			environment,
+function createBuildFunction(getGlobals, {incremental = true, excludeBuiltins = true} = {}) {
+	return async (job, options) => {
+		const result = await updateGlobals({
+			job,
 			getGlobals,
 			dryRun: options.dry,
 			incremental: options.clean ? false : incremental,
 			excludeBuiltins,
 		});
 
-		console.log(`✅ ${environment} globals updated.`);
+		report(job, result)
+	}
+}
 
-		if (added.length > 0) {
-			console.log();
-			console.log(
-				outdent`
-					Added(${added.length}):
-					${added.map(name => ` + ${name}`).join('\n')}
-				`,
-			);
-		}
+function report(job, {environment, added, removed}) {
+	console.log(`✅ ${environment ?? job.id} globals updated.`);
 
-		if (removed.length > 0) {
-			console.log();
-			console.log(
-				outdent`
-					Removed(${removed.length}):
-					${removed.map(name => ` - ${name}`).join('\n')}
-				`,
-			);
-		}
+	if (added.length > 0) {
+		console.log();
+		console.log(
+			outdent`
+				Added(${added.length}):
+				${added.map(name => ` + ${name}`).join('\n')}
+			`,
+		);
+	}
+
+	if (removed.length > 0) {
+		console.log();
+		console.log(
+			outdent`
+				Removed(${removed.length}):
+				${removed.map(name => ` - ${name}`).join('\n')}
+			`,
+		);
+	}
+}
+
+async function run(options) {
+	const jobs = options.job
+		? ALL_JOBS.filter(job => job.id === options.job)
+		: ALL_JOBS;
+
+	for (const job of jobs) {
+		await job.build(job, options);
 	}
 
 	if (!options.dry) {
@@ -110,7 +113,7 @@ const {
 	values: options,
 } = parseArgs({
 	options: {
-		environment: {
+		job: {
 			type: 'string',
 		},
 		dry: {

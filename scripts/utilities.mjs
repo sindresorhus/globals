@@ -20,13 +20,17 @@ const writeGlobals = async (environment, globals) => {
 };
 
 async function updateGlobals({
-	environment,
+	job,
 	getGlobals,
 	dryRun,
 	incremental,
 	excludeBuiltins,
 }) {
-	let updated = await getGlobals();
+	let {
+		[Symbol.for('environment')]: environment = job.id,
+		...updated
+	} = await getGlobals();
+
 	const original = await readGlobals(environment, {ignoreNonExits: true});
 
 	if (incremental) {
@@ -47,6 +51,7 @@ async function updateGlobals({
 	const removed = Object.keys(original).filter(property => !Object.hasOwn(updated, property));
 
 	return {
+		environment,
 		added,
 		removed,
 	};

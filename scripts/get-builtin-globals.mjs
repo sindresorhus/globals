@@ -51,11 +51,23 @@ const getSpecification = async () => {
 function * getGlobalObjects(specification) {
 	const $ = cheerio.load(specification);
 
-	for (const element of $('emu-clause#sec-global-object > emu-clause h1')) {
-		const property = $(element).text().trim().split(/\s/)[0];
-		if (Object.hasOwn(globalThis, property)) {
-			yield property;
+	for (const element of $('emu-clause#sec-global-object emu-clause:not([type]) > h1')) {
+		let text = $(element).text().trim();
+
+		/*
+		Function shape
+
+		```
+    Array ( . . . )
+    ```
+		*/
+		text = text.match(/^(?<functionName>\w+?)\s*\(.*?\)$/)?.groups.functionName ?? text;
+
+		if (!/^\w+$/.test(text)) {
+			continue;
 		}
+
+		yield text;
 	}
 }
 
