@@ -1,7 +1,7 @@
 import {parseArgs} from 'node:util';
 import {outdent} from 'outdent';
 import spawn from 'nano-spawn';
-import getBuiltinGlobals from './get-builtin-globals.mjs';
+import {getBuiltinGlobals, buildYearlyBuiltinGlobals} from './es-builtin.mjs';
 import getNodeBuiltinGlobals from './get-node-builtin-globals.mjs';
 import {
 	getBrowserGlobals,
@@ -15,84 +15,89 @@ import getVitestGlobals from './get-vitest-globals.mjs';
 
 const ALL_JOBS = [
 	{
-		environment: 'builtin',
-		getGlobals: getBuiltinGlobals,
-		incremental: false,
+		id: 'builtin',
+		build: createBuildFunction(getBuiltinGlobals, {
+			incremental: false,
+			excludeBuiltins: false,
+		}),
 	},
 	{
-		environment: 'nodeBuiltin',
-		getGlobals: getNodeBuiltinGlobals,
+		id: 'builtin-yearly',
+		build: buildYearlyBuiltinGlobals,
 	},
 	{
-		environment: 'browser',
-		getGlobals: getBrowserGlobals,
+		id: 'nodeBuiltin',
+		build: createBuildFunction(getNodeBuiltinGlobals),
 	},
 	{
-		environment: 'worker',
-		getGlobals: getWebWorkerGlobals,
+		id: 'browser',
+		build: createBuildFunction(getBrowserGlobals),
 	},
 	{
-		environment: 'serviceworker',
-		getGlobals: getServiceWorkerGlobals,
+		id: 'worker',
+		build: createBuildFunction(getWebWorkerGlobals),
 	},
 	{
-		environment: 'shelljs',
-		getGlobals: getShelljsGlobals,
-		incremental: false,
+		id: 'serviceworker',
+		build: createBuildFunction(getServiceWorkerGlobals),
 	},
 	{
-		environment: 'jest',
-		getGlobals: getJestGlobals,
-		incremental: false,
+		id: 'shelljs',
+		build: createBuildFunction(getShelljsGlobals, {incremental: false}),
 	},
 	{
-		environment: 'vitest',
-		getGlobals: getVitestGlobals,
-		incremental: false,
+		id: 'jest',
+		build: createBuildFunction(getJestGlobals, {incremental: false}),
+	},
+	{
+		id: 'vitest',
+		build: createBuildFunction(getVitestGlobals, {incremental: false}),
 	},
 ];
 
+function createBuildFunction(getGlobals, {incremental = true, excludeBuiltins = true} = {}) {
+	return (job, options) => updateGlobals({
+		job,
+		getGlobals,
+		dryRun: options.dry,
+		incremental: options.clean ? false : incremental,
+		excludeBuiltins,
+	});
+}
+
+function report(job, {environment, added, removed}) {
+	console.log(`✅ ${environment ?? job.id} globals updated.`);
+
+	if (added.length > 0) {
+		console.log();
+		console.log(
+			outdent`
+				Added(${added.length}):
+				${added.map(name => ` + ${name}`).join('\n')}
+			`,
+		);
+	}
+
+	if (removed.length > 0) {
+		console.log();
+		console.log(
+			outdent`
+				Removed(${removed.length}):
+				${removed.map(name => ` - ${name}`).join('\n')}
+			`,
+		);
+	}
+}
+
 async function run(options) {
-	const jobs = options.environment
-		? ALL_JOBS.filter(job => job.environment === options.environment)
+	const jobs = options.job
+		? ALL_JOBS.filter(job => job.id === options.job)
 		: ALL_JOBS;
 
-	for (const {environment, getGlobals, incremental = true} of jobs) {
-		const excludeBuiltins = environment !== 'builtin';
-		const {
-			added,
-			removed,
-		}
+	for (const job of jobs) {
 		// eslint-disable-next-line no-await-in-loop
-		= await updateGlobals({
-			environment,
-			getGlobals,
-			dryRun: options.dry,
-			incremental: options.clean ? false : incremental,
-			excludeBuiltins,
-		});
-
-		console.log(`✅ ${environment} globals updated.`);
-
-		if (added.length > 0) {
-			console.log();
-			console.log(
-				outdent`
-					Added(${added.length}):
-					${added.map(name => ` + ${name}`).join('\n')}
-				`,
-			);
-		}
-
-		if (removed.length > 0) {
-			console.log();
-			console.log(
-				outdent`
-					Removed(${removed.length}):
-					${removed.map(name => ` - ${name}`).join('\n')}
-				`,
-			);
-		}
+		const result = await job.build(job, options);
+		report(job, result);
 	}
 
 	if (!options.dry) {
@@ -110,7 +115,7 @@ const {
 	values: options,
 } = parseArgs({
 	options: {
-		environment: {
+		job: {
 			type: 'string',
 		},
 		dry: {
