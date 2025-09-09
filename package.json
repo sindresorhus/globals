@@ -1,6 +1,6 @@
 {
 	"name": "globals",
-	"version": "16.3.0",
+	"version": "16.4.0",
 	"description": "Global identifiers from different JavaScript environments",
 	"license": "MIT",
 	"repository": "sindresorhus/globals",
