@@ -20,7 +20,6 @@ jobs:
         with:
           check-latest: true
           node-version: latest
-      - run: npm install
       - run: |
           npm install puppeteer --save-dev
           npm run update
@@ -40,7 +39,6 @@ jobs:
         with:
           check-latest: true
           node-version: latest
-      - run: npm install
       - uses: actions/download-artifact@v4
         with:
           name: data
@@ -65,7 +63,6 @@ jobs:
         with:
           check-latest: true
           node-version: latest
-      - run: npm install
       - uses: actions/download-artifact@v4
         with:
           name: data
@@ -75,9 +72,10 @@ jobs:
       - run: |
           npm install puppeteer --save-dev
           npm run update
+      - run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> "$GITHUB_ENV"
       - uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: Update globals
-          branch: automated-update
+          commit-message: Update globals (${{ env.CURRENT_DATE }})
+          branch: automated-update-${{ env.CURRENT_DATE }}
           branch-suffix: timestamp
-          title: Update globals
+          title: Update globals (${{ env.CURRENT_DATE }})
