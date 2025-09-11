@@ -75,9 +75,10 @@ jobs:
       - run: |
           npm install puppeteer --save-dev
           npm run update
+          echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> "$GITHUB_ENV"
       - uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: Update globals
-          branch: automated-update
+          commit-message: Update globals (${{ env.CURRENT_DATE }})
+          branch: automated-update-${{ env.CURRENT_DATE }}
           branch-suffix: timestamp
-          title: Update globals
+          title: Update globals (${{ env.CURRENT_DATE }})
