@@ -16,6 +16,9 @@
 		"Progress": false,
 		"Ref": false
 	},
+	"astro": {
+		"Astro": false
+	},
 	"atomtest": {
 		"advanceClock": false,
 		"atom": false,
@@ -2945,6 +2948,15 @@
 		"uniq": false,
 		"which": false
 	},
+	"svelte": {
+		"$bindable": false,
+		"$derived": false,
+		"$effect": false,
+		"$host": false,
+		"$inspect": false,
+		"$props": false,
+		"$state": false
+	},
 	"vitest": {
 		"afterAll": false,
 		"afterEach": false,
@@ -2963,6 +2975,15 @@
 		"test": false,
 		"vi": false,
 		"vitest": false
+	},
+	"vue": {
+		"defineEmits": false,
+		"defineExpose": false,
+		"defineModel": false,
+		"defineOptions": false,
+		"defineProps": false,
+		"defineSlots": false,
+		"withDefaults": false
 	},
 	"webextensions": {
 		"browser": false,
