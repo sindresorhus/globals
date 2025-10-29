@@ -16,6 +16,9 @@
 		"Progress": false,
 		"Ref": false
 	},
+	"astro": {
+		"Astro": false
+	},
 	"atomtest": {
 		"advanceClock": false,
 		"atom": false,
@@ -156,6 +159,9 @@
 		"CSSFontFaceRule": false,
 		"CSSFontFeatureValuesRule": false,
 		"CSSFontPaletteValuesRule": false,
+		"CSSFunctionDeclarations": false,
+		"CSSFunctionDescriptors": false,
+		"CSSFunctionRule": false,
 		"CSSGroupingRule": false,
 		"CSSImageValue": false,
 		"CSSImportRule": false,
@@ -892,6 +898,11 @@
 		"SnapEvent": false,
 		"SourceBuffer": false,
 		"SourceBufferList": false,
+		"SpeechGrammar": false,
+		"SpeechGrammarList": false,
+		"SpeechRecognition": false,
+		"SpeechRecognitionErrorEvent": false,
+		"SpeechRecognitionEvent": false,
 		"speechSynthesis": false,
 		"SpeechSynthesis": false,
 		"SpeechSynthesisErrorEvent": false,
@@ -2973,6 +2984,15 @@
 		"uniq": false,
 		"which": false
 	},
+	"svelte": {
+		"$bindable": false,
+		"$derived": false,
+		"$effect": false,
+		"$host": false,
+		"$inspect": false,
+		"$props": false,
+		"$state": false
+	},
 	"vitest": {
 		"afterAll": false,
 		"afterEach": false,
@@ -2991,6 +3011,15 @@
 		"test": false,
 		"vi": false,
 		"vitest": false
+	},
+	"vue": {
+		"defineEmits": false,
+		"defineExpose": false,
+		"defineModel": false,
+		"defineOptions": false,
+		"defineProps": false,
+		"defineSlots": false,
+		"withDefaults": false
 	},
 	"webextensions": {
 		"browser": false,
