@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import test from 'ava';
 import {DATA_DIRECTORY, readGlobals} from './utilities.mjs';
 import globals from './index.js';
+import isIdentifier from 'is-identifier'
 
 test('main', t => {
 	t.is(typeof globals, 'object');
@@ -108,7 +109,23 @@ test('globals.json', async t => {
 
 		for (const [name, value] of Object.entries(data)) {
 			t.is(name.trim(), name, `Unexpected space around object name '${name}' in '${environment}'.`);
+			if (!isEsIdentifier(environment, name)) {
+				t.true(isIdentifier(name), `Object name '${name}' in '${environment}' is not a valid identifier.`);
+			}
 			t.is(typeof value, 'boolean', `Value of object '${name}' in '${environment}' should be a boolean.`);
 		}
 	}
 });
+
+function isEsIdentifier(environment, name) {
+	return (
+		(environment === 'builtin' || /^es(?:3|5|\d{4})$/.test(environment))
+		&& (
+			name === 'eval'
+			|| name === 'globalThis'
+			|| name === 'Infinity'
+			|| name === 'NaN'
+			|| name === 'undefined'
+		)
+	)
+}
