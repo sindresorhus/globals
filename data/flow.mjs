@@ -1,8 +1,8 @@
 /**
- * Source:
- * - events: https://flow.org/en/docs/react/events/
- * - utilities: https://flow.org/en/docs/types/utilities/
- */
+Source:
+- events: https://flow.org/en/docs/react/events/
+- utilities: https://flow.org/en/docs/types/utilities/
+*/
 export default {
 	$Exact: false,
 	$Exports: false,
