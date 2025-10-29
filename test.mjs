@@ -109,9 +109,10 @@ test('globals.json', async t => {
 
 		for (const [name, value] of Object.entries(data)) {
 			t.is(name.trim(), name, `Unexpected space around object name '${name}' in '${environment}'.`);
-			if (!isEsIdentifier(environment, name)) {
-				t.true(isIdentifier(name), `Object name '${name}' in '${environment}' is not a valid identifier.`);
-			}
+			t.true(
+				isEsIdentifier(environment, name) || isIdentifier(name),
+				`Object name '${name}' in '${environment}' is not a valid identifier.`,
+			);
 			t.is(typeof value, 'boolean', `Value of object '${name}' in '${environment}' should be a boolean.`);
 		}
 	}
