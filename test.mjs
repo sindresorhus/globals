@@ -102,4 +102,13 @@ test('globals.json', async t => {
 		jsData,
 		globals,
 	);
+
+	for (const [environment, data] of Object.entries(globals)) {
+		t.is(environment.trim(), environment, `Unexpected space around environment key '${environment}'.`);
+
+		for (const [name, value] of Object.entries(data)) {
+			t.is(name.trim(), name, `Unexpected space around object name '${name}' in '${environment}'.`);
+			t.is(typeof value, 'boolean', `Value of object '${name}' in '${environment}' should be a boolean.`);
+		}
+	}
 });
