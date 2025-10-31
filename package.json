@@ -52,6 +52,7 @@
 		"cheerio": "^1.0.0",
 		"eslint-plugin-jest": "^28.11.0",
 		"get-port": "^7.1.0",
+		"is-identifier": "^1.0.1",
 		"nano-spawn": "^0.2.0",
 		"npm-run-all2": "^8.0.1",
 		"outdent": "^0.8.0",
