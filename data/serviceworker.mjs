@@ -129,6 +129,7 @@ export default {
 	IDBKeyRange: false,
 	IDBObjectStore: false,
 	IDBOpenDBRequest: false,
+	IDBRecord: false,
 	IDBRequest: false,
 	IDBTransaction: false,
 	IDBVersionChangeEvent: false,
