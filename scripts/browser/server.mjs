@@ -18,7 +18,7 @@ async function startServer({silent = false, port: preferredPort} = {}) {
 
 		// Only allow `.mjs` and `.html`
 		if (!/\.(?:html|mjs)$/.test(url)) {
-			response.statusCode = 400;
+			response.statusCode = 404;
 			return;
 		}
 
@@ -32,7 +32,7 @@ async function startServer({silent = false, port: preferredPort} = {}) {
 				console.error(error);
 			}
 
-			response.statusCode = error.code === 'ENOENT' ? 400 : 500;
+			response.statusCode = error.code === 'ENOENT' ? 404 : 500;
 			response.end(inspect(error));
 			return;
 		}
