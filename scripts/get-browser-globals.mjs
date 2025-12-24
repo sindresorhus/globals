@@ -2,6 +2,15 @@ import {launchBrowser} from './browser.mjs';
 import {createGlobals} from './utilities.mjs';
 import {startServer} from './browser/server.mjs';
 
+const firefoxNonStandardGlobals = new Set([
+	// Can't find documentation
+	'Directory',
+	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/dump
+	'dump',
+	// Non-standard https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError
+	'InternalError',
+]);
+
 const ignoredGlobals = new Set([
 	// Chrome only
 	'chrome',
@@ -18,16 +27,10 @@ const ignoredGlobals = new Set([
 	'CSS2Properties',
 	// Deprecated https://developer.mozilla.org/en-US/docs/Web/API/Window/captureEvents
 	'captureEvents',
-	// Can't find documentation
-	'Directory',
-	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/dump
-	'dump',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/fullScreen
 	'fullScreen',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/window/getDefaultComputedStyle
 	'getDefaultComputedStyle',
-	// Non-standard https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError
-	'InternalError',
 	// Can't find documentation
 	'KeyEvent',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/MouseScrollEvent
@@ -56,6 +59,7 @@ const ignoredGlobals = new Set([
 	'setResizable',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/updateCommands
 	'updateCommands',
+	...firefoxNonStandardGlobals,
 ]);
 
 const shouldExclude = name =>
@@ -112,7 +116,7 @@ async function getWebWorkerGlobals() {
 	return createGlobals(
 		properties,
 		{
-			shouldExclude: name => name.startsWith('__'),
+			shouldExclude: name => name.startsWith('__') || firefoxNonStandardGlobals.has(name),
 			isWritable: name => name.startsWith('on'),
 		},
 	);
@@ -128,7 +132,7 @@ async function getServiceWorkerGlobals() {
 			...properties,
 		],
 		{
-			shouldExclude: name => name.startsWith('__'),
+			shouldExclude: name => name.startsWith('__') || firefoxNonStandardGlobals.has(name),
 			isWritable: name => name.startsWith('on'),
 		},
 	);
