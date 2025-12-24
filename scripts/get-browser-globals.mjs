@@ -1,4 +1,5 @@
 import process from 'node:process';
+import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';
 import {createGlobals} from './utilities.mjs';
 import {startServer} from './browser/server.mjs';
@@ -108,7 +109,19 @@ async function downloadBrowser({product} = {}) {
 async function getGlobalsInBrowser(environment, product = 'chrome') {
 	await downloadBrowser({product});
 
-	const browser = await puppeteer.launch({product});
+	const browser = await puppeteer.launch({browser: product});
+
+	try {
+		const version = await browser.version();
+		assert.ok(
+			version.toLowerCase().startsWith(`${product}/`),
+			`Unexpected browser version: '${version}', expected '${product}'.`,
+		);
+	} catch (error) {
+		await browser.close();
+		throw error;
+	}
+
 	const page = await browser.newPage();
 
 	let server;
