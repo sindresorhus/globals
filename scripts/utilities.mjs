@@ -76,7 +76,7 @@ function getGlobalThisProperties() {
 async function createGlobals(names, {
 	shouldExclude,
 	isWritable = () => false,
-}) {
+} = {}) {
 	names = unique(names);
 
 	if (shouldExclude) {

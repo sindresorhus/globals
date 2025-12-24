@@ -1,9 +1,10 @@
 const EXECUTE_COMMAND_SIGNAL = 'get-globals';
 
 const environments = [
-	{environment: 'browser', getGlobals: getBrowserGlobals},
+	{environment: 'browser', getGlobals: getGlobalThisProperties},
 	{environment: 'worker', getGlobals: getWebWorkerGlobals},
 	{environment: 'serviceworker', getGlobals: getServiceWorkerGlobals},
+	{environment: 'audioWorklet', getGlobals: getAudioWorkletGlobals},
 ];
 
 function getGlobalThisProperties({expectSecureContext = true} = {}) {
@@ -99,12 +100,6 @@ async function initServiceWorker() {
 	sendResult({
 		sendPort: message => message.source,
 	});
-}
-
-async function getBrowserGlobals() {
-	const globals = getGlobalThisProperties();
-	const audioWorkletGlobals = await getAudioWorkletGlobals();
-	return [...new Set([...globals, ...audioWorkletGlobals])];
 }
 
 const AUDIO_WORKLET_PROCESSOR_NAME = `${EXECUTE_COMMAND_SIGNAL}-processor`;
