@@ -13,6 +13,8 @@ const firefoxNonStandardGlobals = new Set([
 	'InstallTrigger',
 	// Can't find documentation
 	'AnimationTrigger',
+	// Legacy feature https://github.com/whatwg/html/issues/2741
+	'ondragexit',
 ]);
 
 const ignoredGlobals = new Set([
