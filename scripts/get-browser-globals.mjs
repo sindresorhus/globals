@@ -113,7 +113,10 @@ async function getGlobalsInBrowser(environment, product = 'chrome') {
 
 	try {
 		const version = await browser.version();
-		assert.ok(version.toLowerCase().startsWith(`${product}/`));
+		assert.ok(
+			version.toLowerCase().startsWith(`${product}/`),
+			`Unexpected browser version: '${version}', expected '${product}'.`,
+		);
 	} catch (error) {
 		await browser.close();
 		throw error;
