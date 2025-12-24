@@ -9,6 +9,10 @@ const firefoxNonStandardGlobals = new Set([
 	'dump',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError
 	'InternalError',
+	// https://bugzilla.mozilla.org/show_bug.cgi?id=1754441
+	'InstallTrigger',
+	// Can't find documentation
+	'AnimationTrigger',
 ]);
 
 const ignoredGlobals = new Set([
