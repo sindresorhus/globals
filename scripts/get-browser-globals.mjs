@@ -179,4 +179,14 @@ async function getServiceWorkerGlobals() {
 	);
 }
 
-export {getBrowserGlobals, getWebWorkerGlobals, getServiceWorkerGlobals};
+async function getAudioWorkletGlobals() {
+	const properties = await getGlobalsInBrowser('audioWorklet');
+	return createGlobals(properties);
+}
+
+export {
+	getBrowserGlobals,
+	getWebWorkerGlobals,
+	getServiceWorkerGlobals,
+	getAudioWorkletGlobals,
+};

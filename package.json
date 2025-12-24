@@ -24,6 +24,7 @@
 		"update:nodeBuiltin": "node scripts/update.mjs --job=nodeBuiltin",
 		"update:worker": "node scripts/update.mjs --job=worker",
 		"update:serviceworker": "node scripts/update.mjs --job=serviceworker",
+		"update:audioWorklet": "node scripts/update.mjs --job=audioWorklet",
 		"update:shelljs": "node scripts/update.mjs --job=shelljs",
 		"update:jest": "node scripts/update.mjs --job=jest",
 		"update:vitest": "node scripts/update.mjs --job=vitest",
