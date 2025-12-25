@@ -6,6 +6,7 @@ const environments = [
 	{environment: 'serviceworker', getGlobals: getServiceWorkerGlobals},
 	{environment: 'sharedWorker', getGlobals: getSharedWorkerGlobals},
 	{environment: 'audioWorklet', getGlobals: getAudioWorkletGlobals},
+	{environment: 'paintWorklet', getGlobals: getPaintWorkletGlobals},
 ];
 
 function getGlobalThisProperties({expectSecureContext = true} = {}) {
@@ -144,6 +145,25 @@ function initAudioWorklet() {
 	});
 }
 
+const PAINT_WORKLET_PAINT_NAME = `${EXECUTE_COMMAND_SIGNAL}-paint`;
+function getPaintWorkletGlobals() {
+	CSS.paintWorklet.addModule('./assets/paint-worklet.mjs');
+	Object.assign(document.body.style, {
+		backgroundImage: `paint(${PAINT_WORKLET_PAINT_NAME})`,
+	});
+	alert('Open console to see the collected globals.')
+}
+
+function initPaintWorklet() {
+	registerPaint(PAINT_WORKLET_PAINT_NAME, class PaintWorkletGetGlobalsPaint {
+		paint(context, geom, properties) {
+			console.log({
+				paintWorkletGlobals: getGlobalThisProperties({expectSecureContext: false}),
+			});
+		}
+	});
+}
+
 function initPage() {
 	// Exposed for Node.js to call
 	Object.defineProperty(globalThis, '__getGlobals', {
@@ -190,6 +210,7 @@ export {
 	initPage,
 	initWebWorker,
 	initServiceWorker,
-	initAudioWorklet,
 	initSharedWorker,
+	initAudioWorklet,
+	initPaintWorklet,
 };
