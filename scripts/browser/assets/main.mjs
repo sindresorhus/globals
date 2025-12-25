@@ -97,14 +97,14 @@ async function getServiceWorkerGlobals() {
 	return receiveResult({receivePort: serviceWorkerContainer, sendPort: serviceWorker});
 }
 
-async function initServiceWorker() {
+function initServiceWorker() {
 	sendResult({
 		sendPort: message => message.source,
 	});
 }
 
 let sharedWorker;
-async function getSharedWorkerGlobals() {
+function getSharedWorkerGlobals() {
 	sharedWorker ??= new SharedWorker('./assets/shared-worker.mjs', {type: 'module'});
 	return receiveResult({port: sharedWorker.port});
 }
