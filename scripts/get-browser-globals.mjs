@@ -101,7 +101,7 @@ async function getGlobalsInBrowser(environment) {
 	const results = await Promise.all(
 		['chrome', 'firefox'].map(browser => _getGlobalsInBrowser(environment, browser)),
 	);
-	return results.flat();
+	return results.flat().filter(name => !firefoxNonStandardGlobals.has(name));
 }
 
 async function getBrowserGlobals() {
@@ -122,7 +122,7 @@ async function getWebWorkerGlobals() {
 	return createGlobals(
 		properties,
 		{
-			shouldExclude: name => name.startsWith('__') || firefoxNonStandardGlobals.has(name),
+			shouldExclude: name => name.startsWith('__'),
 			isWritable: name => name.startsWith('on'),
 		},
 	);
@@ -138,7 +138,7 @@ async function getServiceWorkerGlobals() {
 			...properties,
 		],
 		{
-			shouldExclude: name => name.startsWith('__') || firefoxNonStandardGlobals.has(name),
+			shouldExclude: name => name.startsWith('__'),
 			isWritable: name => name.startsWith('on'),
 		},
 	);
