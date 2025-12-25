@@ -179,6 +179,16 @@ async function getServiceWorkerGlobals() {
 	);
 }
 
+async function getSharedWorkerGlobals() {
+	const properties = await getGlobalsInBrowser('sharedWorker');
+	return createGlobals(
+		properties,
+		{
+			isWritable: name => name.startsWith('on'),
+		},
+	);
+}
+
 async function getAudioWorkletGlobals() {
 	const properties = await getGlobalsInBrowser('audioWorklet');
 	return createGlobals(properties);
@@ -188,5 +198,6 @@ export {
 	getBrowserGlobals,
 	getWebWorkerGlobals,
 	getServiceWorkerGlobals,
+	getSharedWorkerGlobals,
 	getAudioWorkletGlobals,
 };

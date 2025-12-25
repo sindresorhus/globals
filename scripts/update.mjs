@@ -7,6 +7,7 @@ import {
 	getBrowserGlobals,
 	getWebWorkerGlobals,
 	getServiceWorkerGlobals,
+	getSharedWorkerGlobals,
 	getAudioWorkletGlobals,
 } from './get-browser-globals.mjs';
 import getShelljsGlobals from './get-shelljs-globals.mjs';
@@ -41,6 +42,10 @@ const ALL_JOBS = [
 	{
 		id: 'serviceworker',
 		build: createBuildFunction(getServiceWorkerGlobals),
+	},
+	{
+		id: 'sharedWorker',
+		build: createBuildFunction(getSharedWorkerGlobals),
 	},
 	{
 		id: 'audioWorklet',
