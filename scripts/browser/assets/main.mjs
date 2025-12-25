@@ -4,6 +4,7 @@ const environments = [
 	{environment: 'browser', getGlobals: getGlobalThisProperties},
 	{environment: 'worker', getGlobals: getWebWorkerGlobals},
 	{environment: 'serviceworker', getGlobals: getServiceWorkerGlobals},
+	{environment: 'sharedWorker', getGlobals: getSharedWorkerGlobals},
 	{environment: 'audioWorklet', getGlobals: getAudioWorkletGlobals},
 ];
 
@@ -102,6 +103,18 @@ async function initServiceWorker() {
 	});
 }
 
+let sharedWorker;
+async function getSharedWorkerGlobals() {
+	sharedWorker ??= new SharedWorker('./assets/shared-worker.mjs', {type: 'module'});
+	return receiveResult({port: sharedWorker.port});
+}
+
+function initSharedWorker() {
+	globalThis.onconnect = ({ports: [port]}) => {
+		sendResult({port});
+	};
+}
+
 const AUDIO_WORKLET_PROCESSOR_NAME = `${EXECUTE_COMMAND_SIGNAL}-processor`;
 let audioWorkletNode;
 async function getAudioWorkletGlobals() {
@@ -178,4 +191,5 @@ export {
 	initWebWorker,
 	initServiceWorker,
 	initAudioWorklet,
+	initSharedWorker,
 };
