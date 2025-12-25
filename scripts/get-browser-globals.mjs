@@ -1,8 +1,21 @@
-import process from 'node:process';
-import assert from 'node:assert/strict';
-import puppeteer from 'puppeteer';
+import {launchBrowser} from './browser.mjs';
 import {createGlobals} from './utilities.mjs';
 import {startServer} from './browser/server.mjs';
+
+const firefoxNonStandardGlobals = new Set([
+	// Can't find documentation
+	'Directory',
+	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/dump
+	'dump',
+	// Non-standard https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError
+	'InternalError',
+	// https://bugzilla.mozilla.org/show_bug.cgi?id=1754441
+	'InstallTrigger',
+	// Can't find documentation
+	'AnimationTrigger',
+	// Legacy feature https://github.com/whatwg/html/issues/2741
+	'ondragexit',
+]);
 
 const ignoredGlobals = new Set([
 	// Chrome only
@@ -20,16 +33,10 @@ const ignoredGlobals = new Set([
 	'CSS2Properties',
 	// Deprecated https://developer.mozilla.org/en-US/docs/Web/API/Window/captureEvents
 	'captureEvents',
-	// Can't find documentation
-	'Directory',
-	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/dump
-	'dump',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/fullScreen
 	'fullScreen',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/window/getDefaultComputedStyle
 	'getDefaultComputedStyle',
-	// Non-standard https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError
-	'InternalError',
 	// Can't find documentation
 	'KeyEvent',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/MouseScrollEvent
@@ -58,6 +65,7 @@ const ignoredGlobals = new Set([
 	'setResizable',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/updateCommands
 	'updateCommands',
+	...firefoxNonStandardGlobals,
 ]);
 
 const shouldExclude = name =>
@@ -73,54 +81,8 @@ const isWritable = name =>
 	name === 'location'
 	|| name.startsWith('on');
 
-const puppeteerBrowsers = [
-	'chrome',
-	'chrome-headless-shell',
-	'firefox',
-];
-
-async function downloadBrowser({product} = {}) {
-	const {downloadBrowsers} = await import('puppeteer/internal/node/install.js');
-	const originalEnv = {...process.env};
-
-	const envOverrides = {
-		PUPPETEER_SKIP_DOWNLOAD: JSON.stringify(false),
-		...Object.fromEntries(puppeteerBrowsers.map(browser => [
-			`PUPPETEER_${browser.replaceAll('-', '_').toUpperCase()}_SKIP_DOWNLOAD`,
-			JSON.stringify(browser !== product),
-		])),
-	};
-
-	Object.assign(process.env, envOverrides);
-
-	try {
-		await downloadBrowsers();
-	} finally {
-		for (const env of Object.keys(envOverrides)) {
-			if (Object.hasOwn(originalEnv)) {
-				process.env[env] = originalEnv[env];
-			} else {
-				delete process.env[env];
-			}
-		}
-	}
-}
-
-async function getGlobalsInBrowser(environment, product = 'chrome') {
-	await downloadBrowser({product});
-
-	const browser = await puppeteer.launch({browser: product});
-
-	try {
-		const version = await browser.version();
-		assert.ok(
-			version.toLowerCase().startsWith(`${product}/`),
-			`Unexpected browser version: '${version}', expected '${product}'.`,
-		);
-	} catch (error) {
-		await browser.close();
-		throw error;
-	}
+async function _getGlobalsInBrowser(environment, browserName) {
+	const browser = await launchBrowser({browser: browserName});
 
 	const page = await browser.newPage();
 
@@ -135,15 +97,18 @@ async function getGlobalsInBrowser(environment, product = 'chrome') {
 	}
 }
 
+async function getGlobalsInBrowser(environment) {
+	const results = await Promise.all(
+		['chrome', 'firefox'].map(browser => _getGlobalsInBrowser(environment, browser)),
+	);
+	return results.flat().filter(name => !firefoxNonStandardGlobals.has(name));
+}
+
 async function getBrowserGlobals() {
-	const chromeGlobals = await getGlobalsInBrowser('browser');
-	const firefoxGlobals = await getGlobalsInBrowser('browser', 'firefox');
+	const properties = await getGlobalsInBrowser('browser');
 
 	return createGlobals(
-		[
-			...chromeGlobals,
-			...firefoxGlobals,
-		],
+		properties,
 		{
 			shouldExclude,
 			isWritable,
