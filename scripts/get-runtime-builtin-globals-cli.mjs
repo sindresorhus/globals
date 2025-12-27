@@ -44,6 +44,7 @@ function getRuntimeBuiltinGlobals() {
 		getGlobalThisProperties(),
 		{
 			shouldExclude: name => name.startsWith('__'),
+			isWritable: name => name.startsWith('on'),
 		},
 	);
 }
