@@ -22,6 +22,8 @@
 		"update:builtin": "node scripts/update.mjs --job=builtin",
 		"update:builtin-yearly": "node scripts/update.mjs --job=builtin-yearly",
 		"update:nodeBuiltin": "node scripts/update.mjs --job=nodeBuiltin",
+		"update:bunBuiltin": "node scripts/update.mjs --job=bunBuiltin",
+		"update:denoBuiltin": "node scripts/update.mjs --job=denoBuiltin",
 		"update:worker": "node scripts/update.mjs --job=worker",
 		"update:serviceworker": "node scripts/update.mjs --job=serviceworker",
 		"update:sharedWorker": "node scripts/update.mjs --job=sharedWorker",
