@@ -2490,6 +2490,8 @@
 	"paintWorklet": {
 		"AsyncDisposableStack": false,
 		"ByteLengthQueuingStrategy": false,
+		"console": false,
+		"CountQueuingStrategy": false,
 		"CSSImageValue": false,
 		"CSSKeywordValue": false,
 		"CSSMathClamp": false,
@@ -2517,7 +2519,7 @@
 		"CSSUnitValue": false,
 		"CSSUnparsedValue": false,
 		"CSSVariableReferenceValue": false,
-		"CountQueuingStrategy": false,
+		"devicePixelRatio": false,
 		"DisposableStack": false,
 		"PaintRenderingContext2D": false,
 		"PaintSize": false,
@@ -2530,6 +2532,7 @@
 		"ReadableStreamBYOBRequest": false,
 		"ReadableStreamDefaultController": false,
 		"ReadableStreamDefaultReader": false,
+		"registerPaint": false,
 		"StylePropertyMapReadOnly": false,
 		"SuppressedError": false,
 		"Temporal": false,
@@ -2539,10 +2542,7 @@
 		"WorkletGlobalScope": false,
 		"WritableStream": false,
 		"WritableStreamDefaultController": false,
-		"WritableStreamDefaultWriter": false,
-		"console": false,
-		"devicePixelRatio": false,
-		"registerPaint": false
+		"WritableStreamDefaultWriter": false
 	},
 	"phantomjs": {
 		"console": true,

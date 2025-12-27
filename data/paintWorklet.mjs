@@ -1,3 +1,4 @@
+import {sortObject} from '../utilities.mjs';
 import esBuiltinGlobals from './builtin.mjs';
 
 /*
@@ -129,9 +130,8 @@ const globalProperties = [
 	'WebAssembly',
 ];
 
-export default Object.fromEntries(
+export default sortObject(Object.fromEntries(
 	globalProperties
 		.filter(name => !Object.hasOwn(esBuiltinGlobals, name))
-		.sort()
 		.map(name => [name, false]),
-);
+));
