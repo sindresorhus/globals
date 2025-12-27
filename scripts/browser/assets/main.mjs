@@ -151,12 +151,13 @@ function getPaintWorkletGlobals() {
 	Object.assign(document.body.style, {
 		backgroundImage: `paint(${PAINT_WORKLET_PAINT_NAME})`,
 	});
-	alert('Open console to see the collected globals.')
+	// eslint-disable-next-line no-alert
+	alert('Open console to see the collected globals.');
 }
 
 function initPaintWorklet() {
-	registerPaint(PAINT_WORKLET_PAINT_NAME, class PaintWorkletGetGlobalsPaint {
-		paint(context, geom, properties) {
+	globalThis.registerPaint(PAINT_WORKLET_PAINT_NAME, class PaintWorkletGetGlobalsPaint {
+		paint(/* context, geom, properties */) {
 			console.log({
 				paintWorkletGlobals: getGlobalThisProperties({expectSecureContext: false}),
 			});
