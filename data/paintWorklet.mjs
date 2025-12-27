@@ -132,5 +132,6 @@ const globalProperties = [
 export default Object.fromEntries(
 	globalProperties
 		.filter(name => !Object.hasOwn(esBuiltinGlobals, name))
+		.toSorted()
 		.map(name => [name, false]),
 );
