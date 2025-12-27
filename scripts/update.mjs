@@ -2,7 +2,7 @@ import {parseArgs} from 'node:util';
 import {outdent} from 'outdent';
 import spawn from 'nano-spawn';
 import {getBuiltinGlobals, buildYearlyBuiltinGlobals} from './es-builtin.mjs';
-import getNodeBuiltinGlobals from './get-node-builtin-globals.mjs';
+import getRuntimeBuiltinGlobals from './get-runtime-builtin-globals.mjs';
 import {
 	getBrowserGlobals,
 	getWebWorkerGlobals,
@@ -29,7 +29,15 @@ const ALL_JOBS = [
 	},
 	{
 		id: 'nodeBuiltin',
-		build: createBuildFunction(getNodeBuiltinGlobals),
+		build: createBuildFunction(getRuntimeBuiltinGlobals('node.js')),
+	},
+	{
+		id: 'bunBuiltin',
+		build: createBuildFunction(getRuntimeBuiltinGlobals('bun')),
+	},
+	{
+		id: 'denoBuiltin',
+		build: createBuildFunction(getRuntimeBuiltinGlobals('deno')),
 	},
 	{
 		id: 'browser',

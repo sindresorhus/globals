@@ -16,6 +16,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: denoland/setup-deno@v2
       - uses: actions/setup-node@v4
         with:
           check-latest: true
@@ -35,6 +37,8 @@ jobs:
     needs: [update-on-macos]
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: denoland/setup-deno@v2
       - uses: actions/setup-node@v4
         with:
           check-latest: true
@@ -59,6 +63,8 @@ jobs:
     needs: [update-on-windows]
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: denoland/setup-deno@v2
       - uses: actions/setup-node@v4
         with:
           check-latest: true
