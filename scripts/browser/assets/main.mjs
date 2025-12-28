@@ -146,11 +146,15 @@ function initAudioWorklet() {
 }
 
 const PAINT_WORKLET_PAINT_NAME = `${EXECUTE_COMMAND_SIGNAL}-paint`;
-function getPaintWorkletGlobals() {
+function getPaintWorkletGlobals({isNodejsCall = false} = {}) {
 	CSS.paintWorklet.addModule('./assets/paint-worklet.mjs');
 	Object.assign(document.body.style, {
 		backgroundImage: `paint(${PAINT_WORKLET_PAINT_NAME})`,
 	});
+	if (isNodejsCall) {
+		return;
+	}
+
 	// eslint-disable-next-line no-alert
 	alert('Open console to see the collected globals.');
 }
@@ -158,9 +162,8 @@ function getPaintWorkletGlobals() {
 function initPaintWorklet() {
 	globalThis.registerPaint(PAINT_WORKLET_PAINT_NAME, class PaintWorkletGetGlobalsPaint {
 		paint(/* context, geom, properties */) {
-			console.log({
-				paintWorkletGlobals: getGlobalThisProperties({expectSecureContext: false}),
-			});
+			const properties = getGlobalThisProperties({expectSecureContext: false});
+			console.log(`paintWorkletGlobals: ${JSON.stringify(properties)}`);
 		}
 	});
 }
@@ -169,8 +172,8 @@ function initPage() {
 	// Exposed for Node.js to call
 	Object.defineProperty(globalThis, '__getGlobals', {
 		enumerable: false,
-		value(environment) {
-			return environments.find(({environment: name}) => name === environment).getGlobals();
+		value(environment, options) {
+			return environments.find(({environment: name}) => name === environment).getGlobals(options);
 		},
 	});
 
