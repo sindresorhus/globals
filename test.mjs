@@ -124,15 +124,12 @@ test('globals.json', async t => {
 });
 
 function isEsIdentifier(environment, name) {
-	return (
-		(isEsEnvironment(environment))
-		&& (
-			name === 'eval'
-			|| name === 'globalThis'
-			|| name === 'Infinity'
-			|| name === 'NaN'
-			|| name === 'undefined'
-		)
+	return isEsEnvironment(environment) && (
+		name === 'eval'
+		|| name === 'globalThis'
+		|| name === 'Infinity'
+		|| name === 'NaN'
+		|| name === 'undefined'
 	);
 }
 
