@@ -20,7 +20,7 @@ const ALL_JOBS = [
 		id: 'builtin',
 		build: createBuildFunction(getBuiltinGlobals, {
 			incremental: false,
-			excludeBuiltins: false,
+			excludeEsBuiltins: false,
 		}),
 	},
 	{
@@ -73,13 +73,13 @@ const ALL_JOBS = [
 	},
 ];
 
-function createBuildFunction(getGlobals, {incremental = true, excludeBuiltins = true} = {}) {
+function createBuildFunction(getGlobals, {incremental = true, excludeEsBuiltins = true} = {}) {
 	return (job, options) => updateGlobals({
 		job,
 		getGlobals,
 		dryRun: options.dry,
 		incremental: options.clean ? false : incremental,
-		excludeBuiltins,
+		excludeEsBuiltins,
 	});
 }
 

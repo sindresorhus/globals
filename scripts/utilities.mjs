@@ -34,7 +34,7 @@ async function updateGlobals({
 	getGlobals,
 	dryRun,
 	incremental,
-	excludeBuiltins,
+	excludeEsBuiltins,
 }) {
 	const environment = job.id;
 
@@ -46,7 +46,7 @@ async function updateGlobals({
 		updated = {...original, ...updated};
 	}
 
-	if (excludeBuiltins) {
+	if (excludeEsBuiltins) {
 		for (const name of Object.keys(await readGlobals('esnext'))) {
 			delete updated[name];
 		}
