@@ -62,6 +62,7 @@ test('should not contain builtins', t => {
 
 test('es versions', t => {
 	const builtins = new Map(Object.entries(globals.builtin));
+	const esnextBuiltins = new Map(Object.entries(globals.esnext));
 
 	const esVersions = Object.keys(globals)
 		.filter(key => /^es(?:3|5|\d{4})$/.test(key))
@@ -73,7 +74,7 @@ test('es versions', t => {
 		const data = globals[esVersion];
 		for (const [key, value] of Object.entries(data)) {
 			t.true(builtins.has(key), `The builtin '${key}' in '${esVersion}' is missing in 'builtin'.`);
-			t.is(value, builtins.get(key), `Value of '${key}' should be the same as 'builtin'.`);
+			t.is(value, builtins.get(key), `Value of '${key}' in '${esVersion}' should be the same as 'builtin'.`);
 		}
 
 		if (previousVersion) {
@@ -89,6 +90,10 @@ test('es versions', t => {
 
 	const latestVersion = esVersions.at(-1);
 	t.deepEqual(globals[latestVersion], globals.builtin, `'${latestVersion}' should be the same as 'builtin'.`);
+
+	for (const [key, value] of Object.entries(globals.builtin)) {
+		t.is(value, esnextBuiltins.get(key), `Value of '${key}' in 'builtin' should be the same as 'esnext'.`);
+	}
 });
 
 test('globals.json', async t => {
