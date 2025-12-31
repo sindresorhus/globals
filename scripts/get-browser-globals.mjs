@@ -162,7 +162,7 @@ async function getAudioWorkletGlobals() {
 
 async function getPaintWorkletGlobals() {
 	if (process.platform !== 'win32') {
-		console.warn('\'paintWorklet\' globals generate script currently only works on Windows.')
+		console.warn('\'paintWorklet\' globals generate script currently only works on Windows.');
 		return {};
 	}
 
