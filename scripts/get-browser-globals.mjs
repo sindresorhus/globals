@@ -1,3 +1,4 @@
+import process from 'node:process';
 import {launchBrowser, getDevtoolsPanelOutput} from './browser.mjs';
 import {createGlobals} from './utilities.mjs';
 import {startServer} from './browser/server.mjs';
@@ -160,6 +161,11 @@ async function getAudioWorkletGlobals() {
 }
 
 async function getPaintWorkletGlobals() {
+	if (process.platform !== 'win32') {
+		console.warn('\'paintWorklet\' globals generate script currently only works on Windows.')
+		return {};
+	}
+
 	const browser = await launchBrowser({browser: 'chrome', devtools: true});
 	const page = await browser.newPage();
 
