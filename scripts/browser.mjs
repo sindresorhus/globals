@@ -42,15 +42,17 @@ function downloadBrowser({browser}) {
 	return browserInstallPromises.get(browser);
 }
 
-async function _launchBrowser({browser: browserName}) {
+async function _launchBrowser(options) {
 	const browser = await puppeteer.launch({
-		browser: browserName,
+		headless: true,
 		enableExtensions: false,
 		waitForInitialPage: false,
+		...options,
 	});
 
 	try {
 		const version = await browser.version();
+		const browserName = options.browser;
 		assert.ok(
 			version.toLowerCase().startsWith(`${browserName}/`),
 			`Unexpected browser version: '${version}', expected '${browserName}'.`,
@@ -63,13 +65,41 @@ async function _launchBrowser({browser: browserName}) {
 	return browser;
 }
 
-async function launchBrowser({browser}) {
+async function launchBrowser(options) {
 	try {
-		return await _launchBrowser({browser});
+		return await _launchBrowser(options);
 	} catch {
-		await downloadBrowser({browser});
-		return _launchBrowser({browser});
+		await downloadBrowser(options);
+		return _launchBrowser(options);
 	}
 }
 
-export {launchBrowser};
+async function getDevtoolsPanelOutput(target) {
+	const page = await target.page();
+	return page.evaluate(async () => {
+		globalThis.DevToolsAPI.showPanel('console');
+
+		function waitFor(condition) {
+			// eslint-disable-next-line no-use-extend-native/no-use-extend-native, n/no-unsupported-features/es-syntax
+			const {promise, resolve} = Promise.withResolvers();
+			const check = () => {
+				const result = condition();
+				if (result) {
+					resolve(result);
+				} else {
+					setTimeout(check, 100);
+				}
+			};
+
+			check();
+
+			return promise;
+		}
+
+		const consolePanel = await waitFor(() => globalThis.UI?.panels?.console);
+		const {element} = consolePanel;
+		return Array.from(element.querySelectorAll('.console-message-text'), element => element.textContent);
+	});
+}
+
+export {launchBrowser, getDevtoolsPanelOutput};
