@@ -1,5 +1,5 @@
 import {sortObject} from '../utilities.mjs';
-import esBuiltinGlobals from './builtin.mjs';
+import esnextGlobals from './esnext.mjs';
 
 /*
 Steps to update `paintWorklet` globals:
@@ -132,6 +132,6 @@ const globalProperties = [
 
 export default sortObject(Object.fromEntries(
 	globalProperties
-		.filter(name => !Object.hasOwn(esBuiltinGlobals, name))
+		.filter(name => !Object.hasOwn(esnextGlobals, name))
 		.map(name => [name, false]),
 ));

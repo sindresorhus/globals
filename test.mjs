@@ -43,14 +43,14 @@ test('`node` is `nodeBuiltin` with CommonJS arguments', t => {
 });
 
 test('should not contain builtins', t => {
-	const builtins = new Set(Object.keys(globals.builtin));
+	const esnextBuiltins = new Set(Object.keys(globals.esnext));
 
 	for (const [env, envGlobals] of Object.entries(globals)) {
-		if (env === 'builtin' || /^es\d+$/.test(env)) {
+		if (isEsEnvironment(env)) {
 			continue;
 		}
 
-		const keys = Object.keys(envGlobals).filter(key => builtins.has(key));
+		const keys = Object.keys(envGlobals).filter(key => esnextBuiltins.has(key));
 
 		t.deepEqual(
 			keys,
@@ -125,7 +125,7 @@ test('globals.json', async t => {
 
 function isEsIdentifier(environment, name) {
 	return (
-		(environment === 'builtin' || /^es(?:3|5|\d{4})$/.test(environment))
+		(isEsEnvironment(environment))
 		&& (
 			name === 'eval'
 			|| name === 'globalThis'
@@ -134,4 +134,8 @@ function isEsIdentifier(environment, name) {
 			|| name === 'undefined'
 		)
 	);
+}
+
+function isEsEnvironment(name) {
+	return name === 'builtin' || /^es(?:3|5|\d{4}|next)$/.test(name);
 }

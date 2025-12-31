@@ -2842,7 +2842,6 @@
 		"registerPaint": false,
 		"StylePropertyMapReadOnly": false,
 		"SuppressedError": false,
-		"Temporal": false,
 		"TransformStream": false,
 		"TransformStreamDefaultController": false,
 		"WebAssembly": false,

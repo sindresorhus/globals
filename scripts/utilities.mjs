@@ -47,7 +47,7 @@ async function updateGlobals({
 	}
 
 	if (excludeBuiltins) {
-		for (const name of Object.keys(await readGlobals('builtin'))) {
+		for (const name of Object.keys(await readGlobals('esnext'))) {
 			delete updated[name];
 		}
 	}
