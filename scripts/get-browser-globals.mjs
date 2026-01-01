@@ -1,5 +1,4 @@
-import process from 'node:process';
-import {launchBrowser, getDevtoolsPanelOutput} from './browser.mjs';
+import {launchBrowser} from './browser.mjs';
 import {createGlobals} from './utilities.mjs';
 import {startServer} from './browser/server.mjs';
 
@@ -160,53 +159,10 @@ async function getAudioWorkletGlobals() {
 	return createGlobals(properties);
 }
 
-async function getPaintWorkletGlobals() {
-	if (process.platform !== 'win32') {
-		console.warn('\'paintWorklet\' globals generate script currently only works on Windows.');
-		return {};
-	}
-
-	const browser = await launchBrowser({browser: 'chrome', devtools: true});
-	const page = await browser.newPage();
-
-	let properties;
-	let server;
-	try {
-		server = await startServer({silent: true});
-		await page.goto(server.url);
-		await page.evaluate('globalThis.__getGlobals(\'paintWorklet\', {isNodejsCall: true})');
-		properties = JSON.parse(await getDevtoolsOutputWithPrefix(browser, 'paintWorkletGlobals: '));
-	} finally {
-		await browser.close();
-		await server?.close();
-	}
-
-	return createGlobals(properties);
-}
-
-async function getDevtoolsOutputWithPrefix(browser, prefix) {
-	for (const target of await browser.targets()) {
-		const type = target.type();
-		const url = target.url();
-		if (type !== 'other' || !url.startsWith('devtools://')) {
-			continue;
-		}
-
-		// eslint-disable-next-line no-await-in-loop
-		const logs = await getDevtoolsPanelOutput(target);
-		for (const log of logs) {
-			if (log.startsWith(prefix)) {
-				return log.slice(prefix.length);
-			}
-		}
-	}
-}
-
 export {
 	getBrowserGlobals,
 	getWebWorkerGlobals,
 	getServiceWorkerGlobals,
 	getSharedWorkerGlobals,
 	getAudioWorkletGlobals,
-	getPaintWorkletGlobals,
 };
