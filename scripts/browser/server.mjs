@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises';
-import {fileURLToPath} from 'node:url';
 import http from 'node:http';
 import {inspect} from 'node:util';
 import getPort from 'get-port';
