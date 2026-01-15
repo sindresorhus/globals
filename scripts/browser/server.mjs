@@ -3,21 +3,6 @@ import {fileURLToPath} from 'node:url';
 import http from 'node:http';
 import {inspect} from 'node:util';
 import getPort from 'get-port';
-import esbuild from 'esbuild';
-
-// Firefox will support module service worker in v147
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1360870
-async function transformScript(file) {
-	const filename = '.service-worker-bundled.mjs';
-	await esbuild.build({
-		entryPoints: [fileURLToPath(file)],
-		bundle: true,
-		outfile: filename,
-	});
-	const content = await fs.readFile(filename, 'utf8');
-	await fs.rm(filename);
-	return content;
-}
 
 async function startServer({silent = false, port: preferredPort} = {}) {
 	const port = await getPort({port: preferredPort});
@@ -43,11 +28,7 @@ async function startServer({silent = false, port: preferredPort} = {}) {
 		let content;
 
 		try {
-			content = await (
-				url === '/assets/service-worker.mjs'
-					? transformScript(file)
-					: fs.readFile(file, 'utf8')
-			);
+			content = await fs.readFile(file, 'utf8');
 		} catch (error) {
 			if (!silent) {
 				console.error(error);
