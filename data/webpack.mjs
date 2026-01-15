@@ -1,0 +1,15 @@
+export default {
+	__non_webpack_require__: false,
+	__resourceQuery: false,
+	__webpack_base_uri__: true,
+	__webpack_chunk_load__: true,
+	__webpack_exports_info__: false,
+	__webpack_get_script_filename__: true,
+	__webpack_hash__: false,
+	__webpack_is_included__: false,
+	__webpack_module__: false,
+	__webpack_modules__: false,
+	__webpack_public_path__: true,
+	__webpack_require__: false,
+	__webpack_runtime_id__: false,
+};
