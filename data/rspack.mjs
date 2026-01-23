@@ -1,3 +1,4 @@
+// https://rspack.rs/api/runtime-api/module-variables
 export default {
 	__non_webpack_require__: false,
 	__resourceQuery: false,

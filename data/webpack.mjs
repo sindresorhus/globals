@@ -1,3 +1,4 @@
+// https://webpack.js.org/api/module-variables/
 export default {
 	__non_webpack_require__: false,
 	__resourceQuery: false,
