@@ -2898,6 +2898,28 @@
 		"toint32": false,
 		"version": false
 	},
+	"rspack": {
+		"__non_webpack_require__": false,
+		"__resourceQuery": false,
+		"__rspack_unique_id__": false,
+		"__rspack_version__": false,
+		"__system_context__": false,
+		"__webpack_base_uri__": true,
+		"__webpack_chunk_load__": true,
+		"__webpack_chunkname__": false,
+		"__webpack_exports_info__": false,
+		"__webpack_get_script_filename__": true,
+		"__webpack_hash__": false,
+		"__webpack_init_sharing__": false,
+		"__webpack_is_included__": false,
+		"__webpack_module__": false,
+		"__webpack_modules__": false,
+		"__webpack_nonce__": true,
+		"__webpack_public_path__": true,
+		"__webpack_require__": false,
+		"__webpack_runtime_id__": false,
+		"__webpack_share_scopes__": false
+	},
 	"serviceworker": {
 		"AbortController": false,
 		"AbortPaymentEvent": false,
@@ -3623,6 +3645,21 @@
 		"browser": false,
 		"chrome": false,
 		"opr": false
+	},
+	"webpack": {
+		"__non_webpack_require__": false,
+		"__resourceQuery": false,
+		"__webpack_base_uri__": true,
+		"__webpack_chunk_load__": true,
+		"__webpack_exports_info__": false,
+		"__webpack_get_script_filename__": true,
+		"__webpack_hash__": false,
+		"__webpack_is_included__": false,
+		"__webpack_module__": false,
+		"__webpack_modules__": false,
+		"__webpack_public_path__": true,
+		"__webpack_require__": false,
+		"__webpack_runtime_id__": false
 	},
 	"worker": {
 		"AbortController": false,
