@@ -16,6 +16,8 @@ export default {
 	spyOn: false,
 	spyOnAllFunctions: false,
 	spyOnProperty: false,
+	throwUnless: false,
+	throwUnlessAsync: false,
 	waits: false,
 	waitsFor: false,
 	xdescribe: false,
