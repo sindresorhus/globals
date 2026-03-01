@@ -151,6 +151,7 @@ export default {
 	onrejectionhandled: true,
 	onunhandledrejection: true,
 	origin: false,
+	Origin: false,
 	Path2D: false,
 	performance: false,
 	Performance: false,

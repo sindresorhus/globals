@@ -185,6 +185,7 @@ export default {
 	onsync: true,
 	onunhandledrejection: true,
 	origin: false,
+	Origin: false,
 	Path2D: false,
 	PaymentRequestEvent: false,
 	performance: false,
