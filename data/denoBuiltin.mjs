@@ -133,6 +133,7 @@ export default {
 	structuredClone: false,
 	SubtleCrypto: false,
 	SuppressedError: false,
+	Temporal: false,
 	TextDecoder: false,
 	TextDecoderStream: false,
 	TextEncoder: false,
