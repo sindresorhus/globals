@@ -55,7 +55,7 @@ const getSpecification = async () => {
 };
 
 function * getGlobalObjects($) {
-	for (const element of $('emu-clause#sec-global-object emu-clause:not([type]) > h1')) {
+	for (const element of $('emu-clause#sec-global-object emu-clause > h1')) {
 		let text = $(element).text().trim();
 
 		// Function shape `Array ( . . . )`
