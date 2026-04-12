@@ -114,6 +114,7 @@ export default {
 	PromiseRejectionEvent: false,
 	prompt: false,
 	queueMicrotask: false,
+	QuotaExceededError: false,
 	ReadableByteStreamController: false,
 	ReadableStream: false,
 	ReadableStreamBYOBReader: false,
