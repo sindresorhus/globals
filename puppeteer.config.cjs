@@ -9,4 +9,10 @@ const IS_CI = Boolean(process.env.CI);
 module.exports = {
 	skipDownload: true,
 	cacheDirectory: IS_CI ? path.join(__dirname, '.cache/puppeteer/') : undefined,
+	chrome: {
+		version: 'latest',
+	},
+	firefox: {
+		version: 'latest',
+	},
 };
