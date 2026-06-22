@@ -44,8 +44,8 @@ jobs:
           node-version: latest
       - run: |
           npm install
-          npx puppeteer browsers install chrome@stable
-          npx puppeteer browsers install firefox@stable
+          npx puppeteer browsers install chrome
+          npx puppeteer browsers install firefox
       # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
       - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
         if: matrix.os == 'ubuntu-latest'
