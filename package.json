@@ -117,5 +117,8 @@
 		"compilerOptions": {
 			"resolveJsonModule": true
 		}
+	},
+	"allowScripts": {
+		"puppeteer": true
 	}
 }
