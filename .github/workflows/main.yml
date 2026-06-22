@@ -18,8 +18,8 @@ jobs:
           - 20
           - 18
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
@@ -35,10 +35,10 @@ jobs:
           - macos-latest
           - windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
       - uses: denoland/setup-deno@v2
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           check-latest: true
           node-version: latest
