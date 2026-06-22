@@ -25,7 +25,7 @@ jobs:
       - run: |
           npm install puppeteer --save-dev
           npx puppeteer browsers install chrome@latest
-          npx puppeteer browsers install firefox@latest
+          npx puppeteer browsers install firefox@stable
           npm run update
       - uses: actions/upload-artifact@v4
         with:
@@ -52,7 +52,7 @@ jobs:
       - run: |
           npm install puppeteer --save-dev
           npx puppeteer browsers install chrome@latest
-          npx puppeteer browsers install firefox@latest
+          npx puppeteer browsers install firefox@stable
           npm run update
       - uses: actions/upload-artifact@v4
         with:
@@ -82,7 +82,7 @@ jobs:
       - run: |
           npm install puppeteer --save-dev
           npx puppeteer browsers install chrome@latest
-          npx puppeteer browsers install firefox@latest
+          npx puppeteer browsers install firefox@stable
           npm run update
       - run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> "$GITHUB_ENV"
       - uses: peter-evans/create-pull-request@v7
