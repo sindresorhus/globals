@@ -24,6 +24,7 @@ jobs:
           node-version: latest
       - run: |
           npm install puppeteer --save-dev
+          npx puppeteer browsers install
           npm run update
       - uses: actions/upload-artifact@v4
         with:
@@ -49,6 +50,7 @@ jobs:
           path: data
       - run: |
           npm install puppeteer --save-dev
+          npx puppeteer browsers install
           npm run update
       - uses: actions/upload-artifact@v4
         with:
@@ -77,6 +79,7 @@ jobs:
       - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - run: |
           npm install puppeteer --save-dev
+          npx puppeteer browsers install
           npm run update
       - run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> "$GITHUB_ENV"
       - uses: peter-evans/create-pull-request@v7

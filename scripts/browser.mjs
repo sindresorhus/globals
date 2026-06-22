@@ -2,6 +2,7 @@ import process from 'node:process';
 import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';
 
+const IS_CI = Boolean(process.env.CI);
 const puppeteerBrowsers = ['chrome', 'chrome-headless-shell', 'firefox'];
 
 async function _downloadBrowser({browser}) {
@@ -64,6 +65,10 @@ async function _launchBrowser({browser: browserName}) {
 }
 
 async function launchBrowser({browser}) {
+	if (IS_CI) {
+		return _launchBrowser({browser});
+	}
+
 	try {
 		return await _launchBrowser({browser});
 	} catch {

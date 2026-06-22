@@ -42,8 +42,10 @@ jobs:
         with:
           check-latest: true
           node-version: latest
-      - run: npm install
+      - run: |
+          npm install
+          npx puppeteer browsers install
       # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
       - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
         if: matrix.os == 'ubuntu-latest'
-      - run: npm run update --dry
+      - run: npm run update -- --dry
