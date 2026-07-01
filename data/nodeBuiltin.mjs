@@ -4,7 +4,6 @@
 export default {
 	AbortController: false,
 	AbortSignal: false,
-	AsyncDisposableStack: false,
 	atob: false,
 	Blob: false,
 	BroadcastChannel: false,
@@ -23,7 +22,6 @@ export default {
 	CryptoKey: false,
 	CustomEvent: false,
 	DecompressionStream: false,
-	DisposableStack: false,
 	DOMException: false,
 	ErrorEvent: false,
 	Event: false,
@@ -65,7 +63,6 @@ export default {
 	Storage: false,
 	structuredClone: false,
 	SubtleCrypto: false,
-	SuppressedError: false,
 	Temporal: false,
 	TextDecoder: false,
 	TextDecoderStream: false,
