@@ -1,0 +1,41 @@
+/**
+Source:
+- events: https://flow.org/en/docs/react/events/
+- utilities: https://flow.org/en/docs/types/utilities/
+*/
+export default {
+	$Exact: false,
+	$Exports: false,
+	$KeyMirror: false,
+	$Keys: false,
+	$NonMaybeType: false,
+	$ReadOnly: false,
+	$ReadOnlyArray: false,
+	$Values: false,
+	Class: false,
+	Exclude: false,
+	Extract: false,
+	Omit: false,
+	OmitThisParameter: false,
+	Parameters: false,
+	Partial: false,
+	Pick: false,
+	Record: false,
+	Required: false,
+	ReturnType: false,
+	StringPrefix: false,
+	StringSuffix: false,
+	SyntheticAnimationEvent: false,
+	SyntheticCompositionEvent: false,
+	SyntheticDragEvent: false,
+	SyntheticEvent: false,
+	SyntheticFocusEvent: false,
+	SyntheticInputEvent: false,
+	SyntheticKeyboardEvent: false,
+	SyntheticMouseEvent: false,
+	SyntheticTouchEvent: false,
+	SyntheticTransitionEvent: false,
+	SyntheticUIEvent: false,
+	SyntheticWheelEvent: false,
+	ThisParameterType: false,
+};
