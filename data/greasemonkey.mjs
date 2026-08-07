@@ -6,6 +6,7 @@ export default {
 	GM_addElement: false,
 	GM_addStyle: false,
 	GM_addValueChangeListener: false,
+	GM_cookie: false,
 	GM_deleteValue: false,
 	GM_deleteValues: false,
 	GM_download: false,
