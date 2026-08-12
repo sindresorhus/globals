@@ -3108,6 +3108,21 @@
 		"__webpack_runtime_id__": false,
 		"__webpack_share_scopes__": false
 	},
+	"rstest": {
+		"afterAll": false,
+		"afterEach": false,
+		"assert": false,
+		"beforeAll": false,
+		"beforeEach": false,
+		"describe": false,
+		"expect": false,
+		"it": false,
+		"onTestFailed": false,
+		"onTestFinished": false,
+		"rs": false,
+		"rstest": false,
+		"test": false
+	},
 	"serviceworker": {
 		"AbortController": false,
 		"AbortPaymentEvent": false,

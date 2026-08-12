@@ -1,0 +1,15 @@
+export default {
+	afterAll: false,
+	afterEach: false,
+	assert: false,
+	beforeAll: false,
+	beforeEach: false,
+	describe: false,
+	expect: false,
+	it: false,
+	onTestFailed: false,
+	onTestFinished: false,
+	rs: false,
+	rstest: false,
+	test: false,
+};
