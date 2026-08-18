@@ -13,6 +13,7 @@ export default {
 	__webpack_hash__: false,
 	__webpack_init_sharing__: false,
 	__webpack_is_included__: false,
+	__webpack_layer__: false,
 	__webpack_module__: false,
 	__webpack_modules__: false,
 	__webpack_nonce__: true,

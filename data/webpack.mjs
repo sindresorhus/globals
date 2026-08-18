@@ -8,6 +8,7 @@ export default {
 	__webpack_get_script_filename__: true,
 	__webpack_hash__: false,
 	__webpack_is_included__: false,
+	__webpack_layer__: false,
 	__webpack_module__: false,
 	__webpack_modules__: false,
 	__webpack_public_path__: true,
