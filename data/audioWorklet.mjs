@@ -43,6 +43,7 @@ export default {
 	ReadableStreamDefaultController: false,
 	ReadableStreamDefaultReader: false,
 	registerProcessor: false,
+	renderQuantumSize: false,
 	sampleRate: false,
 	StylePropertyMapReadOnly: false,
 	Temporal: false,

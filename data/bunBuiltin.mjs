@@ -79,6 +79,7 @@ export default {
 	ShadowRealm: false,
 	structuredClone: false,
 	SubtleCrypto: false,
+	Temporal: false,
 	TextDecoder: false,
 	TextDecoderStream: false,
 	TextEncoder: false,
