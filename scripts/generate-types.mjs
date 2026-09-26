@@ -9,13 +9,13 @@ const output = [
 	'// Do NOT modify this file manually\n',
 ];
 
-for (const group of Object.keys(globals)) {
+for (const [group, environmentGlobals] of Object.entries(globals)) {
 	const groupType = getGroupTypeName(group);
 	groups[group] = groupType;
 
-	output.push(`type ${getGroupTypeName(group)} = {`);
+	output.push(`type ${groupType} = {`);
 
-	for (const [rule, status] of Object.entries(globals[group])) {
+	for (const [rule, status] of Object.entries(environmentGlobals)) {
 		output.push(`	readonly '${rule}': ${status};`);
 	}
 

@@ -59,9 +59,9 @@ function * getGlobalObjects($) {
 		let text = $(element).text().trim();
 
 		// Function shape `Array ( . . . )`
-		text = text.match(/^(?<functionName>\w+?)\s*\(.*?\)$/)?.groups.functionName ?? text;
+		text = text.match(/^(?<functionName>\w+)\s*\(.*?\)$/v)?.groups.functionName ?? text;
 
-		if (!/^\w+$/.test(text)) {
+		if (!/^\w+$/v.test(text)) {
 			continue;
 		}
 
@@ -73,7 +73,7 @@ async function parseSpecification() {
 	const specification = await getSpecification();
 	const $ = cheerio.load(specification);
 	const meta = $('pre.metadata').text();
-	const {year} = meta.match(/title: ECMAScript® (?<year>\d{4})/).groups;
+	const {year} = meta.match(/title: ECMAScript® (?<year>\d{4})/v).groups;
 
 	return {
 		year,
@@ -110,7 +110,7 @@ async function buildYearlyBuiltinGlobals(job, options) {
 		${content};
 	`;
 
-	if (!options.dryRun) {
+	if (!options.dry) {
 		await fs.writeFile(file, code + '\n');
 	}
 

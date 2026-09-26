@@ -28,7 +28,7 @@ function getGlobalThisProperties({expectSecureContext = true} = {}) {
 }
 
 function sendResult({
-	port = globalThis,
+	port,
 	receivePort = port,
 	sendPort = receivePort,
 	getGlobals = getGlobalThisProperties,
@@ -45,8 +45,8 @@ function sendResult({
 			message.error = error;
 			throw error;
 		} finally {
-			const port = typeof	sendPort === 'function' ? sendPort(receivedMessage) : sendPort;
-			port.postMessage(message);
+			const messagePort = typeof sendPort === 'function' ? sendPort(receivedMessage) : sendPort;
+			messagePort.postMessage(message);
 		}
 	};
 }
@@ -76,7 +76,7 @@ function getWebWorkerGlobals() {
 }
 
 function initWebWorker() {
-	sendResult();
+	sendResult({port: globalThis});
 }
 
 const SERVICE_WORK_URL = './assets/service-worker.mjs';
@@ -100,6 +100,7 @@ async function getServiceWorkerGlobals() {
 
 function initServiceWorker() {
 	sendResult({
+		port: globalThis,
 		sendPort: message => message.source,
 	});
 }
@@ -111,8 +112,8 @@ function getSharedWorkerGlobals() {
 }
 
 function initSharedWorker() {
-	globalThis.onconnect = ({ports: [port]}) => {
-		sendResult({port});
+	globalThis.onconnect = event => {
+		sendResult({port: event.ports[0]});
 	};
 }
 

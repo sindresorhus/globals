@@ -40,3 +40,6 @@ For Node.js this package provides two sets of globals:
 	See: https://nodejs.org/api/modules.html#modules_the_module_scope
 
 When analyzing code that is known to run outside of a CommonJS wrapper, for example, JavaScript modules, `nodeBuiltin` can find accidental CommonJS references.
+
+> [!NOTE]
+> The data is a snapshot committed to the repository, not something read from the runtime at install time. `nodeBuiltin` is regenerated monthly by the `Update` workflow against the *latest* Node.js release, so it describes the newest Node.js rather than the oldest version this package supports. `engines.node` is the support floor and does not describe the data.

@@ -17,7 +17,7 @@ async function startServer({silent = false, port: preferredPort} = {}) {
 		}
 
 		// Only allow `.mjs` and `.html`
-		if (!/\.(?:html|mjs)$/.test(url)) {
+		if (!/\.(?:html|mjs)$/v.test(url)) {
 			response.statusCode = 404;
 			response.end();
 			return;

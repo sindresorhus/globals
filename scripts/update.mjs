@@ -83,28 +83,25 @@ function createBuildFunction(getGlobals, {incremental = true, excludeBuiltins = 
 	});
 }
 
+function reportChange(label, names, marker) {
+	if (names.length === 0) {
+		return;
+	}
+
+	console.log();
+	console.log(
+		outdent`
+			${label}(${names.length}):
+			${names.map(name => ` ${marker} ${name}`).join('\n')}
+		`,
+	);
+}
+
 function report(job, {environment, added, removed}) {
 	console.log(`✅ ${environment ?? job.id} globals updated.`);
 
-	if (added.length > 0) {
-		console.log();
-		console.log(
-			outdent`
-				Added(${added.length}):
-				${added.map(name => ` + ${name}`).join('\n')}
-			`,
-		);
-	}
-
-	if (removed.length > 0) {
-		console.log();
-		console.log(
-			outdent`
-				Removed(${removed.length}):
-				${removed.map(name => ` - ${name}`).join('\n')}
-			`,
-		);
-	}
+	reportChange('Added', added, '+');
+	reportChange('Removed', removed, '-');
 }
 
 async function run(options) {
@@ -118,15 +115,17 @@ async function run(options) {
 		report(job, result);
 	}
 
-	if (!options.dry) {
-		try {
-			await spawn('npm', ['run', 'build'], {stdio: 'inherit'});
-		} catch {}
-
-		try {
-			await spawn('npx', ['xo', '--fix'], {stdio: 'inherit'});
-		} catch {}
+	if (options.dry) {
+		return;
 	}
+
+	try {
+		await spawn('npm', ['run', 'build'], {stdio: 'inherit'});
+	} catch {}
+
+	try {
+		await spawn('npx', ['xo', '--fix'], {stdio: 'inherit'});
+	} catch {}
 }
 
 const {

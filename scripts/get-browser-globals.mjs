@@ -53,8 +53,6 @@ const ignoredGlobals = new Set([
 	'ScrollAreaEvent',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollByLines
 	'scrollByLines',
-	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollByLines
-	'scrollByLines',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollByPages
 	'scrollByPages',
 	// Non-standard https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollMaxX
@@ -71,7 +69,7 @@ const ignoredGlobals = new Set([
 const shouldExclude = name =>
 	name.startsWith('__')
 	// Chrome only
-	|| /^(?:webkit|WebKit)[A-Z]/.test(name)
+	|| /^(?:webkit|WebKit)[A-Z]/v.test(name)
 	|| name.startsWith('onwebkit')
 	// Firefox only
 	|| name.startsWith('onmoz')

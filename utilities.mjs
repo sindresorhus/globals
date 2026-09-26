@@ -21,7 +21,7 @@ const readGlobals = async (environment, {ignoreNonExits} = {}) => {
 
 const sortObject = object =>
 	Object.fromEntries(
-		Object.entries(object).sort(([propertyA], [propertyB]) =>
+		Object.entries(object).toSorted(([propertyA], [propertyB]) =>
 			propertyA.localeCompare(propertyB),
 		),
 	);
